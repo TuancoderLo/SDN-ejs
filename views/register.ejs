@@ -218,8 +218,7 @@
         box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
       }
       .btn-luxury:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
         background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
       }
       .modern-input {
@@ -253,15 +252,12 @@
         border-color: #667eea;
         background: rgba(255, 255, 255, 1);
         box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        transform: translateY(-1px);
       }
 
       .modern-input i {
         color: #667eea;
       }
-      .form-group {
-        animation-delay: calc(var(--i) * 0.1s);
-      }
+
       .register-card {
         backdrop-filter: blur(20px);
         background: rgba(255, 255, 255, 0.85);
@@ -401,31 +397,19 @@
       <div class="container mx-auto px-4">
         <div class="max-w-lg mx-auto">
           <!-- Register Card -->
-          <div
-            class="register-card rounded-3xl animate-fadeInUp relative overflow-hidden"
-          >
-            <!-- Shimmer Effect -->
-            <div class="absolute inset-0 animate-shimmer opacity-20"></div>
-
+          <div class="register-card rounded-3xl relative">
             <div class="p-8 relative z-10">
               <!-- Header -->
               <div class="text-center mb-8">
                 <div
-                  class="inline-flex items-center justify-center w-20 h-20 modern-gradient rounded-2xl mb-6 shadow-2xl animate-bounce-in relative"
+                  class="inline-flex items-center justify-center w-20 h-20 modern-gradient rounded-2xl mb-6 shadow-2xl relative"
                 >
-                  <i
-                    class="fas fa-user-plus text-3xl text-white animate-rotate-in"
-                  ></i>
-                  <div
-                    class="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-400/30 to-pink-400/30 blur-lg animate-pulse"
-                  ></div>
+                  <i class="fas fa-user-plus text-3xl text-white"></i>
                 </div>
-                <h1
-                  class="text-4xl font-bold gradient-text mb-3 animate-slide-in-left"
-                >
+                <h1 class="text-4xl font-bold gradient-text mb-3">
                   Join Our Community
                 </h1>
-                <p class="text-gray-600 text-lg animate-slide-in-right">
+                <p class="text-gray-600 text-lg">
                   Create your account and start exploring luxury fragrances
                 </p>
               </div>
@@ -446,10 +430,7 @@
               <!-- Register Form -->
               <form id="registerForm" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div
-                    class="modern-input animate-slide-in-left"
-                    style="--i: 1"
-                  >
+                  <div class="modern-input">
                     <label for="registerEmail">
                       <i class="fas fa-envelope mr-2"></i>
                       Email Address
@@ -462,10 +443,7 @@
                     />
                   </div>
 
-                  <div
-                    class="modern-input animate-slide-in-right"
-                    style="--i: 2"
-                  >
+                  <div class="modern-input">
                     <label for="registerName">
                       <i class="fas fa-user mr-2"></i>
                       Full Name
@@ -480,7 +458,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div class="modern-input animate-scale-in" style="--i: 3">
+                  <div class="modern-input">
                     <label for="registerPassword">
                       <i class="fas fa-lock mr-2"></i>
                       Password
@@ -493,7 +471,7 @@
                     />
                   </div>
 
-                  <div class="modern-input animate-scale-in" style="--i: 4">
+                  <div class="modern-input">
                     <label for="confirmPassword">
                       <i class="fas fa-lock mr-2"></i>
                       Confirm Password
@@ -508,10 +486,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div
-                    class="modern-input animate-slide-in-left"
-                    style="--i: 5"
-                  >
+                  <div class="modern-input">
                     <label for="regYOB">
                       <i class="fas fa-calendar mr-2"></i>
                       Year of Birth
@@ -526,10 +501,7 @@
                     />
                   </div>
 
-                  <div
-                    class="modern-input animate-slide-in-right"
-                    style="--i: 6"
-                  >
+                  <div class="modern-input">
                     <label for="regGender">
                       <i class="fas fa-venus-mars mr-2"></i>
                       Gender
@@ -542,7 +514,7 @@
                   </div>
                 </div>
 
-                <div class="pt-4 animate-bounce-in" style="--i: 7">
+                <div class="pt-4">
                   <button
                     type="submit"
                     class="btn w-full h-16 text-lg font-semibold text-white btn-luxury rounded-xl"

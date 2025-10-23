@@ -205,8 +205,7 @@
         box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
       }
       .btn-luxury:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
         background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
       }
       .modern-input {
@@ -238,7 +237,6 @@
         border-color: #667eea;
         background: rgba(255, 255, 255, 1);
         box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        transform: translateY(-1px);
       }
 
       .modern-input i {
@@ -368,31 +366,19 @@
       <div class="container mx-auto px-4">
         <div class="max-w-lg mx-auto">
           <!-- Login Card -->
-          <div
-            class="login-card rounded-3xl animate-fadeInUp relative overflow-hidden"
-          >
-            <!-- Shimmer Effect -->
-            <div class="absolute inset-0 animate-shimmer opacity-20"></div>
-
+          <div class="login-card rounded-3xl relative">
             <div class="p-8 relative z-10">
               <!-- Header -->
               <div class="text-center mb-8">
                 <div
-                  class="inline-flex items-center justify-center w-20 h-20 modern-gradient rounded-2xl mb-6 shadow-2xl animate-bounce-in relative"
+                  class="inline-flex items-center justify-center w-20 h-20 modern-gradient rounded-2xl mb-6 shadow-2xl relative"
                 >
-                  <i
-                    class="fas fa-user-shield text-3xl text-white animate-rotate-in"
-                  ></i>
-                  <div
-                    class="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-400/30 to-pink-400/30 blur-lg animate-pulse"
-                  ></div>
+                  <i class="fas fa-user-shield text-3xl text-white"></i>
                 </div>
-                <h1
-                  class="text-4xl font-bold gradient-text mb-3 animate-slide-in-left"
-                >
+                <h1 class="text-4xl font-bold gradient-text mb-3">
                   Welcome Back
                 </h1>
-                <p class="text-gray-600 text-lg animate-slide-in-right">
+                <p class="text-gray-600 text-lg">
                   Sign in to your account to continue your journey
                 </p>
               </div>
@@ -513,17 +499,13 @@
           }
         }
 
-        // Enhanced form interactions
-        const inputs = document.querySelectorAll(".modern-input input");
-        inputs.forEach((input) => {
-          input.addEventListener("focus", function () {
-            this.parentElement.style.transform = "scale(1.02)";
+        // Basic form validation
+        const form = document.getElementById("loginForm");
+        if (form) {
+          form.addEventListener("submit", function (e) {
+            // Form validation logic can be added here
           });
-
-          input.addEventListener("blur", function () {
-            this.parentElement.style.transform = "scale(1)";
-          });
-        });
+        }
       });
     </script>
 
