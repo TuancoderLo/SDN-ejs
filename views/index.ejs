@@ -1,753 +1,1052 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <style>
-        .section {
-            display: none;
-        }
-        .section.active {
-            display: block;
-        }
-        
-        /* Custom animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(147, 51, 234, 0.6);
-            }
-        }
-        
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
-        }
-        
-        @keyframes gradient-shift {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-        
-        @keyframes bounce-in {
-            0% {
-                opacity: 0;
-                transform: scale(0.3) translateY(-50px);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05) translateY(0);
-            }
-            70% {
-                transform: scale(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        @keyframes slide-in-left {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes slide-in-right {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes rotate-in {
-            from {
-                opacity: 0;
-                transform: rotate(-180deg) scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: rotate(0deg) scale(1);
-            }
-        }
-        
-        .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        .animate-pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-        
-        .animate-shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        
-        .animate-gradient-shift {
-            background-size: 400% 400%;
-            animation: gradient-shift 8s ease infinite;
-        }
-        
-        .animate-bounce-in {
-            animation: bounce-in 0.8s ease-out;
-        }
-        
-        .animate-slide-in-left {
-            animation: slide-in-left 0.8s ease-out;
-        }
-        
-        .animate-slide-in-right {
-            animation: slide-in-right 0.8s ease-out;
-        }
-        
-        .animate-rotate-in {
-            animation: rotate-in 1s ease-out;
-        }
-        
-        /* Gradient text */
-        .gradient-text {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Luxury gradients */
-        .luxury-gradient {
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
-        }
-        
-        .premium-blue {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .ocean-gradient {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-        
-        .royal-gradient {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-        }
-        
-        .gold-gradient {
-            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
-        }
-        
-        .platinum-gradient {
-            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
-        }
-        
-        .diamond-gradient {
-            background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
-        }
-        
-        .sapphire-gradient {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        }
-        
-        .emerald-gradient {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-        
-        .ruby-gradient {
-            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-        }
-        
-        /* Glass morphism effect */
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .luxury-glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        
-        .premium-shadow {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.05);
-        }
-        
-        .luxury-border {
-            border: 2px solid transparent;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)) padding-box,
-                        linear-gradient(135deg, #667eea, #764ba2) border-box;
-        }
-        
-        .text-luxury {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .text-gold {
-            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .text-platinum {
-            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
-        }
-        
-        /* Carousel styles */
-        .carousel {
-            scroll-behavior: smooth;
-        }
-        
-        .carousel-item {
-            transition: all 0.5s ease-in-out;
-        }
-        
-        .carousel-btn {
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid transparent;
-        }
-        
-        .carousel-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            transform: scale(1.1);
-        }
-        
-        .carousel-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: scale(1.2);
-        }
-        
-        /* Carousel card hover effects */
-        .carousel .card {
-            transition: all 0.3s ease;
-        }
-        
-        .carousel .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Auto-rotate animation */
-        @keyframes autoRotate {
-            0% { transform: translateX(0); }
-            33% { transform: translateX(-100%); }
-            66% { transform: translateX(-200%); }
-            100% { transform: translateX(0); }
-        }
-        
-        .carousel.auto-rotate {
-            animation: autoRotate 15s infinite;
-        }
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
 
-        /* Admin table polish */
-        .table tr:hover td {
-            background-color: hsl(var(--b2) / 0.35);
-            transition: background-color .2s ease;
+      /* Custom animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-        .badge-soft {
-            background: hsl(var(--p) / 0.12);
-            color: hsl(var(--p));
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 30px rgba(147, 51, 234, 0.6);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      @keyframes gradient-shift {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      @keyframes bounce-in {
+        0% {
+          opacity: 0;
+          transform: scale(0.3) translateY(-50px);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05) translateY(0);
+        }
+        70% {
+          transform: scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes slide-in-left {
+        from {
+          opacity: 0;
+          transform: translateX(-100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slide-in-right {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes rotate-in {
+        from {
+          opacity: 0;
+          transform: rotate(-180deg) scale(0.5);
+        }
+        to {
+          opacity: 1;
+          transform: rotate(0deg) scale(1);
+        }
+      }
+
+      .animate-fadeInUp {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .animate-pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+
+      .animate-shimmer {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        background-size: 200% 100%;
+        animation: shimmer 2s infinite;
+      }
+
+      .animate-gradient-shift {
+        background-size: 400% 400%;
+        animation: gradient-shift 8s ease infinite;
+      }
+
+      .animate-bounce-in {
+        animation: bounce-in 0.8s ease-out;
+      }
+
+      .animate-slide-in-left {
+        animation: slide-in-left 0.8s ease-out;
+      }
+
+      .animate-slide-in-right {
+        animation: slide-in-right 0.8s ease-out;
+      }
+
+      .animate-rotate-in {
+        animation: rotate-in 1s ease-out;
+      }
+
+      /* Gradient text */
+      .gradient-text {
+        background: linear-gradient(
+          135deg,
+          #1e40af 0%,
+          #3b82f6 50%,
+          #06b6d4 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Luxury gradients */
+      .luxury-gradient {
+        background: linear-gradient(
+          135deg,
+          #0f0f23 0%,
+          #1a1a2e 25%,
+          #16213e 50%,
+          #0f3460 75%,
+          #533483 100%
+        );
+      }
+
+      .premium-blue {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .ocean-gradient {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      }
+
+      .royal-gradient {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      }
+
+      .gold-gradient {
+        background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+      }
+
+      .platinum-gradient {
+        background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+      }
+
+      .diamond-gradient {
+        background: linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%);
+      }
+
+      .sapphire-gradient {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      }
+
+      .emerald-gradient {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      }
+
+      .ruby-gradient {
+        background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      }
+
+      /* Glass morphism effect */
+      .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .luxury-glass {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .premium-shadow {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1),
+          0 0 0 1px rgba(255, 255, 255, 0.05);
+      }
+
+      .luxury-border {
+        border: 2px solid transparent;
+        background: linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.1),
+              rgba(255, 255, 255, 0.05)
+            )
+            padding-box,
+          linear-gradient(135deg, #667eea, #764ba2) border-box;
+      }
+
+      .text-luxury {
+        background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 50%,
+          #f093fb 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .text-gold {
+        background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .text-platinum {
+        background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+      }
+
+      /* Carousel styles */
+      .carousel {
+        scroll-behavior: smooth;
+      }
+
+      .carousel-item {
+        transition: all 0.5s ease-in-out;
+      }
+
+      .carousel-btn {
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid transparent;
+      }
+
+      .carousel-btn:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+      }
+
+      .carousel-btn.active {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.2);
+      }
+
+      /* Carousel card hover effects */
+      .carousel .card {
+        transition: all 0.3s ease;
+      }
+
+      .carousel .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Auto-rotate animation */
+      @keyframes autoRotate {
+        0% {
+          transform: translateX(0);
+        }
+        33% {
+          transform: translateX(-100%);
+        }
+        66% {
+          transform: translateX(-200%);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .carousel.auto-rotate {
+        animation: autoRotate 15s infinite;
+      }
+
+      /* Admin table polish */
+      .table tr:hover td {
+        background-color: hsl(var(--b2) / 0.35);
+        transition: background-color 0.2s ease;
+      }
+      .badge-soft {
+        background: hsl(var(--p) / 0.12);
+        color: hsl(var(--p));
+      }
     </style>
-</head>
-<body class="bg-gradient-to-br from-white via-gray-50 to-blue-50 min-h-screen relative">
+  </head>
+  <body
+    class="bg-gradient-to-br from-white via-gray-50 to-blue-50 min-h-screen relative"
+  >
     <!-- Luxury Background Elements -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-full blur-3xl animate-float"></div>
-        <div class="absolute top-40 right-20 w-80 h-80 bg-gradient-to-r from-blue-200/30 to-cyan-200/30 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-20 left-1/4 w-72 h-72 bg-gradient-to-r from-indigo-200/30 to-purple-200/30 rounded-full blur-3xl animate-float" style="animation-delay: 4s;"></div>
-        <div class="absolute bottom-40 right-1/3 w-64 h-64 bg-gradient-to-r from-pink-200/30 to-rose-200/30 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-10 w-56 h-56 bg-gradient-to-r from-cyan-200/30 to-blue-200/30 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-        <div class="absolute top-1/3 right-1/4 w-48 h-48 bg-gradient-to-r from-violet-200/30 to-purple-200/30 rounded-full blur-3xl animate-float" style="animation-delay: 5s;"></div>
+      <div
+        class="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-full blur-3xl animate-float"
+      ></div>
+      <div
+        class="absolute top-40 right-20 w-80 h-80 bg-gradient-to-r from-blue-200/30 to-cyan-200/30 rounded-full blur-3xl animate-float"
+        style="animation-delay: 2s"
+      ></div>
+      <div
+        class="absolute bottom-20 left-1/4 w-72 h-72 bg-gradient-to-r from-indigo-200/30 to-purple-200/30 rounded-full blur-3xl animate-float"
+        style="animation-delay: 4s"
+      ></div>
+      <div
+        class="absolute bottom-40 right-1/3 w-64 h-64 bg-gradient-to-r from-pink-200/30 to-rose-200/30 rounded-full blur-3xl animate-float"
+        style="animation-delay: 1s"
+      ></div>
+      <div
+        class="absolute top-1/2 left-10 w-56 h-56 bg-gradient-to-r from-cyan-200/30 to-blue-200/30 rounded-full blur-3xl animate-float"
+        style="animation-delay: 3s"
+      ></div>
+      <div
+        class="absolute top-1/3 right-1/4 w-48 h-48 bg-gradient-to-r from-violet-200/30 to-purple-200/30 rounded-full blur-3xl animate-float"
+        style="animation-delay: 5s"
+      ></div>
     </div>
     <%- include('partials/navbar') %>
-    
+
     <main class="min-h-screen relative z-10">
-        <!-- Perfumes Section -->
-        <section id="perfumes" class="section active">
-            <div class="container mx-auto px-4 py-12">
-                <!-- Hero Section with Carousel -->
-                <div class="hero bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl mb-12 p-12 relative overflow-hidden animate-gradient-shift premium-shadow border border-blue-200">
-                    <!-- Luxury background elements -->
-                    <div class="absolute inset-0 opacity-20">
-                        <div class="absolute top-10 left-10 w-40 h-40 bg-gradient-to-r from-purple-400/40 to-pink-400/40 rounded-full animate-float blur-xl"></div>
-                        <div class="absolute top-20 right-20 w-32 h-32 bg-gradient-to-r from-blue-400/40 to-cyan-400/40 rounded-full animate-float blur-xl" style="animation-delay: 1s;"></div>
-                        <div class="absolute bottom-10 left-1/4 w-36 h-36 bg-gradient-to-r from-indigo-400/40 to-purple-400/40 rounded-full animate-float blur-xl" style="animation-delay: 2s;"></div>
-                        <div class="absolute bottom-20 right-1/3 w-28 h-28 bg-gradient-to-r from-pink-400/40 to-rose-400/40 rounded-full animate-float blur-xl" style="animation-delay: 0.5s;"></div>
-                        <div class="absolute top-1/2 left-1/2 w-24 h-24 bg-gradient-to-r from-cyan-400/40 to-blue-400/40 rounded-full animate-float blur-xl" style="animation-delay: 3s;"></div>
-                    </div>
-                    
-                    <!-- Luxury overlay pattern -->
-                    <div class="absolute inset-0 opacity-10">
-                        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
-                    </div>
-                    
-                    <div class="hero-content text-center relative z-10">
-                        <div class="max-w-6xl">
-                            <div class="mb-8 animate-bounce-in">
-                                <div class="inline-flex items-center justify-center w-32 h-32 gold-gradient rounded-full mb-6 animate-float animate-pulse-glow relative shadow-2xl luxury-border">
-                                    <i class="fas fa-crown text-5xl text-white animate-rotate-in"></i>
-                                    <div class="absolute inset-0 rounded-full emerald-gradient opacity-50 animate-ping"></div>
-                                    <div class="absolute -inset-2 rounded-full diamond-gradient opacity-30 animate-pulse"></div>
-                                </div>
-                            </div>
-                            <h1 class="text-7xl md:text-8xl font-bold mb-8 text-gray-800 drop-shadow-2xl animate-fadeInUp">
-                                <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                                    Perfume SDN
-                                </span>
-                            </h1>
-                            <div class="mb-6">
-                                <span class="inline-block px-6 py-3 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full text-blue-800 text-lg font-semibold border border-blue-200 backdrop-blur-sm">
-                                    ✨ LUXURY FRAGRANCE COLLECTION ✨
-                                </span>
-                            </div>
-                            <p class="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed mb-8 animate-slide-in-left drop-shadow-lg">
-                                Discover our exclusive collection of <span class="text-blue-600 font-semibold">premium fragrances</span> from the world's most prestigious brands. 
-                                Each scent is a masterpiece, crafted with <span class="text-purple-600 font-semibold">passion and precision</span> for the discerning connoisseur.
-                            </p>
-                            
-                            <!-- Featured Perfumes Carousel -->
-                            <div class="carousel carousel-center w-full max-w-5xl mx-auto mb-8" id="featuredCarousel">
-                                <div id="slide1" class="carousel-item relative w-full">
-                                    <div class="card w-full bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border border-gray-200">
-                                        <div class="card-body flex-row items-center p-10">
-                                            <div class="flex-1">
-                                                <div class="mb-4">
-                                                    <span class="inline-block px-4 py-2 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-full text-yellow-800 text-sm font-semibold border border-yellow-200">
-                                                        👑 ICONIC COLLECTION
-                                                    </span>
-                                                </div>
-                                                <h2 class="card-title text-4xl mb-4 text-gray-800">Chanel No. 5</h2>
-                                                <p class="text-lg mb-6 text-gray-600 leading-relaxed">The world's most iconic fragrance, a timeless blend of rose, jasmine, and aldehydes that has captivated hearts for over a century.</p>
-                                                <div class="flex items-center gap-6">
-                                                    <div class="badge badge-lg gold-gradient text-white border-0">EDP</div>
-                                                    <div class="badge badge-lg emerald-gradient text-white border-0">Female</div>
-                                                    <div class="text-3xl font-bold text-gold">$120</div>
-                                                </div>
-                                            </div>
-                                            <div class="flex-shrink-0 ml-8">
-                                                <div class="relative">
-                                                    <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=300&h=300&q=80" 
-                                                         alt="Chanel No. 5" class="w-56 h-56 object-cover rounded-2xl shadow-2xl luxury-border"
-                                                         referrerpolicy="no-referrer"
-                                                         onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';">
-                                                    <div class="absolute -inset-2 bg-gradient-to-r from-yellow-400/20 to-amber-400/20 rounded-2xl blur-xl"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="slide2" class="carousel-item relative w-full">
-                                    <div class="card w-full bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border border-gray-200">
-                                        <div class="card-body flex-row items-center p-10">
-                                            <div class="flex-1">
-                                                <div class="mb-4">
-                                                    <span class="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full text-blue-800 text-sm font-semibold border border-blue-200">
-                                                        💎 PREMIUM COLLECTION
-                                                    </span>
-                                                </div>
-                                                <h2 class="card-title text-4xl mb-4 text-gray-800">Dior Sauvage</h2>
-                                                <p class="text-lg mb-6 text-gray-600 leading-relaxed">A fresh and woody fragrance that captures the spirit of adventure and freedom, perfect for the modern man.</p>
-                                                <div class="flex items-center gap-6">
-                                                    <div class="badge badge-lg sapphire-gradient text-white border-0">EDT</div>
-                                                    <div class="badge badge-lg ruby-gradient text-white border-0">Male</div>
-                                                    <div class="text-3xl font-bold text-gold">$95</div>
-                                                </div>
-                                            </div>
-                                            <div class="flex-shrink-0 ml-8">
-                                                <div class="relative">
-                                                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?auto=format&fit=crop&w=300&h=300&q=80" 
-                                                         alt="Dior Sauvage" class="w-56 h-56 object-cover rounded-2xl shadow-2xl luxury-border"
-                                                         referrerpolicy="no-referrer"
-                                                         onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';">
-                                                    <div class="absolute -inset-2 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-2xl blur-xl"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="slide3" class="carousel-item relative w-full">
-                                    <div class="card w-full bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border border-gray-200">
-                                        <div class="card-body flex-row items-center p-10">
-                                            <div class="flex-1">
-                                                <div class="mb-4">
-                                                    <span class="inline-block px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full text-purple-800 text-sm font-semibold border border-purple-200">
-                                                        🌟 EXCLUSIVE COLLECTION
-                                                    </span>
-                                                </div>
-                                                <h2 class="card-title text-4xl mb-4 text-gray-800">Tom Ford Black Orchid</h2>
-                                                <p class="text-lg mb-6 text-gray-600 leading-relaxed">A luxurious and mysterious fragrance that combines dark florals with rich spices for an unforgettable experience.</p>
-                                                <div class="flex items-center gap-6">
-                                                    <div class="badge badge-lg diamond-gradient text-white border-0">EDP</div>
-                                                    <div class="badge badge-lg platinum-gradient text-gray-800 border-0">Unisex</div>
-                                                    <div class="text-3xl font-bold text-gold">$180</div>
-                                                </div>
-                                            </div>
-                                            <div class="flex-shrink-0 ml-8">
-                                                <div class="relative">
-                                                    <img src="https://images.unsplash.com/photo-1588405748880-12d1d2a59cc5?auto=format&fit=crop&w=300&h=300&q=80" 
-                                                         alt="Tom Ford Black Orchid" class="w-56 h-56 object-cover rounded-2xl shadow-2xl luxury-border"
-                                                         referrerpolicy="no-referrer"
-                                                         onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';">
-                                                    <div class="absolute -inset-2 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-2xl blur-xl"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Carousel Navigation -->
-                            <div class="flex justify-center w-full py-4 gap-3" id="carouselDots">
-                                <a href="#slide1" class="btn btn-sm btn-circle carousel-btn active gold-gradient text-white border-0 shadow-lg" onclick="setActiveSlide(1)">1</a>
-                                <a href="#slide2" class="btn btn-sm btn-circle carousel-btn sapphire-gradient text-white border-0 shadow-lg" onclick="setActiveSlide(2)">2</a>
-                                <a href="#slide3" class="btn btn-sm btn-circle carousel-btn diamond-gradient text-white border-0 shadow-lg" onclick="setActiveSlide(3)">3</a>
-                            </div>
-                            
-                            <div class="flex justify-center mt-12 animate-slide-in-right">
-                                <div class="stats stats-horizontal shadow-xl bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8">
-                                    <div class="stat group hover:scale-105 transition-all duration-300">
-                                        <div class="stat-figure text-gold group-hover:animate-bounce">
-                                            <i class="fas fa-crown text-4xl"></i>
-                                        </div>
-                                        <div class="stat-title text-gray-600">Premium</div>
-                                        <div class="stat-value text-yellow-600 text-4xl">500+</div>
-                                        <div class="stat-desc text-gray-500">Luxury Fragrances</div>
-                                    </div>
-                                    <div class="stat group hover:scale-105 transition-all duration-300">
-                                        <div class="stat-figure text-platinum group-hover:animate-bounce">
-                                            <i class="fas fa-gem text-4xl"></i>
-                                        </div>
-                                        <div class="stat-title text-gray-600">Exclusive</div>
-                                        <div class="stat-value text-gray-600 text-4xl">50+</div>
-                                        <div class="stat-desc text-gray-500">Prestigious Brands</div>
-                                    </div>
-                                    <div class="stat group hover:scale-105 transition-all duration-300">
-                                        <div class="stat-figure text-luxury group-hover:animate-bounce">
-                                            <i class="fas fa-star text-4xl"></i>
-                                        </div>
-                                        <div class="stat-title text-gray-600">Excellence</div>
-                                        <div class="stat-value text-blue-600 text-4xl">5★</div>
-                                        <div class="stat-desc text-gray-500">Premium Rated</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Search and Filter -->
-                <div class="card bg-white/80 backdrop-blur-sm shadow-xl mb-12 border border-gray-200 rounded-3xl animate-fadeInUp">
-                    <div class="card-body p-10">
-                        <!-- Admin quick actions (shown via JS when isAdmin) -->
-                        <div class="flex justify-between items-center mb-8">
-                            <h3 class="text-3xl font-bold text-gray-800 flex items-center gap-4">
-                                <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                                    <i class="fas fa-search text-white text-lg"></i>
-                                </div>
-                                <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Search & Filter</span>
-                            </h3>
-                            <div class="flex gap-4">
-                                <button id="searchAddBrandBtn" class="btn btn-ghost btn-sm hover:bg-gray-100 text-gray-700 border border-gray-300 transition-all duration-300 rounded-xl" style="display: none;" onclick="showBrandForm()">
-                                    <i class="fas fa-tags mr-2"></i>
-                                    Add Brand
-                                </button>
-                                <button id="searchAddPerfumeBtn" class="btn btn-sm bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white transition-all duration-300 shadow-lg rounded-xl" style="display: none;" onclick="showPerfumeForm()">
-                                    <i class="fas fa-plus mr-2"></i>
-                                    Add Perfume
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex flex-col lg:flex-row gap-8 items-end">
-                            <div class="form-control flex-1">
-                                <label class="label">
-                                    <span class="label-text font-bold text-lg text-gray-800">
-                                        <i class="fas fa-search mr-2 text-blue-600"></i>
-                                        Search Perfumes
-                                    </span>
-                                </label>
-                                <div class="join w-full">
-                                    <input type="text" id="searchInput" placeholder="Search by name, brand, or description..." 
-                                           class="input input-bordered join-item flex-1 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 h-16 text-lg shadow-lg hover:shadow-xl border-gray-300 bg-white text-gray-800 placeholder-gray-500">
-                                    <button class="btn join-item bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white transition-all duration-300 h-16 px-8 shadow-lg rounded-r-xl">
-                                        <i class="fas fa-search text-xl"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-control w-full lg:w-80">
-                                <label class="label">
-                                    <span class="label-text font-bold text-lg text-gray-800">
-                                        <i class="fas fa-filter mr-2 text-purple-600"></i>
-                                        Filter by Brand
-                                    </span>
-                                </label>
-                                <select id="brandFilter" class="select select-bordered w-full focus:border-blue-500 focus:ring-blue-500 transition-all duration-300 h-16 text-lg shadow-lg hover:shadow-xl border-gray-300 bg-white text-gray-800">
-                                    <option value="">All Brands</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Perfumes Grid -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:gap-10" id="perfumesGrid">
-                    <!-- Perfumes will be loaded here -->
-                </div>
+      <!-- Perfumes Section -->
+      <section id="perfumes" class="section active">
+        <div class="container mx-auto px-4 py-12">
+          <!-- Modern Hero Section -->
+          <div
+            class="hero min-h-[80vh] bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 rounded-3xl mb-16 relative overflow-hidden"
+          >
+            <!-- Animated background elements -->
+            <div class="absolute inset-0">
+              <div
+                class="absolute top-20 left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"
+              ></div>
+              <div
+                class="absolute bottom-20 right-20 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"
+                style="animation-delay: 2s"
+              ></div>
+              <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-full blur-3xl"
+              ></div>
             </div>
-        </section>
 
-        <!-- Profile Section -->
-        <section id="profile" class="section">
-            <div class="container mx-auto px-4 py-12">
-                <!-- Profile Header -->
-                <div class="hero bg-white/80 backdrop-blur-sm shadow-xl rounded-3xl mb-12 border border-gray-200">
-                    <div class="hero-content text-center p-12">
-                        <div class="max-w-2xl">
-                            <div class="avatar placeholder mb-8">
-                                <div class="gold-gradient text-white rounded-full w-32 h-32 flex items-center justify-center shadow-2xl luxury-border">
-                                    <span class="text-5xl">
-                                        <i class="fas fa-crown"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <h1 class="text-5xl font-bold mb-4">
-                                <span class="text-yellow-600">My</span> <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Profile</span>
-                            </h1>
-                            <p class="text-xl text-gray-600">
-                                Manage your personal information and account settings
-                            </p>
-                        </div>
-                    </div>
+            <!-- Grid overlay -->
+            <div
+              class="absolute inset-0 opacity-20"
+              style="
+                background-image: linear-gradient(
+                    rgba(255, 255, 255, 0.03) 1px,
+                    transparent 1px
+                  ),
+                  linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.03) 1px,
+                    transparent 1px
+                  );
+                background-size: 50px 50px;
+              "
+            ></div>
+
+            <div class="hero-content text-center relative z-10 py-20">
+              <div class="max-w-5xl">
+                <!-- Brand Icon -->
+                <div class="mb-8">
+                  <div
+                    class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl shadow-2xl transform hover:scale-110 transition-transform duration-300"
+                  >
+                    <i class="fas fa-spray-can text-3xl text-white"></i>
+                  </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    <!-- Personal Information Card -->
-                    <div class="card bg-white/80 backdrop-blur-sm shadow-xl border border-gray-200 rounded-3xl">
-                        <div class="card-body p-8">
-                            <div class="flex items-center gap-4 mb-8">
-                                <div class="badge badge-lg gold-gradient text-white border-0">
-                                    <i class="fas fa-user-edit mr-2"></i>
-                                </div>
-                                <h2 class="card-title text-3xl text-gray-800">Personal Information</h2>
-                            </div>
-                            
-                            <form id="profileForm" class="space-y-6">
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text font-semibold text-gray-800">
-                                            <i class="fas fa-user mr-2 text-blue-600"></i>
-                                            Full Name
-                                        </span>
-                                    </label>
-                                    <input type="text" id="profileName" placeholder="Enter your full name" 
-                                           class="input input-bordered h-14 text-lg bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
-                                </div>
-                                
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text font-semibold text-gray-800">
-                                            <i class="fas fa-calendar mr-2 text-blue-600"></i>
-                                            Year of Birth
-                                        </span>
-                                    </label>
-                                    <input type="number" id="profileYOB" min="1900" max="2024" 
-                                           placeholder="YYYY" class="input input-bordered h-14 text-lg bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
-                                </div>
-                                
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text font-semibold text-gray-800">
-                                            <i class="fas fa-venus-mars mr-2 text-blue-600"></i>
-                                            Gender
-                                        </span>
-                                    </label>
-                                    <select id="profileGender" class="select select-bordered h-14 text-lg bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-blue-500" required>
-                                        <option value="true">Male</option>
-                                        <option value="false">Female</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="card-actions justify-end mt-8">
-                                    <button type="submit" class="btn btn-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg rounded-xl">
-                                        <i class="fas fa-save mr-2"></i>
-                                        Update Profile
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <!-- Main Heading -->
+                <h1
+                  class="text-5xl md:text-7xl font-black mb-6 text-white leading-tight"
+                >
+                  Perfume
+                  <span
+                    class="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+                    >SDN</span
+                  >
+                </h1>
 
-                    <!-- Change Password Card -->
-                    <div class="card bg-base-100 shadow-xl">
-                        <div class="card-body">
-                            <div class="flex items-center gap-3 mb-6">
-                                <div class="badge badge-secondary badge-lg">
-                                    <i class="fas fa-lock mr-2"></i>
-                                </div>
-                                <h2 class="card-title text-2xl">Change Password</h2>
-                            </div>
-                            
-                            <form id="passwordForm" class="space-y-4">
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text font-semibold">
-                                            <i class="fas fa-key mr-2 text-secondary"></i>
-                                            Current Password
-                                        </span>
-                                    </label>
-                                    <input type="password" id="oldPassword" placeholder="Enter current password" 
-                                           class="input input-bordered input-secondary" required>
-                                </div>
-                                
-                                <div class="form-control">
-                                    <label class="label">
-                                        <span class="label-text font-semibold">
-                                            <i class="fas fa-shield-alt mr-2 text-secondary"></i>
-                                            New Password
-                                        </span>
-                                    </label>
-                                    <input type="password" id="newPassword" placeholder="Enter new password" 
-                                           class="input input-bordered input-secondary" required>
-                                </div>
-                                
-                                <div class="card-actions justify-end mt-6">
-                                    <button type="submit" class="btn btn-secondary btn-lg">
-                                        <i class="fas fa-lock mr-2"></i>
-                                        Change Password
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                <!-- Subtitle -->
+                <p
+                  class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed font-light"
+                >
+                  Discover the world's finest fragrances. From classic elegance
+                  to modern sophistication, find your signature scent in our
+                  curated collection.
+                </p>
+
+                <!-- CTA Button -->
+                <div class="mb-16">
+                  <button
+                    onclick="document.getElementById('perfumesGrid').scrollIntoView({behavior: 'smooth'})"
+                    class="btn btn-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 rounded-full px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-purple-500/25 transform hover:scale-105 transition-all duration-300"
+                  >
+                    <i class="fas fa-search mr-3"></i>
+                    Explore Collection
+                  </button>
                 </div>
 
-                <!-- Account Statistics -->
-                <div class="mt-8">
-                    <div class="card bg-base-100 shadow-xl">
-                        <div class="card-body">
-                            <div class="flex items-center gap-3 mb-6">
-                                <div class="badge badge-accent badge-lg">
-                                    <i class="fas fa-chart-bar mr-2"></i>
-                                </div>
-                                <h2 class="card-title text-2xl">Account Statistics</h2>
-                            </div>
-                            
-                            <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
-                                <div class="stat">
-                                    <div class="stat-figure text-primary">
-                                        <i class="fas fa-user text-3xl"></i>
-                                    </div>
-                                    <div class="stat-title">Member Since</div>
-                                    <div class="stat-value text-primary" id="memberSince">-</div>
-                                    <div class="stat-desc">Account created</div>
-                                </div>
-                                
-                                <div class="stat">
-                                    <div class="stat-figure text-secondary">
-                                        <i class="fas fa-comment text-3xl"></i>
-                                    </div>
-                                    <div class="stat-title">Reviews</div>
-                                    <div class="stat-value text-secondary" id="reviewCount">0</div>
-                                    <div class="stat-desc">Perfume reviews</div>
-                                </div>
-                                
-                                <div class="stat">
-                                    <div class="stat-figure text-accent">
-                                        <i class="fas fa-star text-3xl"></i>
-                                    </div>
-                                    <div class="stat-title">Average Rating</div>
-                                    <div class="stat-value text-accent" id="avgRating">-</div>
-                                    <div class="stat-desc">Your reviews</div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Statistics -->
+                <div class="stats-grid">
+                  <div class="stat-card">
+                    <div class="text-4xl mb-4">
+                      <i class="fas fa-spray-can text-purple-400"></i>
                     </div>
+                    <div class="text-3xl font-bold text-white mb-2">100+</div>
+                    <div class="text-gray-300">Premium Brands</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="text-4xl mb-4">
+                      <i class="fas fa-users text-blue-400"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-white mb-2">50K+</div>
+                    <div class="text-gray-300">Happy Customers</div>
+                  </div>
+                  <div class="stat-card">
+                    <div class="text-4xl mb-4">
+                      <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-white mb-2">4.9</div>
+                    <div class="text-gray-300">Average Rating</div>
+                  </div>
                 </div>
+
+                <!-- Featured Perfumes Carousel -->
+                <div
+                  class="carousel carousel-center w-full max-w-5xl mx-auto mb-8"
+                  id="featuredCarousel"
+                >
+                  <div id="slide1" class="carousel-item relative w-full">
+                    <div
+                      class="card w-full bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border border-gray-200"
+                    >
+                      <div class="card-body flex-row items-center p-10">
+                        <div class="flex-1">
+                          <div class="mb-4">
+                            <span
+                              class="inline-block px-4 py-2 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-full text-yellow-800 text-sm font-semibold border border-yellow-200"
+                            >
+                              👑 ICONIC COLLECTION
+                            </span>
+                          </div>
+                          <h2 class="card-title text-4xl mb-4 text-gray-800">
+                            Chanel No. 5
+                          </h2>
+                          <p class="text-lg mb-6 text-gray-600 leading-relaxed">
+                            The world's most iconic fragrance, a timeless blend
+                            of rose, jasmine, and aldehydes that has captivated
+                            hearts for over a century.
+                          </p>
+                          <div class="flex items-center gap-6">
+                            <div
+                              class="badge badge-lg gold-gradient text-white border-0"
+                            >
+                              EDP
+                            </div>
+                            <div
+                              class="badge badge-lg emerald-gradient text-white border-0"
+                            >
+                              Female
+                            </div>
+                            <div class="text-3xl font-bold text-gold">$120</div>
+                          </div>
+                        </div>
+                        <div class="flex-shrink-0 ml-8">
+                          <div class="relative">
+                            <img
+                              src="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=300&h=300&q=80"
+                              alt="Chanel No. 5"
+                              class="w-56 h-56 object-cover rounded-2xl shadow-2xl luxury-border"
+                              referrerpolicy="no-referrer"
+                              onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';"
+                            />
+                            <div
+                              class="absolute -inset-2 bg-gradient-to-r from-yellow-400/20 to-amber-400/20 rounded-2xl blur-xl"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="slide2" class="carousel-item relative w-full">
+                    <div
+                      class="card w-full bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border border-gray-200"
+                    >
+                      <div class="card-body flex-row items-center p-10">
+                        <div class="flex-1">
+                          <div class="mb-4">
+                            <span
+                              class="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full text-blue-800 text-sm font-semibold border border-blue-200"
+                            >
+                              💎 PREMIUM COLLECTION
+                            </span>
+                          </div>
+                          <h2 class="card-title text-4xl mb-4 text-gray-800">
+                            Dior Sauvage
+                          </h2>
+                          <p class="text-lg mb-6 text-gray-600 leading-relaxed">
+                            A fresh and woody fragrance that captures the spirit
+                            of adventure and freedom, perfect for the modern
+                            man.
+                          </p>
+                          <div class="flex items-center gap-6">
+                            <div
+                              class="badge badge-lg sapphire-gradient text-white border-0"
+                            >
+                              EDT
+                            </div>
+                            <div
+                              class="badge badge-lg ruby-gradient text-white border-0"
+                            >
+                              Male
+                            </div>
+                            <div class="text-3xl font-bold text-gold">$95</div>
+                          </div>
+                        </div>
+                        <div class="flex-shrink-0 ml-8">
+                          <div class="relative">
+                            <img
+                              src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?auto=format&fit=crop&w=300&h=300&q=80"
+                              alt="Dior Sauvage"
+                              class="w-56 h-56 object-cover rounded-2xl shadow-2xl luxury-border"
+                              referrerpolicy="no-referrer"
+                              onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';"
+                            />
+                            <div
+                              class="absolute -inset-2 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-2xl blur-xl"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="slide3" class="carousel-item relative w-full">
+                    <div
+                      class="card w-full bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border border-gray-200"
+                    >
+                      <div class="card-body flex-row items-center p-10">
+                        <div class="flex-1">
+                          <div class="mb-4">
+                            <span
+                              class="inline-block px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full text-purple-800 text-sm font-semibold border border-purple-200"
+                            >
+                              🌟 EXCLUSIVE COLLECTION
+                            </span>
+                          </div>
+                          <h2 class="card-title text-4xl mb-4 text-gray-800">
+                            Tom Ford Black Orchid
+                          </h2>
+                          <p class="text-lg mb-6 text-gray-600 leading-relaxed">
+                            A luxurious and mysterious fragrance that combines
+                            dark florals with rich spices for an unforgettable
+                            experience.
+                          </p>
+                          <div class="flex items-center gap-6">
+                            <div
+                              class="badge badge-lg diamond-gradient text-white border-0"
+                            >
+                              EDP
+                            </div>
+                            <div
+                              class="badge badge-lg platinum-gradient text-gray-800 border-0"
+                            >
+                              Unisex
+                            </div>
+                            <div class="text-3xl font-bold text-gold">$180</div>
+                          </div>
+                        </div>
+                        <div class="flex-shrink-0 ml-8">
+                          <div class="relative">
+                            <img
+                              src="https://images.unsplash.com/photo-1588405748880-12d1d2a59cc5?auto=format&fit=crop&w=300&h=300&q=80"
+                              alt="Tom Ford Black Orchid"
+                              class="w-56 h-56 object-cover rounded-2xl shadow-2xl luxury-border"
+                              referrerpolicy="no-referrer"
+                              onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==';"
+                            />
+                            <div
+                              class="absolute -inset-2 bg-gradient-to-r from-purple-400/20 to-pink-400/20 rounded-2xl blur-xl"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Carousel Navigation -->
+                <div
+                  class="flex justify-center w-full py-4 gap-3"
+                  id="carouselDots"
+                >
+                  <a
+                    href="#slide1"
+                    class="btn btn-sm btn-circle carousel-btn active gold-gradient text-white border-0 shadow-lg"
+                    onclick="setActiveSlide(1)"
+                    >1</a
+                  >
+                  <a
+                    href="#slide2"
+                    class="btn btn-sm btn-circle carousel-btn sapphire-gradient text-white border-0 shadow-lg"
+                    onclick="setActiveSlide(2)"
+                    >2</a
+                  >
+                  <a
+                    href="#slide3"
+                    class="btn btn-sm btn-circle carousel-btn diamond-gradient text-white border-0 shadow-lg"
+                    onclick="setActiveSlide(3)"
+                    >3</a
+                  >
+                </div>
+
+                <div class="flex justify-center mt-12 animate-slide-in-right">
+                  <div
+                    class="stats stats-horizontal shadow-xl bg-white/80 backdrop-blur-sm border border-gray-200 rounded-3xl p-8"
+                  >
+                    <div
+                      class="stat group hover:scale-105 transition-all duration-300"
+                    >
+                      <div
+                        class="stat-figure text-gold group-hover:animate-bounce"
+                      >
+                        <i class="fas fa-crown text-4xl"></i>
+                      </div>
+                      <div class="stat-title text-gray-600">Premium</div>
+                      <div class="stat-value text-yellow-600 text-4xl">
+                        500+
+                      </div>
+                      <div class="stat-desc text-gray-500">
+                        Luxury Fragrances
+                      </div>
+                    </div>
+                    <div
+                      class="stat group hover:scale-105 transition-all duration-300"
+                    >
+                      <div
+                        class="stat-figure text-platinum group-hover:animate-bounce"
+                      >
+                        <i class="fas fa-gem text-4xl"></i>
+                      </div>
+                      <div class="stat-title text-gray-600">Exclusive</div>
+                      <div class="stat-value text-gray-600 text-4xl">50+</div>
+                      <div class="stat-desc text-gray-500">
+                        Prestigious Brands
+                      </div>
+                    </div>
+                    <div
+                      class="stat group hover:scale-105 transition-all duration-300"
+                    >
+                      <div
+                        class="stat-figure text-luxury group-hover:animate-bounce"
+                      >
+                        <i class="fas fa-star text-4xl"></i>
+                      </div>
+                      <div class="stat-title text-gray-600">Excellence</div>
+                      <div class="stat-value text-blue-600 text-4xl">5★</div>
+                      <div class="stat-desc text-gray-500">Premium Rated</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
+          </div>
+
+          <!-- Search and Filter -->
+          <div
+            class="bg-white rounded-3xl shadow-lg border border-gray-100 mb-12 p-8"
+          >
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+              <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">
+                  Find Your Perfect Scent
+                </h3>
+                <p class="text-gray-600">
+                  Search through our curated collection of premium fragrances
+                </p>
+              </div>
+              <div class="flex gap-3">
+                <button
+                  id="searchAddBrandBtn"
+                  class="btn btn-outline btn-sm normal-case"
+                  style="display: none"
+                  onclick="showBrandForm()"
+                >
+                  <i class="fas fa-tags mr-2"></i>
+                  Add Brand
+                </button>
+                <button
+                  id="searchAddPerfumeBtn"
+                  class="btn btn-primary btn-sm normal-case"
+                  style="display: none"
+                  onclick="showPerfumeForm()"
+                >
+                  <i class="fas fa-plus mr-2"></i>
+                  Add Perfume
+                </button>
+              </div>
+            </div>
+
+            <!-- Search Controls -->
+            <div class="flex flex-col lg:flex-row gap-4">
+              <div class="flex-1">
+                <div class="relative">
+                  <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"
+                  >
+                    <i class="fas fa-search text-gray-400"></i>
+                  </div>
+                  <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by name, brand, or description..."
+                    class="input input-bordered w-full pl-12 h-12 text-base bg-gray-50 border-gray-200 focus:bg-white focus:border-purple-500 transition-all duration-300"
+                  />
+                </div>
+              </div>
+              <div class="w-full lg:w-64">
+                <select
+                  id="brandFilter"
+                  class="select select-bordered w-full h-12 bg-gray-50 border-gray-200 focus:bg-white focus:border-purple-500 transition-all duration-300"
+                >
+                  <option value="">All Brands</option>
+                </select>
+              </div>
+              <button
+                class="btn btn-primary h-12 px-6 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 border-0"
+              >
+                <i class="fas fa-search mr-2"></i>
+                Search
+              </button>
+            </div>
+          </div>
+
+          <!-- Perfumes Grid -->
+          <div class="perfumes-grid" id="perfumesGrid">
+            <!-- Perfumes will be loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Section -->
+      <section id="profile" class="section">
+        <div class="container mx-auto px-4 py-12">
+          <!-- Profile Header -->
+          <div
+            class="hero bg-white/80 backdrop-blur-sm shadow-xl rounded-3xl mb-12 border border-gray-200"
+          >
+            <div class="hero-content text-center p-12">
+              <div class="max-w-2xl">
+                <div class="avatar placeholder mb-8">
+                  <div
+                    class="gold-gradient text-white rounded-full w-32 h-32 flex items-center justify-center shadow-2xl luxury-border"
+                  >
+                    <span class="text-5xl">
+                      <i class="fas fa-crown"></i>
+                    </span>
+                  </div>
+                </div>
+                <h1 class="text-5xl font-bold mb-4">
+                  <span class="text-yellow-600">My</span>
+                  <span
+                    class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                    >Profile</span
+                  >
+                </h1>
+                <p class="text-xl text-gray-600">
+                  Manage your personal information and account settings
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- Personal Information Card -->
+            <div
+              class="card bg-white/80 backdrop-blur-sm shadow-xl border border-gray-200 rounded-3xl"
+            >
+              <div class="card-body p-8">
+                <div class="flex items-center gap-4 mb-8">
+                  <div class="badge badge-lg gold-gradient text-white border-0">
+                    <i class="fas fa-user-edit mr-2"></i>
+                  </div>
+                  <h2 class="card-title text-3xl text-gray-800">
+                    Personal Information
+                  </h2>
+                </div>
+
+                <form id="profileForm" class="space-y-6">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-semibold text-gray-800">
+                        <i class="fas fa-user mr-2 text-blue-600"></i>
+                        Full Name
+                      </span>
+                    </label>
+                    <input
+                      type="text"
+                      id="profileName"
+                      placeholder="Enter your full name"
+                      class="input input-bordered h-14 text-lg bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-semibold text-gray-800">
+                        <i class="fas fa-calendar mr-2 text-blue-600"></i>
+                        Year of Birth
+                      </span>
+                    </label>
+                    <input
+                      type="number"
+                      id="profileYOB"
+                      min="1900"
+                      max="2024"
+                      placeholder="YYYY"
+                      class="input input-bordered h-14 text-lg bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-semibold text-gray-800">
+                        <i class="fas fa-venus-mars mr-2 text-blue-600"></i>
+                        Gender
+                      </span>
+                    </label>
+                    <select
+                      id="profileGender"
+                      class="select select-bordered h-14 text-lg bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      required
+                    >
+                      <option value="true">Male</option>
+                      <option value="false">Female</option>
+                    </select>
+                  </div>
+
+                  <div class="card-actions justify-end mt-8">
+                    <button
+                      type="submit"
+                      class="btn btn-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg rounded-xl"
+                    >
+                      <i class="fas fa-save mr-2"></i>
+                      Update Profile
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Change Password Card -->
+            <div class="card bg-base-100 shadow-xl">
+              <div class="card-body">
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="badge badge-secondary badge-lg">
+                    <i class="fas fa-lock mr-2"></i>
+                  </div>
+                  <h2 class="card-title text-2xl">Change Password</h2>
+                </div>
+
+                <form id="passwordForm" class="space-y-4">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-semibold">
+                        <i class="fas fa-key mr-2 text-secondary"></i>
+                        Current Password
+                      </span>
+                    </label>
+                    <input
+                      type="password"
+                      id="oldPassword"
+                      placeholder="Enter current password"
+                      class="input input-bordered input-secondary"
+                      required
+                    />
+                  </div>
+
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text font-semibold">
+                        <i class="fas fa-shield-alt mr-2 text-secondary"></i>
+                        New Password
+                      </span>
+                    </label>
+                    <input
+                      type="password"
+                      id="newPassword"
+                      placeholder="Enter new password"
+                      class="input input-bordered input-secondary"
+                      required
+                    />
+                  </div>
+
+                  <div class="card-actions justify-end mt-6">
+                    <button type="submit" class="btn btn-secondary btn-lg">
+                      <i class="fas fa-lock mr-2"></i>
+                      Change Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Statistics -->
+          <div class="mt-8">
+            <div class="card bg-base-100 shadow-xl">
+              <div class="card-body">
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="badge badge-accent badge-lg">
+                    <i class="fas fa-chart-bar mr-2"></i>
+                  </div>
+                  <h2 class="card-title text-2xl">Account Statistics</h2>
+                </div>
+
+                <div
+                  class="stats stats-vertical lg:stats-horizontal shadow w-full"
+                >
+                  <div class="stat">
+                    <div class="stat-figure text-primary">
+                      <i class="fas fa-user text-3xl"></i>
+                    </div>
+                    <div class="stat-title">Member Since</div>
+                    <div class="stat-value text-primary" id="memberSince">
+                      -
+                    </div>
+                    <div class="stat-desc">Account created</div>
+                  </div>
+
+                  <div class="stat">
+                    <div class="stat-figure text-secondary">
+                      <i class="fas fa-comment text-3xl"></i>
+                    </div>
+                    <div class="stat-title">Reviews</div>
+                    <div class="stat-value text-secondary" id="reviewCount">
+                      0
+                    </div>
+                    <div class="stat-desc">Perfume reviews</div>
+                  </div>
+
+                  <div class="stat">
+                    <div class="stat-figure text-accent">
+                      <i class="fas fa-star text-3xl"></i>
+                    </div>
+                    <div class="stat-title">Average Rating</div>
+                    <div class="stat-value text-accent" id="avgRating">-</div>
+                    <div class="stat-desc">Your reviews</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
-    
-    <%- include('partials/modals') %>
-    <%- include('partials/toast') %>
-    
-    <%- include('partials/footer') %>
-    
+
+    <%- include('partials/modals') %> <%- include('partials/toast') %> <%-
+    include('partials/footer') %>
+
     <script src="/javascripts/app.js"></script>
-</body>
+  </body>
 </html>
