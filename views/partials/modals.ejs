@@ -1,16 +1,472 @@
-<!-- Perfume Detail Modal -->
-<dialog id="perfumeModal" class="modal">
-  <div class="modal-box max-w-4xl">
-    <form method="dialog">
-      <button
-        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-        onclick="closeModal()"
-      >
-        ✕
-      </button>
-    </form>
-    <div id="perfumeDetail">
-      <!-- Perfume details will be loaded here -->
+<!-- Modern Modal Styles -->
+<style>
+  /* Global Modal Overlay */
+  .modal-overlay {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+  }
+
+  /* Perfume Detail Modal */
+  .perfume-modal {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+  }
+
+  .perfume-modal-content {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    max-width: 950px;
+    width: 95vw;
+    max-height: 90vh;
+    overflow: hidden;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: none;
+    color: #64748b;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 50;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .modal-close-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+  }
+
+  .perfume-detail-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 32px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .perfume-detail-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .perfume-detail-header:hover::before {
+    transform: translateX(100%);
+  }
+
+  .perfume-detail-body {
+    padding: 0;
+    overflow-y: auto;
+    max-height: calc(90vh - 140px);
+  }
+
+  /* Form Modal Styles */
+  .form-modal-content {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    width: 95vw;
+    max-height: 90vh;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  .form-modal-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    padding: 24px 32px;
+    color: white;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+  }
+
+  .form-modal-body {
+    padding: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: #f9fafb;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #f9fafb;
+    transition: all 0.2s ease;
+  }
+
+  .form-select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #f9fafb;
+    resize: vertical;
+    min-height: 80px;
+    transition: all 0.2s ease;
+  }
+
+  .form-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Large Form Modal */
+  .large-form-modal-content {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+    max-width: 1000px;
+    width: 95vw;
+    max-height: 95vh;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+  }
+
+  .large-form-header {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    padding: 28px 32px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .large-form-body {
+    padding: 32px;
+    overflow-y: auto;
+    max-height: calc(95vh - 160px);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .form-grid-full {
+    grid-column: 1 / -1;
+  }
+
+  .form-grid-half {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .image-preview-container {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background: #f9fafb;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-preview {
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .preview-placeholder {
+    color: #9ca3af;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Button Styles */
+  .btn-primary-modern {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary-modern:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-secondary-modern {
+    background: #f3f4f6;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary-modern:hover {
+    background: #e5e7eb;
+    border-color: #d1d5db;
+  }
+
+  .btn-danger-modern {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-danger-modern:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+  }
+
+  .modal-actions {
+    padding: 24px 32px;
+    background: #f8fafc;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  /* Floating Action Button */
+  .fab-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 40;
+  }
+
+  .fab-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fab-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .fab-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 40px rgba(102, 126, 234, 0.5);
+  }
+
+  .fab-button:hover::before {
+    transform: translateX(100%);
+  }
+
+  .fab-tooltip {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+  }
+
+  .fab-tooltip::after {
+    content: "";
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: #1f2937;
+  }
+
+  .fab-container:hover .fab-tooltip {
+    opacity: 1;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .form-grid-half {
+      grid-template-columns: 1fr;
+    }
+
+    .large-form-modal-content,
+    .perfume-modal-content,
+    .form-modal-content {
+      width: 98vw;
+      margin: 1vh;
+      border-radius: 16px;
+    }
+
+    .large-form-body,
+    .perfume-detail-body,
+    .form-modal-body {
+      padding: 20px;
+    }
+
+    .fab-button {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+    }
+
+    .fab-container {
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+</style>
+
+<dialog id="perfumeModal" class="modal perfume-modal">
+  <div class="perfume-modal-content">
+    <button class="modal-close-btn" onclick="closeModal()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="perfume-detail-header">
+      <div style="position: relative; z-index: 1">
+        <h2 class="text-3xl font-bold mb-2">Perfume Details</h2>
+        <p class="text-white/80 text-lg">
+          Discover the essence of luxury fragrance
+        </p>
+      </div>
+    </div>
+    <div class="perfume-detail-body">
+      <div id="perfumeDetail">
+        <!-- Perfume details will be loaded here -->
+      </div>
     </div>
   </div>
   <form method="dialog" class="modal-backdrop">
@@ -19,37 +475,39 @@
 </dialog>
 
 <!-- Brand Form Modal -->
-<dialog id="brandModal" class="modal">
-  <div class="modal-box">
-    <form method="dialog">
-      <button
-        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-        onclick="closeModal()"
-      >
-        ✕
+<dialog id="brandModal" class="modal modal-overlay">
+  <div class="form-modal-content">
+    <button class="modal-close-btn" onclick="closeModal()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="form-modal-header">
+      <h3 class="text-xl font-bold">Add New Brand</h3>
+      <p class="text-white/80 mt-1">Create a new fragrance brand</p>
+    </div>
+    <div class="form-modal-body">
+      <form id="brandForm">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-tag mr-2"></i>Brand Name
+          </label>
+          <input
+            type="text"
+            id="brandName"
+            placeholder="e.g., Chanel, Dior, Tom Ford"
+            class="form-input"
+            required
+          />
+        </div>
+      </form>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn-secondary-modern" onclick="closeModal()">
+        <i class="fas fa-times mr-2"></i>Cancel
       </button>
-    </form>
-    <h3 class="font-bold text-lg mb-4">Add New Brand</h3>
-    <form id="brandForm" class="space-y-4">
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text font-semibold">Brand Name</span>
-        </label>
-        <input
-          type="text"
-          id="brandName"
-          placeholder="Enter brand name"
-          class="input input-bordered"
-          required
-        />
-      </div>
-      <div class="modal-action">
-        <button type="submit" class="btn btn-primary">
-          <i class="fas fa-save mr-2"></i>
-          Save Brand
-        </button>
-      </div>
-    </form>
+      <button type="submit" form="brandForm" class="btn-primary-modern">
+        <i class="fas fa-save mr-2"></i>Save Brand
+      </button>
+    </div>
   </div>
   <form method="dialog" class="modal-backdrop">
     <button onclick="closeModal()">close</button>
@@ -57,209 +515,190 @@
 </dialog>
 
 <!-- Perfume Form Modal -->
-<dialog id="perfumeFormModal" class="modal">
-  <div class="modal-box max-w-4xl bg-base-200/95 backdrop-blur-sm">
-    <form method="dialog">
-      <button
-        class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10"
-      >
-        ✕
+<dialog id="perfumeFormModal" class="modal modal-overlay">
+  <div class="large-form-modal-content">
+    <button class="modal-close-btn" onclick="closeModal()">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="large-form-header">
+      <div style="position: relative; z-index: 1">
+        <h3 id="perfumeFormTitle" class="text-2xl font-bold">
+          Add New Perfume
+        </h3>
+        <p class="text-white/80 mt-1">Create a new fragrance entry</p>
+      </div>
+    </div>
+    <div class="large-form-body">
+      <form id="perfumeForm">
+        <div class="form-grid">
+          <!-- Left Column -->
+          <div>
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-spray-can mr-2"></i>Perfume Name
+              </label>
+              <input
+                type="text"
+                id="perfumeName"
+                placeholder="e.g., Sauvage, Bleu de Chanel"
+                class="form-input"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-tag mr-2"></i>Brand
+              </label>
+              <select id="perfumeBrand" class="form-select" required>
+                <option value="" disabled selected>Select a brand</option>
+              </select>
+            </div>
+            <div class="form-grid-half">
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-dollar-sign mr-2"></i>Price ($)
+                </label>
+                <input
+                  type="number"
+                  id="perfumePrice"
+                  step="0.01"
+                  placeholder="120.00"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-flask mr-2"></i>Volume (ml)
+                </label>
+                <input
+                  type="number"
+                  id="perfumeVolume"
+                  placeholder="100"
+                  class="form-input"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-grid-half">
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-tint mr-2"></i>Concentration
+                </label>
+                <select id="perfumeConcentration" class="form-select" required>
+                  <option value="" disabled selected>Select type</option>
+                  <option value="Extrait">Extrait (20-30%)</option>
+                  <option value="EDP">EDP - Eau de Parfum (15-20%)</option>
+                  <option value="EDT">EDT - Eau de Toilette (5-15%)</option>
+                  <option value="EDC">EDC - Eau de Cologne (2-4%)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fas fa-users mr-2"></i>Target Audience
+                </label>
+                <select id="perfumeTarget" class="form-select" required>
+                  <option value="" disabled selected>Select audience</option>
+                  <option value="male">👨 Male</option>
+                  <option value="female">👩 Female</option>
+                  <option value="unisex">👥 Unisex</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div>
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-image mr-2"></i>Primary Image URL
+              </label>
+              <input
+                type="url"
+                id="perfumeImageUrl"
+                placeholder="https://example.com/perfume-image.jpg"
+                class="form-input"
+                oninput="updatePreview()"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-images mr-2"></i>Secondary Image URL
+              </label>
+              <input
+                type="url"
+                id="perfumeUri"
+                placeholder="https://example.com/perfume-image2.jpg"
+                class="form-input"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label">
+                <i class="fas fa-eye mr-2"></i>Image Preview
+              </label>
+              <div class="image-preview-container">
+                <img
+                  id="perfumePreview"
+                  alt="Image Preview"
+                  class="image-preview"
+                  style="display: none"
+                />
+                <div id="previewPlaceholder" class="preview-placeholder">
+                  <i class="fas fa-image text-4xl mb-2"></i>
+                  <span>Image preview will appear here</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="form-grid-full">
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-align-left mr-2"></i>Description
+            </label>
+            <textarea
+              id="perfumeDescription"
+              class="form-textarea"
+              rows="3"
+              placeholder="Write a captivating description that highlights the perfume's character, mood, and unique qualities..."
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">
+              <i class="fas fa-leaf mr-2"></i>Key Ingredients & Notes
+            </label>
+            <textarea
+              id="perfumeIngredients"
+              class="form-textarea"
+              rows="2"
+              placeholder="Top notes: Bergamot, Pepper | Heart notes: Lavender, Pink Pepper | Base notes: Ambroxan, Cedar, Labdanum"
+              required
+            ></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn-secondary-modern" onclick="closeModal()">
+        <i class="fas fa-times mr-2"></i>Cancel
       </button>
-    </form>
-    <h3 id="perfumeFormTitle" class="font-bold text-2xl mb-6 text-base-content">
-      Add New Perfume
-    </h3>
-    <form id="perfumeForm" class="space-y-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4">
-        <!-- Left Column -->
-        <div class="space-y-4">
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text font-medium">Perfume Name</span>
-            </label>
-            <input
-              type="text"
-              id="perfumeName"
-              placeholder="e.g., Sauvage"
-              class="input input-bordered w-full"
-              required
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text font-medium">Brand</span>
-            </label>
-            <select
-              id="perfumeBrand"
-              class="select select-bordered w-full"
-              required
-            >
-              <option value="" disabled selected>Select a brand</option>
-            </select>
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Price ($)</span>
-              </label>
-              <input
-                type="number"
-                id="perfumePrice"
-                step="0.01"
-                placeholder="e.g., 120"
-                class="input input-bordered w-full"
-                required
-              />
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Volume (ml)</span>
-              </label>
-              <input
-                type="number"
-                id="perfumeVolume"
-                placeholder="e.g., 100"
-                class="input input-bordered w-full"
-                required
-              />
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Concentration</span>
-              </label>
-              <select
-                id="perfumeConcentration"
-                class="select select-bordered w-full"
-                required
-              >
-                <option value="" disabled selected>Select type</option>
-                <option value="Extrait">Extrait</option>
-                <option value="EDP">EDP (Eau de Parfum)</option>
-                <option value="EDT">EDT (Eau de Toilette)</option>
-                <option value="EDC">EDC (Eau de Cologne)</option>
-              </select>
-            </div>
-            <div class="form-control">
-              <label class="label">
-                <span class="label-text font-medium">Target Audience</span>
-              </label>
-              <select
-                id="perfumeTarget"
-                class="select select-bordered w-full"
-                required
-              >
-                <option value="" disabled selected>Select audience</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="unisex">Unisex</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right Column -->
-        <div class="space-y-4">
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text font-medium">Image URL (Primary)</span>
-            </label>
-            <input
-              type="url"
-              id="perfumeImageUrl"
-              placeholder="https://example.com/image.jpg"
-              class="input input-bordered w-full"
-              oninput="updatePreview()"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text font-medium">Image URL (Secondary)</span>
-            </label>
-            <input
-              type="url"
-              id="perfumeUri"
-              placeholder="https://example.com/image2.jpg"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control">
-            <label class="label">
-              <span class="label-text font-medium">Image Preview</span>
-            </label>
-            <div
-              class="mt-1 flex justify-center items-center rounded-lg border border-dashed border-base-300 h-48 bg-base-100 p-2"
-            >
-              <img
-                id="perfumePreview"
-                alt="Image Preview"
-                class="max-h-full max-w-full object-contain"
-                src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNhMGEwYTAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBQcmV2aWV3PC90ZXh0Pjwvc3ZnPg=="
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom Section -->
-      <div class="space-y-4 pt-4">
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text font-medium">Description</span>
-          </label>
-          <textarea
-            id="perfumeDescription"
-            class="textarea textarea-bordered w-full"
-            rows="3"
-            placeholder="A short, captivating description of the perfume..."
-            required
-          ></textarea>
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text font-medium">Ingredients</span>
-          </label>
-          <textarea
-            id="perfumeIngredients"
-            class="textarea textarea-bordered w-full"
-            rows="2"
-            placeholder="e.g., Bergamot, Pepper, Ambroxan, Cedar"
-            required
-          ></textarea>
-        </div>
-      </div>
-
-      <div class="modal-action mt-8">
-        <button
-          type="button"
-          class="btn btn-ghost mr-2"
-          onclick="document.getElementById('perfumeFormModal').close()"
-        >
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary w-32">Save</button>
-      </div>
-    </form>
+      <button type="submit" form="perfumeForm" class="btn-primary-modern">
+        <i class="fas fa-save mr-2"></i>Save Perfume
+      </button>
+    </div>
   </div>
   <form method="dialog" class="modal-backdrop">
-    <button>close</button>
+    <button onclick="closeModal()">close</button>
   </form>
 </dialog>
 
 <!-- Floating Add Perfume Button (Admin only) -->
-<div
-  id="addPerfumeFab"
-  class="fixed bottom-6 right-6 z-40"
-  style="display: none"
->
-  <div class="tooltip tooltip-left" data-tip="Add Perfume">
-    <button
-      class="btn btn-circle btn-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 animate-float text-white"
-      style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)"
-      onclick="showPerfumeForm()"
-    >
-      <i class="fas fa-plus text-xl"></i>
-    </button>
-  </div>
+<div id="addPerfumeFab" class="fab-container" style="display: none">
+  <div class="fab-tooltip">Add Perfume</div>
+  <button class="fab-button" onclick="showPerfumeForm()">
+    <i class="fas fa-plus"></i>
+  </button>
 </div>
