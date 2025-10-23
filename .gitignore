@@ -1,0 +1,58 @@
+# ...existing code...
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.*          # ignore env variants like .env.local, .env.test
+
+# Lockfiles
+# NOTE: Do NOT ignore package-lock.json or yarn.lock — commit lockfiles to repo
+# (Remove any lines that ignore package-lock.json or yarn.lock)
+
+# Build and cache
+dist/
+build/
+.cache/
+.parcel-cache/
+.sass-cache/
+
+# Coverage / test reports
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+npm-debug.log*
+yarn-error.log*
+*.log
+
+# Temporary / uploads
+uploads/
+tmp/
+temp/
+pids/
+*.pid
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Lint / tooling caches
+.eslintcache
+/.turbo
+
+# Firebase local files
+.firebase/
+
+# Pack / npm artifacts
+*.tgz
+
+# Misc
+.history/

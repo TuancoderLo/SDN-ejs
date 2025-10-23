@@ -1,0 +1,108 @@
+<style>
+    .footer-gradient {
+        background: linear-gradient(135deg, #4a90a4 0%, #357abd 100%);
+    }
+    .footer-link {
+        color: #ffffff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .footer-link:hover {
+        color: #e0f2fe;
+        transform: translateX(4px);
+    }
+    .social-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    .social-icon:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    .newsletter-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
+    }
+    .newsletter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+</style>
+
+<footer class="footer-gradient text-white py-16">
+    <div class="container mx-auto px-6">
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <!-- About Us -->
+            <div>
+                <h3 class="text-white font-bold text-xl mb-6 uppercase tracking-wide">About Us</h3>
+                <p class="text-white/90 text-sm leading-relaxed mb-6">
+                    Founded in 2024, Perfume SDN offers over 100 premium fragrance brands. 
+                    We are Vietnam's leading perfume website, committed to providing diversity, 
+                    convenience, cost savings and absolute customer satisfaction.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="social-icon bg-blue-600">
+                        <i class="fab fa-facebook-f text-white text-lg"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-gradient-to-r from-purple-500 to-pink-500">
+                        <i class="fab fa-instagram text-white text-lg"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-red-600">
+                        <i class="fab fa-youtube text-white text-lg"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-blue-500">
+                        <i class="fab fa-tiktok text-white text-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h3 class="text-white font-bold text-xl mb-6 uppercase tracking-wide">Quick Links</h3>
+                <div class="space-y-3">
+                    <a href="/" class="footer-link block text-sm">Home</a>
+                    <a href="/?section=perfumes" class="footer-link block text-sm">Perfumes</a>
+                    <a href="/login" class="footer-link block text-sm" onclick="storeRedirectUrl(window.location.href)">Login</a>
+                    <a href="/register" class="footer-link block text-sm">Register</a>
+                    <a href="/?section=profile" class="footer-link block text-sm">Profile</a>
+                    <a href="/admin" class="footer-link block text-sm" id="adminFooterLink" style="display: none;">Admin Panel</a>
+                </div>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h3 class="text-white font-bold text-xl mb-6 uppercase tracking-wide">Newsletter</h3>
+                <p class="text-white/90 text-sm mb-6">
+                    Get the latest promotions and Flash Sale updates from Perfume SDN.
+                </p>
+                <button class="newsletter-btn text-white px-6 py-3 rounded-xl flex items-center gap-3 w-full justify-center">
+                    <i class="fab fa-facebook-messenger text-lg"></i>
+                    <span class="font-medium">Subscribe to Messenger</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Row -->
+        <div class="border-t border-white/20 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-white/80 text-sm text-center md:text-left">
+                    <p class="font-medium">© 2024 Perfume SDN. All rights reserved.</p>
+                    <p class="text-white/60">Premium fragrances for everyone</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-white/20 px-4 py-2 rounded-lg text-xs font-bold">VISA</div>
+                    <div class="bg-white/20 px-4 py-2 rounded-lg text-xs font-bold">MASTERCARD</div>
+                    <div class="bg-white/20 px-4 py-2 rounded-lg text-xs font-bold">PAYPAL</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

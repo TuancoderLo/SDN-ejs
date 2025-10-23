@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        
+        /* Admin table polish */
+        .table tr:hover td {
+            background-color: hsl(var(--b2) / 0.35);
+            transition: background-color .2s ease;
+        }
+        .badge-soft {
+            background: hsl(var(--p) / 0.12);
+            color: hsl(var(--p));
+        }
+    </style>
+</head>
+<body class="bg-base-100">
+    <%- include('partials/navbar') %>
+    
+    <main class="min-h-screen bg-gradient-to-b from-base-100 via-base-200/40 to-base-100">
+<!-- Admin Section -->
+<section id="admin" class="section active">
+    <div class="container mx-auto px-4 py-12">
+        <!-- Admin Header -->
+        <div class="hero bg-gradient-to-br from-accent/10 via-base-100 to-primary/10 rounded-2xl mb-8">
+            <div class="hero-content text-center">
+                <div class="max-w-2xl">
+                    <div class="mb-6">
+                        <i class="fas fa-crown text-6xl text-accent mb-4"></i>
+                    </div>
+                    <h1 class="text-4xl font-bold mb-2">
+                        <span class="text-accent">Admin</span> Panel
+                    </h1>
+                    <p class="text-lg text-base-content/70">
+                        Manage your perfume collection, brands, and members
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="tabs tabs-boxed justify-center mb-8">
+            <button class="tab tab-lg active" onclick="showAdminTab('members')">
+                <i class="fas fa-users mr-2"></i>
+                Members
+            </button>
+            <button class="tab tab-lg" onclick="showAdminTab('brands')">
+                <i class="fas fa-tags mr-2"></i>
+                Brands
+            </button>
+            <button class="tab tab-lg" onclick="showAdminTab('perfumes')">
+                <i class="fas fa-spray-can mr-2"></i>
+                Perfumes
+            </button>
+            <button class="tab tab-lg" onclick="showAdminTab('profile')">
+                <i class="fas fa-user-cog mr-2"></i>
+                Profile
+            </button>
+            <button class="btn btn-outline btn-sm ml-4" onclick="loadAllAdminData()">
+                <i class="fas fa-sync-alt mr-2"></i>
+                Load All Data
+            </button>
+        </div>
+
+        <!-- Members Tab -->
+        <div id="adminMembers" class="admin-tab">
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="card-title text-2xl">
+                            <i class="fas fa-users text-primary mr-2"></i>
+                            All Members
+                        </h2>
+                        <button class="btn btn-primary" onclick="loadMembers()">
+                            <i class="fas fa-sync-alt mr-2"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    <div id="membersTable">
+                        <!-- Members table will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brands Tab -->
+        <div id="adminBrands" class="admin-tab hidden">
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="card-title text-2xl">
+                            <i class="fas fa-tags text-secondary mr-2"></i>
+                            Brand Management
+                        </h2>
+                        <div class="flex gap-2">
+                            <button class="btn btn-primary" onclick="showBrandForm()">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Brand
+                            </button>
+                            <button class="btn btn-secondary" onclick="loadAdminBrands()">
+                                <i class="fas fa-sync-alt mr-2"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div id="brandsTable">
+                        <!-- Brands table will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Perfumes Tab -->
+        <div id="adminPerfumes" class="admin-tab hidden">
+            <div class="card bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="card-title text-2xl">
+                            <i class="fas fa-spray-can text-accent mr-2"></i>
+                            Perfume Management
+                        </h2>
+                        <div class="flex gap-2">
+                            <button class="btn btn-primary" onclick="showPerfumeForm()">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Perfume
+                            </button>
+                            <button class="btn btn-secondary" onclick="loadAdminPerfumes()">
+                                <i class="fas fa-sync-alt mr-2"></i>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div id="perfumesTable">
+                        <!-- Perfumes table will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="adminProfile" class="admin-tab hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Personal Information Card -->
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="badge badge-primary badge-lg">
+                                <i class="fas fa-user-edit mr-2"></i>
+                            </div>
+                            <h2 class="card-title text-2xl">Personal Information</h2>
+                        </div>
+                        
+                        <form id="profileForm" class="space-y-4">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-semibold">
+                                        <i class="fas fa-user mr-2 text-primary"></i>
+                                        Full Name
+                                    </span>
+                                </label>
+                                <input type="text" id="profileName" placeholder="Enter your full name" 
+                                       class="input input-bordered input-primary" required>
+                            </div>
+                            
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-semibold">
+                                        <i class="fas fa-calendar mr-2 text-primary"></i>
+                                        Year of Birth
+                                    </span>
+                                </label>
+                                <input type="number" id="profileYOB" min="1900" max="2024" 
+                                       placeholder="YYYY" class="input input-bordered input-primary" required>
+                            </div>
+                            
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-semibold">
+                                        <i class="fas fa-venus-mars mr-2 text-primary"></i>
+                                        Gender
+                                    </span>
+                                </label>
+                                <select id="profileGender" class="select select-bordered select-primary" required>
+                                    <option value="true">Male</option>
+                                    <option value="false">Female</option>
+                                </select>
+                            </div>
+                            
+                            <div class="card-actions justify-end mt-6">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save mr-2"></i>
+                                    Update Profile
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Change Password Card -->
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="badge badge-secondary badge-lg">
+                                <i class="fas fa-lock mr-2"></i>
+                            </div>
+                            <h2 class="card-title text-2xl">Change Password</h2>
+                        </div>
+                        
+                        <form id="passwordForm" class="space-y-4">
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-semibold">
+                                        <i class="fas fa-key mr-2 text-secondary"></i>
+                                        Current Password
+                                    </span>
+                                </label>
+                                <input type="password" id="oldPassword" placeholder="Enter current password" 
+                                       class="input input-bordered input-secondary" required>
+                            </div>
+                            
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text font-semibold">
+                                        <i class="fas fa-shield-alt mr-2 text-secondary"></i>
+                                        New Password
+                                    </span>
+                                </label>
+                                <input type="password" id="newPassword" placeholder="Enter new password" 
+                                       class="input input-bordered input-secondary" required>
+                            </div>
+                            
+                            <div class="card-actions justify-end mt-6">
+                                <button type="submit" class="btn btn-secondary btn-lg">
+                                    <i class="fas fa-lock mr-2"></i>
+                                    Change Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Statistics -->
+            <div class="mt-8">
+                <div class="card bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="badge badge-accent badge-lg">
+                                <i class="fas fa-chart-bar mr-2"></i>
+                            </div>
+                            <h2 class="card-title text-2xl">Account Statistics</h2>
+                        </div>
+                        
+                        <div class="stats stats-vertical lg:stats-horizontal shadow w-full">
+                            <div class="stat">
+                                <div class="stat-figure text-primary">
+                                    <i class="fas fa-user text-3xl"></i>
+                                </div>
+                                <div class="stat-title">Member Since</div>
+                                <div class="stat-value text-primary" id="memberSince">-</div>
+                                <div class="stat-desc">Account created</div>
+                            </div>
+                            
+                            <div class="stat">
+                                <div class="stat-figure text-secondary">
+                                    <i class="fas fa-comment text-3xl"></i>
+                                </div>
+                                <div class="stat-title">Reviews</div>
+                                <div class="stat-value text-secondary" id="reviewCount">0</div>
+                                <div class="stat-desc">Perfume reviews</div>
+                            </div>
+                            
+                            <div class="stat">
+                                <div class="stat-figure text-accent">
+                                    <i class="fas fa-star text-3xl"></i>
+                                </div>
+                                <div class="stat-title">Average Rating</div>
+                                <div class="stat-value text-accent" id="avgRating">-</div>
+                                <div class="stat-desc">Your reviews</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+    
+    <%- include('partials/modals') %>
+    <%- include('partials/toast') %>
+    
+    <!-- Edit Brand Modal -->
+    <dialog id="editBrandModal" class="modal">
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">Edit Brand</h3>
+            <form id="editBrandForm">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Brand Name</span>
+                    </label>
+                    <input type="text" id="editBrandName" name="brandName" class="input input-bordered" required>
+                </div>
+                <div class="modal-action">
+                    <button type="button" class="btn btn-ghost" onclick="closeEditBrandModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Brand</button>
+                </div>
+            </form>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button>close</button>
+        </form>
+    </dialog>
+    
+    <%- include('partials/footer') %>
+    
+    <script src="/javascripts/app.js"></script>
+</body>
+</html>

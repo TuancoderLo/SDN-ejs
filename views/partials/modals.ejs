@@ -1,0 +1,164 @@
+<!-- Perfume Detail Modal -->
+<dialog id="perfumeModal" class="modal">
+    <div class="modal-box max-w-4xl">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="closeModal()">✕</button>
+        </form>
+        <div id="perfumeDetail">
+            <!-- Perfume details will be loaded here -->
+        </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button onclick="closeModal()">close</button>
+    </form>
+</dialog>
+
+<!-- Brand Form Modal -->
+<dialog id="brandModal" class="modal">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="closeModal()">✕</button>
+        </form>
+        <h3 class="font-bold text-lg mb-4">Add New Brand</h3>
+        <form id="brandForm" class="space-y-4">
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-semibold">Brand Name</span>
+                </label>
+                <input type="text" id="brandName" placeholder="Enter brand name" class="input input-bordered" required>
+            </div>
+            <div class="modal-action">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save mr-2"></i>
+                    Save Brand
+                </button>
+            </div>
+        </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button onclick="closeModal()">close</button>
+    </form>
+</dialog>
+
+<!-- Perfume Form Modal -->
+<dialog id="perfumeFormModal" class="modal">
+    <div class="modal-box max-w-4xl">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick="closeModal()">✕</button>
+        </form>
+        <h3 class="font-bold text-lg mb-4">Add New Perfume</h3>
+        <form id="perfumeForm" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Perfume Name</span>
+                    </label>
+                    <input type="text" id="perfumeName" placeholder="Enter perfume name" class="input input-bordered" required>
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Brand</span>
+                    </label>
+                    <select id="perfumeBrand" class="select select-bordered" required>
+                        <option value="">Select Brand</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Price ($)</span>
+                    </label>
+                    <input type="number" id="perfumePrice" step="0.01" placeholder="0.00" class="input input-bordered" required>
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Volume (ml)</span>
+                    </label>
+                    <input type="number" id="perfumeVolume" placeholder="100" class="input input-bordered" required>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Concentration</span>
+                    </label>
+                    <select id="perfumeConcentration" class="select select-bordered" required>
+                        <option value="">Select Concentration</option>
+                        <option value="Extrait">Extrait</option>
+                        <option value="EDP">EDP (Eau de Parfum)</option>
+                        <option value="EDT">EDT (Eau de Toilette)</option>
+                        <option value="EDC">EDC (Eau de Cologne)</option>
+                    </select>
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Target Audience</span>
+                    </label>
+                    <select id="perfumeTarget" class="select select-bordered" required>
+                        <option value="">Select Target</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="unisex">Unisex</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Image URL (Primary)</span>
+                    </label>
+                    <input type="url" id="perfumeImageUrl" placeholder="https://example.com/image.jpg" class="input input-bordered" oninput="updatePreview()">
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-semibold">Image URL (Secondary)</span>
+                    </label>
+                    <input type="url" id="perfumeUri" placeholder="https://example.com/image2.jpg" class="input input-bordered" oninput="updatePreview()">
+                </div>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-semibold">Image Preview</span>
+                </label>
+                <div class="mt-2">
+                    <div class="rounded-xl border border-base-200/60 bg-base-100 p-3 flex items-center justify-center">
+                        <img id="perfumePreview" alt="Preview" class="max-h-40 object-contain" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlPC90ZXh0Pjwvc3ZnPg==">
+                    </div>
+                </div>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-semibold">Description</span>
+                </label>
+                <textarea id="perfumeDescription" class="textarea textarea-bordered" rows="3" placeholder="Describe the perfume..." required></textarea>
+            </div>
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text font-semibold">Ingredients</span>
+                </label>
+                <textarea id="perfumeIngredients" class="textarea textarea-bordered" rows="3" placeholder="List the main ingredients..." required></textarea>
+            </div>
+            <div class="modal-action">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save mr-2"></i>
+                    Save Perfume
+                </button>
+            </div>
+        </form>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+        <button onclick="closeModal()">close</button>
+    </form>
+</dialog>
+
+<!-- Floating Add Perfume Button (Admin only) -->
+<div id="addPerfumeFab" class="fixed bottom-6 right-6 z-40" style="display: none;">
+    <div class="tooltip tooltip-left" data-tip="Add Perfume">
+        <button class="btn btn-circle btn-lg shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 animate-float text-white" 
+                style="background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);" 
+                onclick="showPerfumeForm()">
+            <i class="fas fa-plus text-xl"></i>
+        </button>
+    </div>
+</div>

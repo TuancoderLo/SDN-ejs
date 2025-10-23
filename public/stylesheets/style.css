@@ -1,0 +1,49 @@
+/* Placeholder stylesheet to avoid 404s. Add custom styles as needed. */
+
+/* Toast animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.animate-fadeOutDown {
+  animation: fadeOutDown 0.3s ease-out;
+}
+
+/* Toast positioning adjustments - below navbar */
+#toast-container {
+  position: fixed;
+  top: 4.5rem; /* Position just below navbar (navbar height ~4rem) */
+  right: 1rem;
+  z-index: 50;
+}
+
+.toast-top {
+  top: 4.5rem !important; /* Override DaisyUI default */
+}
+
+.toast-end {
+  right: 1rem;
+}
+
