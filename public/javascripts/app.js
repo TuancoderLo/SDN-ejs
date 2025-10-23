@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isMainPage) {
       loadPerfumes();
       loadBrands();
-      initCarousel(); // Initialize carousel
 
       // Check for section parameter in URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -670,12 +669,6 @@ async function loadPerfumes() {
     const data = await response.json();
     allPerfumes = data || [];
     displayPerfumes(allPerfumes);
-    // Render featured carousel from API perfumes (first 7 items)
-    try {
-      renderFeaturedCarousel((allPerfumes || []).slice(0, 7));
-    } catch (e) {
-      console.error("Render carousel failed:", e);
-    }
   } catch (error) {
     console.error("Error loading perfumes:", error);
     allPerfumes = [];
@@ -1627,158 +1620,6 @@ function changeTheme(theme) {
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme) {
   document.documentElement.setAttribute("data-theme", savedTheme);
-}
-
-// Carousel functions
-let currentSlide = 1;
-let autoRotateInterval;
-
-function setActiveSlide(slideNumber) {
-  // Remove active class from all buttons
-  document.querySelectorAll(".carousel-btn").forEach((btn) => {
-    btn.classList.remove("active");
-  });
-
-  // Add active class to clicked button
-  const targetBtn = document.querySelector(
-    `#carouselDots .carousel-btn:nth-child(${slideNumber})`
-  );
-  if (targetBtn) {
-    targetBtn.classList.add("active");
-  }
-
-  // Scroll to the selected slide
-  const carousel = document.querySelector(".carousel");
-  if (carousel) {
-    const slideWidth = carousel.offsetWidth;
-    carousel.scrollTo({
-      left: (slideNumber - 1) * slideWidth,
-      behavior: "smooth",
-    });
-  }
-
-  currentSlide = slideNumber;
-
-  // Reset auto-rotate timer
-  clearInterval(autoRotateInterval);
-  startAutoRotate();
-}
-
-function startAutoRotate() {
-  const total =
-    document.querySelectorAll("#featuredCarousel .carousel-item").length || 3;
-  autoRotateInterval = setInterval(() => {
-    currentSlide = currentSlide >= total ? 1 : currentSlide + 1;
-    setActiveSlide(currentSlide);
-  }, 5000); // Change slide every 5 seconds
-}
-
-function stopAutoRotate() {
-  clearInterval(autoRotateInterval);
-}
-
-// Initialize carousel when page loads
-function initCarousel() {
-  // Start auto-rotation
-  startAutoRotate();
-
-  // Pause auto-rotation on hover
-  const carousel = document.querySelector(".carousel");
-  if (carousel) {
-    carousel.addEventListener("mouseenter", stopAutoRotate);
-    carousel.addEventListener("mouseleave", startAutoRotate);
-  }
-}
-
-// Build carousel slides from API data
-function renderFeaturedCarousel(perfumes) {
-  const carousel = document.getElementById("featuredCarousel");
-  const dots = document.getElementById("carouselDots");
-  if (!carousel || !dots) return;
-
-  // If no perfumes, do nothing
-  if (!Array.isArray(perfumes) || perfumes.length === 0) return;
-
-  // Map genders to badge styles and icons
-  const genderBadge = (target) => {
-    if (target === "male") return { cls: "badge-accent", text: "Male" };
-    if (target === "female") return { cls: "badge-secondary", text: "Female" };
-    return { cls: "badge-secondary", text: "Unisex" };
-  };
-
-  // Build slides
-  const slidesHtml = perfumes
-    .map((p, idx) => {
-      const n = idx + 1;
-      const g = genderBadge(p.targetAudience);
-      const brandName =
-        p.brand && (p.brand.brandName || p.brandName)
-          ? p.brand.brandName || p.brandName
-          : "";
-      return `
-            <div id="slide${n}" class="carousel-item relative w-full">
-                <div class="card w-full bg-gradient-to-br from-primary/10 to-secondary/10 shadow-2xl">
-                    <div class="card-body flex-row items-center p-8">
-                        <div class="flex-1 text-left">
-                            <h2 class="card-title text-3xl mb-4">${
-                              p.perfumeName || "Unknown Perfume"
-                            }</h2>
-                            <p class="text-sm opacity-70 mb-2 ${
-                              p.brand?.isDeleted
-                                ? "line-through text-red-500"
-                                : ""
-                            }">${brandName}${
-        p.brand?.isDeleted ? " (Deleted)" : ""
-      }</p>
-                            <p class="text-lg mb-4 line-clamp-3">${
-                              p.description || ""
-                            }</p>
-                            <div class="flex items-center gap-4">
-                                <div class="badge badge-primary badge-lg">${
-                                  p.concentration || "EDP"
-                                }</div>
-                                <div class="badge ${g.cls} badge-lg">${
-        g.text
-      }</div>
-                                <div class="text-2xl font-bold text-primary">${
-                                  p.price ? "$" + p.price : ""
-                                }</div>
-                            </div>
-                        </div>
-                        <div class="flex-shrink-0 ml-8">
-                            <img src="${
-                              p.uri ||
-                              "https://via.placeholder.com/300x300?text=No+Image"
-                            }"
-                                 alt="${
-                                   p.perfumeName || "Perfume"
-                                 }" class="w-48 h-48 object-cover rounded-2xl shadow-lg"
-                                 referrerpolicy="no-referrer"
-                                 onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300?text=No+Image';">
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-    })
-    .join("");
-
-  carousel.innerHTML = slidesHtml;
-
-  // Build dots
-  const dotsHtml = perfumes
-    .map((_, idx) => {
-      const n = idx + 1;
-      return `<a href="#slide${n}" class="btn btn-sm btn-circle carousel-btn ${
-        n === 1 ? "active" : ""
-      }" onclick="setActiveSlide(${n})">${n}</a>`;
-    })
-    .join("");
-  dots.innerHTML = dotsHtml;
-
-  // Reset state and start rotation using new count
-  currentSlide = 1;
-  clearInterval(autoRotateInterval);
-  startAutoRotate();
 }
 
 // Notifications
