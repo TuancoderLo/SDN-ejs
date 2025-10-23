@@ -1,108 +1,470 @@
 <style>
-    .footer-gradient {
-        background: linear-gradient(135deg, #4a90a4 0%, #357abd 100%);
+  .footer-premium {
+    background: linear-gradient(
+      135deg,
+      #1a1a2e 0%,
+      #16213e 25%,
+      #0f3460 50%,
+      #533483 75%,
+      #e94560 100%
+    );
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer-premium::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>')
+      repeat;
+    opacity: 0.3;
+  }
+
+  .footer-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-section {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .section-title {
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+
+  .section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    border-radius: 2px;
+  }
+
+  .footer-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer-link::before {
+    content: "▶";
+    color: #ffd700;
+    font-size: 0.7rem;
+    transition: all 0.3s ease;
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  .footer-link:hover::before {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .footer-link:hover {
+    color: #ffd700;
+    transform: translateX(10px);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+
+  .social-platform {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-platform::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.3) 0%,
+      transparent 70%
+    );
+    transition: all 0.4s ease;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .social-platform:hover::before {
+    width: 100px;
+    height: 100px;
+  }
+
+  .social-platform:hover {
+    transform: translateY(-8px) rotate(5deg) scale(1.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  }
+
+  .contact-info {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 4px solid #ffd700;
+    transition: all 0.3s ease;
+  }
+
+  .contact-info:hover {
+    background: rgba(255, 215, 0, 0.1);
+    transform: translateX(5px);
+  }
+
+  .newsletter-form {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .newsletter-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    color: white;
+    width: 100%;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .subscribe-btn {
+    background: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+    color: #1a1a2e;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .subscribe-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, #ffb347 0%, #ffd700 100%);
+  }
+
+  .footer-bottom {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .payment-method {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .payment-method:hover {
+    background: rgba(255, 215, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .company-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ffb347);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stat-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer-section {
+      padding: 1.5rem;
+      margin-bottom: 2rem;
     }
-    .footer-link {
-        color: #ffffff;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        position: relative;
+
+    .company-stats {
+      flex-direction: column;
+      gap: 1rem;
     }
-    .footer-link:hover {
-        color: #e0f2fe;
-        transform: translateX(4px);
+
+    .stat-item {
+      padding: 0.5rem;
     }
-    .social-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    }
-    .social-icon:hover {
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    }
-    .newsletter-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        transition: all 0.3s ease;
-    }
-    .newsletter-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
+  }
 </style>
 
-<footer class="footer-gradient text-white py-16">
+<footer class="footer-premium text-white py-20">
+  <div class="footer-content">
     <div class="container mx-auto px-6">
-        <!-- Main Content -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            <!-- About Us -->
-            <div>
-                <h3 class="text-white font-bold text-xl mb-6 uppercase tracking-wide">About Us</h3>
-                <p class="text-white/90 text-sm leading-relaxed mb-6">
-                    Founded in 2024, Perfume SDN offers over 100 premium fragrance brands. 
-                    We are Vietnam's leading perfume website, committed to providing diversity, 
-                    convenience, cost savings and absolute customer satisfaction.
-                </p>
-                <div class="flex gap-4">
-                    <a href="#" class="social-icon bg-blue-600">
-                        <i class="fab fa-facebook-f text-white text-lg"></i>
-                    </a>
-                    <a href="#" class="social-icon bg-gradient-to-r from-purple-500 to-pink-500">
-                        <i class="fab fa-instagram text-white text-lg"></i>
-                    </a>
-                    <a href="#" class="social-icon bg-red-600">
-                        <i class="fab fa-youtube text-white text-lg"></i>
-                    </a>
-                    <a href="#" class="social-icon bg-blue-500">
-                        <i class="fab fa-tiktok text-white text-lg"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Quick Links -->
-            <div>
-                <h3 class="text-white font-bold text-xl mb-6 uppercase tracking-wide">Quick Links</h3>
-                <div class="space-y-3">
-                    <a href="/" class="footer-link block text-sm">Home</a>
-                    <a href="/?section=perfumes" class="footer-link block text-sm">Perfumes</a>
-                    <a href="/login" class="footer-link block text-sm" onclick="storeRedirectUrl(window.location.href)">Login</a>
-                    <a href="/register" class="footer-link block text-sm">Register</a>
-                    <a href="/?section=profile" class="footer-link block text-sm">Profile</a>
-                    <a href="/admin" class="footer-link block text-sm" id="adminFooterLink" style="display: none;">Admin Panel</a>
-                </div>
-            </div>
-
-            <!-- Newsletter -->
-            <div>
-                <h3 class="text-white font-bold text-xl mb-6 uppercase tracking-wide">Newsletter</h3>
-                <p class="text-white/90 text-sm mb-6">
-                    Get the latest promotions and Flash Sale updates from Perfume SDN.
-                </p>
-                <button class="newsletter-btn text-white px-6 py-3 rounded-xl flex items-center gap-3 w-full justify-center">
-                    <i class="fab fa-facebook-messenger text-lg"></i>
-                    <span class="font-medium">Subscribe to Messenger</span>
-                </button>
-            </div>
+      <!-- Main Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
+        <!-- Company Info -->
+        <div class="footer-section">
+          <h3 class="section-title text-2xl">Perfume SDN</h3>
+          <p class="text-white/80 text-sm leading-relaxed mb-6">
+            Founded in 2024, Perfume SDN offers over 100 premium fragrance
+            brands. We are Vietnam's leading perfume website, committed to
+            providing diversity, convenience, cost savings and absolute customer
+            satisfaction.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <a href="#" class="social-platform bg-blue-600">
+              <i class="fab fa-facebook-f text-white text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="social-platform bg-gradient-to-r from-purple-500 to-pink-500"
+            >
+              <i class="fab fa-instagram text-white text-xl"></i>
+            </a>
+            <a href="#" class="social-platform bg-red-600">
+              <i class="fab fa-youtube text-white text-xl"></i>
+            </a>
+            <a
+              href="#"
+              class="social-platform bg-gradient-to-r from-black to-gray-800"
+            >
+              <i class="fab fa-tiktok text-white text-xl"></i>
+            </a>
+            <a href="#" class="social-platform bg-blue-400">
+              <i class="fab fa-twitter text-white text-xl"></i>
+            </a>
+          </div>
         </div>
 
-        <!-- Bottom Row -->
-        <div class="border-t border-white/20 pt-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="text-white/80 text-sm text-center md:text-left">
-                    <p class="font-medium">© 2024 Perfume SDN. All rights reserved.</p>
-                    <p class="text-white/60">Premium fragrances for everyone</p>
-                </div>
-                <div class="flex gap-4">
-                    <div class="bg-white/20 px-4 py-2 rounded-lg text-xs font-bold">VISA</div>
-                    <div class="bg-white/20 px-4 py-2 rounded-lg text-xs font-bold">MASTERCARD</div>
-                    <div class="bg-white/20 px-4 py-2 rounded-lg text-xs font-bold">PAYPAL</div>
-                </div>
-            </div>
+        <!-- Quick Links -->
+        <div class="footer-section">
+          <h3 class="section-title text-xl">Quick Links</h3>
+          <div class="space-y-2">
+            <a href="/" class="footer-link text-sm">🏠 Home</a>
+            <a href="/?section=perfumes" class="footer-link text-sm"
+              >🌸 Perfumes</a
+            >
+            <a
+              href="/login"
+              class="footer-link text-sm"
+              onclick="storeRedirectUrl(window.location.href)"
+              >🔐 Login</a
+            >
+            <a href="/register" class="footer-link text-sm">📝 Register</a>
+            <a href="/?section=profile" class="footer-link text-sm"
+              >👤 Profile</a
+            >
+            <a
+              href="/admin"
+              class="footer-link text-sm"
+              id="adminFooterLink"
+              style="display: none"
+              >⚙️ Admin Panel</a
+            >
+          </div>
         </div>
+
+        <!-- Contact Info -->
+        <div class="footer-section">
+          <h3 class="section-title text-xl">Contact Info</h3>
+          <div class="space-y-3">
+            <div class="contact-info">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-map-marker-alt text-yellow-400"></i>
+                <div>
+                  <p class="text-white font-medium text-sm">Address</p>
+                  <p class="text-white/70 text-xs">
+                    123 Perfume Street, Ho Chi Minh City
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="contact-info">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-phone text-yellow-400"></i>
+                <div>
+                  <p class="text-white font-medium text-sm">Hotline</p>
+                  <p class="text-white/70 text-xs">+84 123 456 789</p>
+                </div>
+              </div>
+            </div>
+            <div class="contact-info">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-envelope text-yellow-400"></i>
+                <div>
+                  <p class="text-white font-medium text-sm">Email</p>
+                  <p class="text-white/70 text-xs">info@perfumesdn.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="footer-section">
+          <h3 class="section-title text-xl">Newsletter</h3>
+          <div class="newsletter-form">
+            <p class="text-white/80 text-sm mb-4">
+              Get the latest promotions and Flash Sale updates from Perfume SDN.
+            </p>
+            <input
+              type="email"
+              placeholder="Enter your email..."
+              class="newsletter-input"
+            />
+            <button class="subscribe-btn">
+              <i class="fas fa-paper-plane mr-2"></i>
+              Subscribe Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Stats -->
+      <div class="company-stats">
+        <div class="stat-item">
+          <div class="stat-number">100+</div>
+          <div class="stat-label">Premium Brands</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">1000+</div>
+          <div class="stat-label">Fragrances</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div
+          class="flex flex-col lg:flex-row justify-between items-center gap-6"
+        >
+          <div class="text-center lg:text-left">
+            <p class="text-white font-semibold text-lg mb-2">
+              © 2024 Perfume SDN. All rights reserved.
+            </p>
+            <p class="text-white/60 text-sm">
+              Premium fragrances for everyone | Made with ❤️ in Vietnam
+            </p>
+            <div
+              class="flex flex-wrap gap-4 mt-3 justify-center lg:justify-start"
+            >
+              <a
+                href="#"
+                class="text-white/60 hover:text-yellow-400 text-xs transition-colors"
+                >Privacy Policy</a
+              >
+              <a
+                href="#"
+                class="text-white/60 hover:text-yellow-400 text-xs transition-colors"
+                >Terms of Service</a
+              >
+              <a
+                href="#"
+                class="text-white/60 hover:text-yellow-400 text-xs transition-colors"
+                >Return Policy</a
+              >
+              <a
+                href="#"
+                class="text-white/60 hover:text-yellow-400 text-xs transition-colors"
+                >Shipping Info</a
+              >
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3 justify-center">
+            <div class="payment-method">
+              <i class="fab fa-cc-visa mr-2"></i>VISA
+            </div>
+            <div class="payment-method">
+              <i class="fab fa-cc-mastercard mr-2"></i>MASTERCARD
+            </div>
+            <div class="payment-method">
+              <i class="fab fa-paypal mr-2"></i>PAYPAL
+            </div>
+            <div class="payment-method">
+              <i class="fas fa-mobile-alt mr-2"></i>MOMO
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </footer>
