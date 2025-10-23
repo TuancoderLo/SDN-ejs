@@ -113,7 +113,8 @@
     max-width: 500px;
     width: 95vw;
     max-height: 90vh;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     animation: modalSlideIn 0.3s ease-out;
   }
 
@@ -123,10 +124,14 @@
     color: white;
     border-radius: 16px 16px 0 0;
     position: relative;
+    flex-shrink: 0;
   }
 
   .form-modal-body {
     padding: 32px;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
   }
 
   .form-group {
@@ -202,7 +207,8 @@
     max-width: 1000px;
     width: 95vw;
     max-height: 95vh;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     animation: modalSlideIn 0.3s ease-out;
   }
 
@@ -212,12 +218,14 @@
     color: white;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
   }
 
   .large-form-body {
     padding: 32px;
     overflow-y: auto;
-    max-height: calc(95vh - 160px);
+    flex: 1;
+    min-height: 0;
   }
 
   .form-grid {
@@ -326,9 +334,14 @@
     padding: 24px 32px;
     background: #f8fafc;
     border-top: 1px solid #e5e7eb;
+    border-radius: 0 0 20px 20px;
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
   }
 
   /* Floating Action Button */
@@ -434,6 +447,15 @@
     .large-form-body,
     .perfume-detail-body,
     .form-modal-body {
+      padding: 20px;
+    }
+
+    .modal-actions {
+      padding: 16px 20px;
+    }
+
+    .large-form-header,
+    .form-modal-header {
       padding: 20px;
     }
 
@@ -702,3 +724,88 @@
     <i class="fas fa-plus"></i>
   </button>
 </div>
+
+<script>
+  // Image Preview Function
+  function updatePreview() {
+    const imageUrl = document.getElementById("perfumeImageUrl").value;
+    const preview = document.getElementById("perfumePreview");
+    const placeholder = document.getElementById("previewPlaceholder");
+
+    if (imageUrl && imageUrl.trim() !== "") {
+      preview.src = imageUrl;
+      preview.style.display = "block";
+      if (placeholder) placeholder.style.display = "none";
+
+      // Handle image load error
+      preview.onerror = function () {
+        this.style.display = "none";
+        if (placeholder) {
+          placeholder.style.display = "flex";
+          placeholder.innerHTML =
+            '<i class="fas fa-exclamation-triangle text-4xl mb-2 text-red-400"></i><span class="text-red-500">Failed to load image</span>';
+        }
+      };
+
+      // Handle successful load
+      preview.onload = function () {
+        if (placeholder) placeholder.style.display = "none";
+      };
+    } else {
+      preview.style.display = "none";
+      if (placeholder) {
+        placeholder.style.display = "flex";
+        placeholder.innerHTML =
+          '<i class="fas fa-image text-4xl mb-2"></i><span>Image preview will appear here</span>';
+      }
+    }
+  }
+
+  // Enhanced close modal function
+  function closeModal() {
+    // Close all modals
+    const modals = document.querySelectorAll("dialog[open]");
+    modals.forEach((modal) => {
+      modal.close();
+    });
+
+    // Reset forms
+    const forms = document.querySelectorAll("form");
+    forms.forEach((form) => {
+      if (form.id === "brandForm" || form.id === "perfumeForm") {
+        form.reset();
+        // Reset image preview
+        updatePreview();
+      }
+    });
+  }
+
+  // Prevent modal close on backdrop click of form content
+  document.addEventListener("click", function (e) {
+    const modals = document.querySelectorAll("dialog");
+    modals.forEach((modal) => {
+      if (e.target === modal) {
+        // Only close if clicking on the backdrop, not the content
+        const rect = modal.getBoundingClientRect();
+        const isInDialog =
+          rect.top <= e.clientY &&
+          e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX &&
+          e.clientX <= rect.left + rect.width;
+
+        if (!isInDialog) {
+          closeModal();
+        }
+      }
+    });
+  });
+
+  // Initialize on page load
+  document.addEventListener("DOMContentLoaded", function () {
+    // Setup image preview if elements exist
+    const imageUrlInput = document.getElementById("perfumeImageUrl");
+    if (imageUrlInput) {
+      imageUrlInput.addEventListener("input", updatePreview);
+    }
+  });
+</script>
