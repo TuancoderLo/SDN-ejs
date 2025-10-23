@@ -215,6 +215,56 @@
       .tab:hover::before {
         left: 100%;
       }
+
+      /* Sidebar Styles */
+      .sidebar-item {
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid transparent;
+      }
+
+      .sidebar-item:hover {
+        background: hsl(var(--b2) / 0.5);
+        border-color: hsl(var(--p) / 0.2);
+        transform: translateX(2px);
+      }
+
+      .sidebar-item.active {
+        background: linear-gradient(135deg, hsl(var(--p) / 0.1), hsl(var(--s) / 0.1));
+        border-color: hsl(var(--p) / 0.3);
+        color: hsl(var(--p));
+        font-weight: 600;
+      }
+
+      .sidebar-item.active .bg-primary\/10 {
+        background: hsl(var(--p));
+      }
+
+      .sidebar-item.active .text-primary {
+        color: white;
+      }
+
+      /* Dashboard responsive */
+      @media (max-width: 1024px) {
+        .w-80 {
+          width: 16rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .w-80 {
+          width: 100%;
+          position: absolute;
+          top: 0;
+          left: -100%;
+          height: 100vh;
+          z-index: 50;
+          transition: left 0.3s ease;
+        }
+        
+        .w-80.mobile-open {
+          left: 0;
+        }
+      }
     </style>
   </head>
   <body class="bg-base-100">
@@ -225,238 +275,316 @@
     >
       <!-- Admin Section -->
       <section id="admin" class="section active">
-        <div class="container mx-auto px-4 py-12">
-          <!-- Admin Header -->
-          <div
-            class="hero bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 rounded-3xl mb-8 shadow-xl"
-          >
-            <div class="hero-content text-center py-12">
-              <div class="max-w-3xl">
-                <div class="mb-8">
-                  <div
-                    class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-accent to-primary flex items-center justify-center shadow-lg"
-                  >
-                    <i class="fas fa-crown text-3xl text-white"></i>
-                  </div>
+        <div class="flex min-h-screen">
+          <!-- Sidebar -->
+          <div class="w-80 bg-white shadow-xl border-r border-base-300 flex-shrink-0">
+            <!-- Sidebar Header -->
+            <div class="p-6 border-b border-base-200">
+              <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
+                  <i class="fas fa-crown text-white text-lg"></i>
                 </div>
-                <h1 class="text-5xl font-bold mb-4">
-                  <span
-                    class="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-                    >Admin</span
-                  >
-                  <span class="text-base-content">Panel</span>
-                </h1>
-                <p class="text-xl text-base-content/70 mb-6">
-                  Manage your perfume collection, brands, and members with ease
-                </p>
-                <div class="flex justify-center gap-4">
-                  <div class="badge badge-primary badge-lg gap-2">
-                    <i class="fas fa-users"></i>
-                    <span>Members</span>
-                  </div>
-                  <div class="badge badge-secondary badge-lg gap-2">
-                    <i class="fas fa-tags"></i>
-                    <span>Brands</span>
-                  </div>
-                  <div class="badge badge-accent badge-lg gap-2">
-                    <i class="fas fa-spray-can"></i>
-                    <span>Perfumes</span>
-                  </div>
+                <div>
+                  <h2 class="text-xl font-bold gradient-text">Admin Panel</h2>
+                  <p class="text-sm text-base-content/60">Management Dashboard</p>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Admin Tabs -->
-          <div
-            class="flex flex-col lg:flex-row justify-center items-center gap-4 mb-8"
-          >
-            <div class="tabs tabs-boxed bg-base-200/50 p-1 rounded-2xl">
-              <button
-                class="tab tab-lg active hover:bg-base-100 transition-all duration-300"
-                onclick="showAdminTab('members')"
-              >
-                <i class="fas fa-users mr-2 text-primary"></i>
-                <span class="font-semibold">Members</span>
-              </button>
-              <button
-                class="tab tab-lg hover:bg-base-100 transition-all duration-300"
-                onclick="showAdminTab('brands')"
-              >
-                <i class="fas fa-tags mr-2 text-secondary"></i>
-                <span class="font-semibold">Brands</span>
-              </button>
-              <button
-                class="tab tab-lg hover:bg-base-100 transition-all duration-300"
-                onclick="showAdminTab('perfumes')"
-              >
-                <i class="fas fa-spray-can mr-2 text-accent"></i>
-                <span class="font-semibold">Perfumes</span>
-              </button>
-              <button
-                class="tab tab-lg hover:bg-base-100 transition-all duration-300"
-                onclick="showAdminTab('profile')"
-              >
-                <i class="fas fa-user-cog mr-2 text-primary"></i>
-                <span class="font-semibold">Profile</span>
-              </button>
-            </div>
-            <button
-              class="btn btn-outline btn-primary hover:btn-primary hover:text-white transition-all duration-300"
-              onclick="loadAllAdminData()"
-            >
-              <i class="fas fa-sync-alt mr-2"></i>
-              Load All Data
-            </button>
-          </div>
-
-          <!-- Members Tab -->
-          <div id="adminMembers" class="admin-tab">
-            <div
-              class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div class="card-body">
-                <div class="flex items-center justify-between mb-8">
-                  <div class="flex items-center gap-4">
-                    <div
-                      class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center"
-                    >
-                      <i class="fas fa-users text-white text-lg"></i>
-                    </div>
-                    <div>
-                      <h2 class="card-title text-2xl">All Members</h2>
-                      <p class="text-base-content/70">
-                        Manage user accounts and permissions
-                      </p>
-                    </div>
+            <!-- Navigation Menu -->
+            <nav class="p-4 space-y-2 flex-1">
+              <!-- Overview -->
+              <div class="mb-6">
+                <h3 class="text-xs font-semibold text-base-content/40 uppercase tracking-wider mb-3 px-3">Overview</h3>
+                <button
+                  class="sidebar-item active w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left hover:bg-base-100 transition-all duration-200"
+                  onclick="showAdminTab('dashboard')"
+                >
+                  <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <i class="fas fa-chart-pie text-primary text-sm"></i>
                   </div>
+                  <span class="font-medium">Dashboard</span>
+                </button>
+              </div>
+
+              <!-- Management -->
+              <div class="mb-6">
+                <h3 class="text-xs font-semibold text-base-content/40 uppercase tracking-wider mb-3 px-3">Management</h3>
+                <div class="space-y-1">
                   <button
-                    class="btn btn-primary btn-lg hover:scale-105 transition-transform duration-300"
-                    onclick="loadMembers()"
+                    class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left hover:bg-base-100 transition-all duration-200"
+                    onclick="showAdminTab('members')"
                   >
-                    <i class="fas fa-sync-alt mr-2"></i>
-                    Refresh
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                      <i class="fas fa-users text-blue-500 text-sm"></i>
+                    </div>
+                    <span class="font-medium">Members</span>
+                    <div class="ml-auto">
+                      <span class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">3</span>
+                    </div>
+                  </button>
+                  
+                  <button
+                    class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left hover:bg-base-100 transition-all duration-200"
+                    onclick="showAdminTab('brands')"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                      <i class="fas fa-tags text-pink-500 text-sm"></i>
+                    </div>
+                    <span class="font-medium">Brands</span>
+                  </button>
+                  
+                  <button
+                    class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left hover:bg-base-100 transition-all duration-200"
+                    onclick="showAdminTab('perfumes')"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                      <i class="fas fa-spray-can text-teal-500 text-sm"></i>
+                    </div>
+                    <span class="font-medium">Perfumes</span>
                   </button>
                 </div>
-                <div id="membersTable" class="rounded-xl overflow-hidden">
-                  <!-- Members table will be loaded here -->
-                </div>
               </div>
+
+              <!-- Settings -->
+              <div>
+                <h3 class="text-xs font-semibold text-base-content/40 uppercase tracking-wider mb-3 px-3">Settings</h3>
+                <button
+                  class="sidebar-item w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left hover:bg-base-100 transition-all duration-200"
+                  onclick="showAdminTab('profile')"
+                >
+                  <div class="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                    <i class="fas fa-user-cog text-orange-500 text-sm"></i>
+                  </div>
+                  <span class="font-medium">Profile</span>
+                </button>
+              </div>
+            </nav>
+
+            <!-- Load Data Button -->
+            <div class="p-4 border-t border-base-200 mt-auto">
+              <button
+                class="btn btn-primary w-full hover:btn-primary hover:text-white transition-all duration-300"
+                onclick="loadAllAdminData()"
+              >
+                <i class="fas fa-sync-alt mr-2"></i>
+                Load All Data
+              </button>
             </div>
           </div>
 
-          <!-- Brands Tab -->
-          <div id="adminBrands" class="admin-tab hidden">
-            <div
-              class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div class="card-body">
-                <div class="flex items-center justify-between mb-8">
-                  <div class="flex items-center gap-4">
-                    <div
-                      class="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-secondary/80 flex items-center justify-center"
-                    >
-                      <i class="fas fa-tags text-white text-lg"></i>
-                    </div>
-                    <div>
-                      <h2 class="card-title text-2xl">Brand Management</h2>
-                      <p class="text-base-content/70">
-                        Add, edit, and organize perfume brands
-                      </p>
+          <!-- Main Content Area -->
+          <div class="flex-1 flex flex-col min-h-screen">
+            <!-- Top Header -->
+            <div class="bg-white shadow-sm border-b border-base-200 p-6">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <!-- Mobile Menu Button -->
+                  <button class="btn btn-ghost btn-sm lg:hidden" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                  </button>
+                  <div>
+                    <h1 class="text-2xl font-bold text-base-content" id="pageTitle">Dashboard</h1>
+                    <p class="text-base-content/60" id="pageSubtitle">Overview of your admin panel</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                  <div class="stats shadow-sm">
+                    <div class="stat px-4 py-2">
+                      <div class="stat-title text-xs">Active Users</div>
+                      <div class="stat-value text-lg">3</div>
                     </div>
                   </div>
-                  <div class="flex gap-3">
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Container -->
+            <div class="flex-1 p-6 bg-base-50">
+              
+              <!-- Dashboard Tab -->
+              <div id="adminDashboard" class="admin-tab">
+                <div class="flex items-center justify-center min-h-[60vh]">
+                  <div class="text-center max-w-2xl mx-auto">
+                    <!-- Welcome Icon -->
+                    <div class="mb-8">
+                      <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-xl">
+                        <i class="fas fa-crown text-white text-3xl"></i>
+                      </div>
+                    </div>
+                    
+                    <!-- Welcome Message -->
+                    <div class="mb-8">
+                      <h1 class="text-4xl font-bold mb-4">
+                        <span class="gradient-text">Chào mừng Admin</span>
+                      </h1>
+                      <p class="text-xl text-base-content/70 mb-6">
+                        Chào mừng bạn quay trở lại với bảng điều khiển quản trị
+                      </p>
+                      <p class="text-base-content/60">
+                        Sử dụng menu bên trái để quản lý thành viên, thương hiệu và nước hoa
+                      </p>
+                    </div>
+                    
+                    <!-- Quick Access Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                      <button 
+                        class="btn btn-primary btn-lg hover:scale-105 transition-all duration-300"
+                        onclick="showAdminTab('members')"
+                      >
+                        <i class="fas fa-users mr-2"></i>
+                        Quản lý thành viên
+                      </button>
+                      <button 
+                        class="btn btn-secondary btn-lg hover:scale-105 transition-all duration-300"
+                        onclick="showAdminTab('brands')"
+                      >
+                        <i class="fas fa-tags mr-2"></i>
+                        Quản lý thương hiệu
+                      </button>
+                      <button 
+                        class="btn btn-accent btn-lg hover:scale-105 transition-all duration-300"
+                        onclick="showAdminTab('perfumes')"
+                      >
+                        <i class="fas fa-spray-can mr-2"></i>
+                        Quản lý nước hoa
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Members Tab -->
+              <div id="adminMembers" class="admin-tab hidden">
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                  <div class="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 class="text-lg font-semibold mb-1">All Members</h3>
+                      <p class="text-base-content/60">Manage user accounts and permissions</p>
+                    </div>
                     <button
-                      class="btn btn-primary btn-lg hover:scale-105 transition-transform duration-300"
-                      onclick="showBrandForm()"
-                    >
-                      <i class="fas fa-plus mr-2"></i>
-                      Add Brand
-                    </button>
-                    <button
-                      class="btn btn-secondary btn-lg hover:scale-105 transition-transform duration-300"
-                      onclick="loadAdminBrands()"
+                      class="btn btn-primary hover:scale-105 transition-transform duration-300"
+                      onclick="loadMembers()"
                     >
                       <i class="fas fa-sync-alt mr-2"></i>
                       Refresh
                     </button>
                   </div>
-                </div>
-                <div id="brandsTable" class="rounded-xl overflow-hidden">
-                  <!-- Brands table will be loaded here -->
+                  
+                  <!-- Member Statistics -->
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg">
+                      <div class="flex items-center">
+                        <div class="p-2 bg-blue-500 rounded-lg mr-3">
+                          <i class="fas fa-users text-white text-sm"></i>
+                        </div>
+                        <div>
+                          <p class="text-xs text-blue-600 font-medium">Active</p>
+                          <p class="text-xl font-bold text-blue-700" id="activeCount">0</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-gradient-to-r from-red-50 to-red-100 p-4 rounded-lg">
+                      <div class="flex items-center">
+                        <div class="p-2 bg-red-500 rounded-lg mr-3">
+                          <i class="fas fa-user-times text-white text-sm"></i>
+                        </div>
+                        <div>
+                          <p class="text-xs text-red-600 font-medium">Blocked</p>
+                          <p class="text-xl font-bold text-red-700" id="blockedCount">0</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg">
+                      <div class="flex items-center">
+                        <div class="p-2 bg-green-500 rounded-lg mr-3">
+                          <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <div>
+                          <p class="text-xs text-green-600 font-medium">Total</p>
+                          <p class="text-xl font-bold text-green-700" id="totalCount">0</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="membersTable" class="rounded-xl overflow-hidden">
+                    <!-- Members table will be loaded here -->
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Perfumes Tab -->
-          <div id="adminPerfumes" class="admin-tab hidden">
-            <div
-              class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-            >
-              <div class="card-body">
-                <div class="flex items-center justify-between mb-8">
-                  <div class="flex items-center gap-4">
-                    <div
-                      class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center"
-                    >
-                      <i class="fas fa-spray-can text-white text-lg"></i>
-                    </div>
+              <!-- Brands Tab -->
+              <div id="adminBrands" class="admin-tab hidden">
+                <div class="bg-white rounded-xl shadow-sm p-6">
                     <div>
-                      <h2 class="card-title text-2xl">Perfume Management</h2>
-                      <p class="text-base-content/70">
-                        Manage your perfume collection and inventory
-                      </p>
+                      <h3 class="text-lg font-semibold mb-1">Brand Management</h3>
+                      <p class="text-base-content/60">Add, edit, and organize perfume brands</p>
+                    </div>
+                    <div class="flex gap-3">
+                      <button
+                        class="btn btn-primary hover:scale-105 transition-transform duration-300"
+                        onclick="showBrandForm()"
+                      >
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Brand
+                      </button>
+                      <button
+                        class="btn btn-secondary hover:scale-105 transition-transform duration-300"
+                        onclick="loadAdminBrands()"
+                      >
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        Refresh
+                      </button>
                     </div>
                   </div>
-                  <div class="flex gap-3">
-                    <button
-                      class="btn btn-primary btn-lg hover:scale-105 transition-transform duration-300"
-                      onclick="showPerfumeForm()"
-                    >
-                      <i class="fas fa-plus mr-2"></i>
-                      Add Perfume
-                    </button>
-                    <button
-                      class="btn btn-secondary btn-lg hover:scale-105 transition-transform duration-300"
-                      onclick="loadAdminPerfumes()"
-                    >
-                      <i class="fas fa-sync-alt mr-2"></i>
-                      Refresh
-                    </button>
+                  <div id="brandsTable" class="rounded-xl overflow-hidden">
+                    <!-- Brands table will be loaded here -->
                   </div>
                 </div>
-                <div id="perfumesTable" class="rounded-xl overflow-hidden">
-                  <!-- Perfumes table will be loaded here -->
-                </div>
               </div>
-            </div>
-          </div>
 
-          <!-- Profile Tab -->
-          <div id="adminProfile" class="admin-tab hidden">
-            <!-- Profile Header -->
-            <div
-              class="hero bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-2xl mb-8"
-            >
-              <div class="hero-content text-center">
-                <div class="max-w-2xl">
-                  <div class="avatar mb-6">
-                    <div
-                      class="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center"
-                    >
-                      <i class="fas fa-user-cog text-3xl text-white"></i>
+              <!-- Perfumes Tab -->
+              <div id="adminPerfumes" class="admin-tab hidden">
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                  <div class="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 class="text-lg font-semibold mb-1">Perfume Management</h3>
+                      <p class="text-base-content/60">Manage your perfume collection and inventory
+                    </div>
+                    <div class="flex gap-3">
+                      <button
+                        class="btn btn-primary hover:scale-105 transition-transform duration-300"
+                        onclick="showPerfumeForm()"
+                      >
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Perfume
+                      </button>
+                      <button
+                        class="btn btn-secondary hover:scale-105 transition-transform duration-300"
+                        onclick="loadAdminPerfumes()"
+                      >
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        Refresh
+                      </button>
                     </div>
                   </div>
-                  <h1 class="text-3xl font-bold mb-2">
-                    <span class="text-primary">Profile</span> Management
-                  </h1>
-                  <p class="text-base-content/70">
-                    Manage your personal information and account settings
-                  </p>
+                  <div id="perfumesTable" class="rounded-xl overflow-hidden">
+                    <!-- Perfumes table will be loaded here -->
+                  </div>
                 </div>
               </div>
-            </div>
+
+              <!-- Profile Tab -->
+              <div id="adminProfile" class="admin-tab hidden">
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                  <div class="flex items-center justify-between mb-6">
+                    <div>
+                      <h3 class="text-lg font-semibold mb-1">Profile Management</h3>
+                      <p class="text-base-content/60">Manage your personal information and account settings</p>
+                    </div>
+                  </div>
+                </div>
 
             <!-- Main Profile Grid -->
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
@@ -895,15 +1023,32 @@
         });
       });
 
-      // Smooth tab switching with proper transitions
+      // Enhanced tab switching with sidebar navigation
       function showAdminTab(tabName) {
         return new Promise(async (resolve) => {
           // Close any open modals first
           await enhancedCloseModal();
 
-          // Get all tabs and buttons
+          // Update page title and subtitle
+          const pageTitle = document.getElementById('pageTitle');
+          const pageSubtitle = document.getElementById('pageSubtitle');
+          
+          const tabInfo = {
+            members: { title: 'Members', subtitle: 'Manage user accounts and permissions' },
+            brands: { title: 'Brands', subtitle: 'Add, edit, and organize perfume brands' },
+            perfumes: { title: 'Perfumes', subtitle: 'Manage your perfume collection and inventory' },
+            profile: { title: 'Profile', subtitle: 'Manage your personal information and account settings' },
+            dashboard: { title: 'Dashboard', subtitle: 'Overview of your admin panel' }
+          };
+          
+          if (pageTitle && tabInfo[tabName]) {
+            pageTitle.textContent = tabInfo[tabName].title;
+            pageSubtitle.textContent = tabInfo[tabName].subtitle;
+          }
+
+          // Get all tabs and sidebar items
           const tabs = document.querySelectorAll(".admin-tab");
-          const tabButtons = document.querySelectorAll(".tab");
+          const sidebarItems = document.querySelectorAll(".sidebar-item");
           const selectedTab = document.getElementById(
             "admin" + tabName.charAt(0).toUpperCase() + tabName.slice(1)
           );
@@ -911,8 +1056,8 @@
             `[onclick="showAdminTab('${tabName}')"]`
           );
 
-          // Update tab buttons immediately
-          tabButtons.forEach((btn) => btn.classList.remove("active"));
+          // Update sidebar active state
+          sidebarItems.forEach((item) => item.classList.remove("active"));
           if (activeButton) {
             activeButton.classList.add("active");
           }
@@ -942,6 +1087,12 @@
             resolve();
           }, 200);
         });
+      }
+
+      // Mobile sidebar toggle
+      function toggleSidebar() {
+        const sidebar = document.querySelector('.w-80');
+        sidebar.classList.toggle('mobile-open');
       }
 
       // Enhanced page initialization
@@ -981,8 +1132,8 @@
           }
         });
 
-        // Initialize first tab
-        showAdminTab("members");
+        // Initialize dashboard tab
+        showAdminTab("dashboard");
       });
     </script>
   </body>
