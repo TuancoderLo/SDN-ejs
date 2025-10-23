@@ -38,9 +38,17 @@
 
         .tab.active {
             background: linear-gradient(135deg, hsl(var(--p)), hsl(var(--s)));
-            color: white;
+            color: white !important;
             transform: scale(1.05);
             box-shadow: 0 4px 15px hsl(var(--p) / 0.3);
+        }
+
+        .tab.active span {
+            color: white !important;
+        }
+
+        .tab.active i {
+            color: white !important;
         }
 
         .card {
@@ -97,6 +105,34 @@
         .stat:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px hsl(var(--b3) / 0.3);
+        }
+
+        /* Modal fix */
+        .modal-fix {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 9999 !important;
+            background: rgba(0, 0, 0, 0.5) !important;
+            display: none !important;
+        }
+
+        .modal-fix.show {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        /* Ensure proper modal closing */
+        dialog[open] {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 9999 !important;
         }
     </style>
 </head>
@@ -282,7 +318,7 @@
             <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
                 <!-- Personal Information Card -->
                 <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                    <div class="card-body">
+                    <div class="card-body flex flex-col h-full">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
                                 <i class="fas fa-user-edit text-white text-lg"></i>
@@ -290,43 +326,45 @@
                             <h2 class="card-title text-xl">Personal Information</h2>
                         </div>
                         
-                        <form id="profileForm" class="space-y-5">
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text font-semibold flex items-center gap-2">
-                                        <i class="fas fa-user text-primary"></i>
-                                        Full Name
-                                    </span>
-                                </label>
-                                <input type="text" id="profileName" placeholder="Enter your full name" 
-                                       class="input input-bordered input-primary focus:input-primary" required>
+                        <form id="profileForm" class="flex-1 flex flex-col">
+                            <div class="space-y-5 flex-1">
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text font-semibold flex items-center gap-2">
+                                            <i class="fas fa-user text-primary"></i>
+                                            Full Name
+                                        </span>
+                                    </label>
+                                    <input type="text" id="profileName" placeholder="Enter your full name" 
+                                           class="input input-bordered input-primary focus:input-primary" required>
+                                </div>
+                                
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text font-semibold flex items-center gap-2">
+                                            <i class="fas fa-calendar text-primary"></i>
+                                            Year of Birth
+                                        </span>
+                                    </label>
+                                    <input type="number" id="profileYOB" min="1900" max="2024" 
+                                           placeholder="YYYY" class="input input-bordered input-primary focus:input-primary" required>
+                                </div>
+                                
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text font-semibold flex items-center gap-2">
+                                            <i class="fas fa-venus-mars text-primary"></i>
+                                            Gender
+                                        </span>
+                                    </label>
+                                    <select id="profileGender" class="select select-bordered select-primary focus:select-primary" required>
+                                        <option value="true">Male</option>
+                                        <option value="false">Female</option>
+                                    </select>
+                                </div>
                             </div>
                             
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text font-semibold flex items-center gap-2">
-                                        <i class="fas fa-calendar text-primary"></i>
-                                        Year of Birth
-                                    </span>
-                                </label>
-                                <input type="number" id="profileYOB" min="1900" max="2024" 
-                                       placeholder="YYYY" class="input input-bordered input-primary focus:input-primary" required>
-                            </div>
-                            
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text font-semibold flex items-center gap-2">
-                                        <i class="fas fa-venus-mars text-primary"></i>
-                                        Gender
-                                    </span>
-                                </label>
-                                <select id="profileGender" class="select select-bordered select-primary focus:select-primary" required>
-                                    <option value="true">Male</option>
-                                    <option value="false">Female</option>
-                                </select>
-                            </div>
-                            
-                            <div class="card-actions justify-center mt-8">
+                            <div class="card-actions justify-center mt-auto pt-8">
                                 <button type="submit" class="btn btn-primary btn-lg w-full">
                                     <i class="fas fa-save mr-2"></i>
                                     Update Profile
@@ -338,7 +376,7 @@
 
                 <!-- Change Password Card -->
                 <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                    <div class="card-body">
+                    <div class="card-body flex flex-col h-full">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-secondary/80 flex items-center justify-center">
                                 <i class="fas fa-lock text-white text-lg"></i>
@@ -346,30 +384,32 @@
                             <h2 class="card-title text-xl">Change Password</h2>
                         </div>
                         
-                        <form id="passwordForm" class="space-y-5">
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text font-semibold flex items-center gap-2">
-                                        <i class="fas fa-key text-secondary"></i>
-                                        Current Password
-                                    </span>
-                                </label>
-                                <input type="password" id="oldPassword" placeholder="Enter current password" 
-                                       class="input input-bordered input-secondary focus:input-secondary" required>
+                        <form id="passwordForm" class="flex-1 flex flex-col">
+                            <div class="space-y-5 flex-1">
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text font-semibold flex items-center gap-2">
+                                            <i class="fas fa-key text-secondary"></i>
+                                            Current Password
+                                        </span>
+                                    </label>
+                                    <input type="password" id="oldPassword" placeholder="Enter current password" 
+                                           class="input input-bordered input-secondary focus:input-secondary" required>
+                                </div>
+                                
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text font-semibold flex items-center gap-2">
+                                            <i class="fas fa-shield-alt text-secondary"></i>
+                                            New Password
+                                        </span>
+                                    </label>
+                                    <input type="password" id="newPassword" placeholder="Enter new password" 
+                                           class="input input-bordered input-secondary focus:input-secondary" required>
+                                </div>
                             </div>
                             
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text font-semibold flex items-center gap-2">
-                                        <i class="fas fa-shield-alt text-secondary"></i>
-                                        New Password
-                                    </span>
-                                </label>
-                                <input type="password" id="newPassword" placeholder="Enter new password" 
-                                       class="input input-bordered input-secondary focus:input-secondary" required>
-                            </div>
-                            
-                            <div class="card-actions justify-center mt-8">
+                            <div class="card-actions justify-center mt-auto pt-8">
                                 <button type="submit" class="btn btn-secondary btn-lg w-full">
                                     <i class="fas fa-lock mr-2"></i>
                                     Change Password
@@ -491,5 +531,111 @@
     <%- include('partials/footer') %>
     
     <script src="/javascripts/app.js"></script>
+    
+    <!-- Enhanced Modal Fix Script -->
+    <script>
+        // Enhanced modal management
+        function enhancedCloseModal() {
+            // Close all dialog modals
+            const dialogModals = document.querySelectorAll("dialog[open]");
+            dialogModals.forEach((modal) => {
+                modal.close();
+                modal.removeAttribute('open');
+            });
+            
+            // Close all custom modals
+            const customModals = document.querySelectorAll(".modal-fix.show");
+            customModals.forEach((modal) => {
+                modal.classList.remove('show');
+            });
+            
+            // Reset all forms
+            const forms = document.querySelectorAll("form");
+            forms.forEach((form) => {
+                if (form.id === "brandForm" || form.id === "perfumeForm") {
+                    form.reset();
+                    // Clear any dataset attributes
+                    delete form.dataset.mode;
+                    delete form.dataset.perfumeId;
+                }
+            });
+            
+            // Reset modal titles
+            const modalTitles = document.querySelectorAll("#perfumeFormModal h3, #brandFormModal h3");
+            modalTitles.forEach((title) => {
+                if (title.id.includes('perfume')) {
+                    title.textContent = "Add New Perfume";
+                } else if (title.id.includes('brand')) {
+                    title.textContent = "Add New Brand";
+                }
+            });
+            
+            // Clear body scroll lock
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+            
+            // Force reflow to ensure modal is closed
+            document.body.offsetHeight;
+        }
+        
+        // Override the existing closeModal function
+        window.closeModal = enhancedCloseModal;
+        
+        // Add event listeners for modal close buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle modal backdrop clicks
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal-backdrop') || 
+                    e.target.closest('.modal-backdrop')) {
+                    enhancedCloseModal();
+                }
+            });
+            
+            // Handle escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    enhancedCloseModal();
+                }
+            });
+            
+            // Prevent modal content clicks from closing modal
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.modal-content') || 
+                    e.target.closest('.modal-box')) {
+                    e.stopPropagation();
+                }
+            });
+        });
+        
+        // Fix for tab switching issues
+        function showAdminTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.admin-tab');
+            tabs.forEach(tab => {
+                tab.classList.add('hidden');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById('admin' + tabName.charAt(0).toUpperCase() + tabName.slice(1));
+            if (selectedTab) {
+                selectedTab.classList.remove('hidden');
+            }
+            
+            // Update tab buttons
+            const tabButtons = document.querySelectorAll('.tab');
+            tabButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find and activate the correct tab button
+            const activeButton = document.querySelector(`[onclick="showAdminTab('${tabName}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+            
+            // Ensure modal is closed when switching tabs
+            enhancedCloseModal();
+        }
+    </script>
 </body>
 </html>
