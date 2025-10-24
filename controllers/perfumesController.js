@@ -93,6 +93,11 @@ const deletePerfume = async (req, res) => {
 // Member: post a comment on a perfume (one comment per member per perfume)
 const addComment = async (req, res) => {
   try {
+    // Check if user is Admin - Admin cannot comment
+    if (req.user && req.user.isAdmin) {
+      return res.status(403).json({ message: 'Admin users are not allowed to comment on perfumes' });
+    }
+
     const p = await Perfume.findById(req.params.id);
     if (!p) return res.status(404).json({ message: 'Perfume not found' });
     const existing = p.comments.find(c => c.author && c.author.toString() === req.user._id.toString());

@@ -715,7 +715,22 @@
       }
 
       function getCurrentUserId() {
-        // Get current user ID from token or user data
+        // First try to get user ID from stored user data
+        const userString = localStorage.getItem("user") || sessionStorage.getItem("user");
+        
+        if (userString) {
+          try {
+            const user = JSON.parse(userString);
+            if (user && user._id) {
+              console.log("User ID from stored data:", user._id);
+              return user._id;
+            }
+          } catch (e) {
+            console.error("Error parsing stored user data:", e);
+          }
+        }
+
+        // Fallback: Get current user ID from token
         const token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
         console.log("Token found:", !!token);
@@ -860,6 +875,49 @@
         const loginPrompt = document.getElementById("loginPrompt");
 
         if (token) {
+          // Get current user data to check if user is Admin
+          const userString = localStorage.getItem("user") || sessionStorage.getItem("user");
+          let currentUser = null;
+          
+          try {
+            if (userString) {
+              currentUser = JSON.parse(userString);
+            }
+          } catch (e) {
+            console.error("Error parsing user data:", e);
+          }
+
+          // Check if user is Admin - Admin cannot comment
+          if (currentUser && currentUser.isAdmin) {
+            addCommentForm.classList.add("hidden");
+            loginPrompt.classList.add("hidden");
+
+            // Create or update admin message
+            let existingMsg = document.getElementById("adminCommentMessage");
+            if (!existingMsg) {
+              existingMsg = document.createElement("div");
+              existingMsg.id = "adminCommentMessage";
+              existingMsg.className =
+                "mt-6 pt-6 border-t border-white/20 text-center";
+              existingMsg.innerHTML = `
+                            <div class="alert alert-warning">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.232 15.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                </svg>
+                                <span>Với vai trò Admin, bạn không được phép đánh giá sản phẩm.</span>
+                            </div>
+                        `;
+              // Insert after comments container
+              const commentsContainer =
+                document.getElementById("commentsContainer");
+              commentsContainer.parentNode.insertBefore(
+                existingMsg,
+                commentsContainer.nextSibling
+              );
+            }
+            return;
+          }
+
           // Check if user already has a comment
           const currentUserId = getCurrentUserId();
           let userHasComment = false;
@@ -904,14 +962,18 @@
               );
             }
           } else {
-            // User doesn't have a comment, show form
+            // User doesn't have a comment and is not Admin, show form
             addCommentForm.classList.remove("hidden");
             loginPrompt.classList.add("hidden");
 
-            // Remove existing message if it exists
+            // Remove existing messages if they exist
             const existingMsg = document.getElementById("userCommentMessage");
             if (existingMsg) {
               existingMsg.remove();
+            }
+            const adminMsg = document.getElementById("adminCommentMessage");
+            if (adminMsg) {
+              adminMsg.remove();
             }
 
             // Remove existing event listener first to prevent double binding
@@ -929,10 +991,14 @@
           addCommentForm.classList.add("hidden");
           loginPrompt.classList.remove("hidden");
 
-          // Remove existing message if it exists
+          // Remove existing messages if they exist
           const existingMsg = document.getElementById("userCommentMessage");
           if (existingMsg) {
             existingMsg.remove();
+          }
+          const adminMsg = document.getElementById("adminCommentMessage");
+          if (adminMsg) {
+            adminMsg.remove();
           }
         }
       }
