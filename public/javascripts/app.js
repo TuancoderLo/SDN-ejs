@@ -1714,7 +1714,9 @@ async function handleBrandSubmit(e) {
       showNotification("Brand added successfully!", "success");
       document.getElementById("brandForm").reset();
       closeModal();
+      // Refresh both admin brands table and brand dropdown for perfume form
       loadAdminBrands();
+      loadBrands(); // This is crucial for updating perfume form dropdown
     } else {
       showNotification(data.message || "Failed to add brand", "error");
     }
@@ -2189,8 +2191,9 @@ async function deleteBrand(id) {
       } else {
         showNotification("Brand permanently unvalued (no products)", "success");
       }
+      // Refresh both admin brands table and brand dropdown for perfume form
       loadAdminBrands();
-      loadBrands(); // Refresh brand filters
+      loadBrands(); // Refresh brand filters and perfume form dropdown
     } else {
       const errorData = await response.json();
       showNotification(errorData.message || "Failed to unvalue brand", "error");
@@ -2234,8 +2237,9 @@ async function restoreBrand(id) {
       const data = await response.json();
       console.log("Restore success:", data);
       showNotification("Brand valued successfully!", "success");
+      // Refresh both admin brands table and brand dropdown for perfume form
       loadAdminBrands();
-      loadBrands(); // Refresh brand filters
+      loadBrands(); // Refresh brand filters and perfume form dropdown
     } else {
       const errorData = await response.json();
       console.log("Restore error:", errorData);
@@ -2300,8 +2304,9 @@ async function updateBrandFromModal(event) {
     if (response.ok) {
       showNotification("Brand updated successfully!", "success");
       closeEditBrandModal();
+      // Refresh both admin brands table and brand dropdown for perfume form
       loadAdminBrands();
-      loadBrands(); // Refresh brand filters
+      loadBrands(); // Refresh brand filters and perfume form dropdown
     } else {
       const errorData = await response.json();
       showNotification(errorData.message || "Failed to update brand", "error");
