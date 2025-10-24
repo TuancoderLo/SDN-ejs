@@ -7,6 +7,121 @@ let allPerfumes = [];
 let allBrands = [];
 let currentEditId = null;
 
+// Pagination state management
+const paginationState = {
+  members: { currentPage: 1, itemsPerPage: 10, totalItems: 0 },
+  brands: { currentPage: 1, itemsPerPage: 10, totalItems: 0 },
+  perfumes: { currentPage: 1, itemsPerPage: 10, totalItems: 0 },
+};
+
+// Reset pagination when switching tabs
+function resetPagination(tabName) {
+  if (paginationState[tabName]) {
+    paginationState[tabName].currentPage = 1;
+  }
+}
+
+// Create pagination UI
+function createPaginationHTML(tabName, data) {
+  const state = paginationState[tabName];
+  if (!state || !data || data.length <= state.itemsPerPage) {
+    return ""; // No pagination needed
+  }
+
+  state.totalItems = data.length;
+  const totalPages = Math.ceil(state.totalItems / state.itemsPerPage);
+  const currentPage = state.currentPage;
+
+  if (totalPages <= 1) return "";
+
+  let paginationHTML = `
+    <div class="flex justify-center items-center mt-6 gap-2">
+      <div class="join">
+        <button class="join-item btn ${
+          currentPage === 1 ? "btn-disabled" : "btn-outline"
+        }" 
+                onclick="changePage('${tabName}', ${currentPage - 1})" 
+                ${currentPage === 1 ? "disabled" : ""}>
+          <i class="fas fa-chevron-left"></i>
+        </button>
+  `;
+
+  // Show page numbers
+  for (let i = 1; i <= totalPages; i++) {
+    if (
+      i === 1 ||
+      i === totalPages ||
+      (i >= currentPage - 1 && i <= currentPage + 1)
+    ) {
+      paginationHTML += `
+        <button class="join-item btn ${
+          i === currentPage ? "btn-active btn-primary" : "btn-outline"
+        }" 
+                onclick="changePage('${tabName}', ${i})">
+          ${i}
+        </button>
+      `;
+    } else if (i === currentPage - 2 || i === currentPage + 2) {
+      paginationHTML += `<span class="join-item btn btn-disabled">...</span>`;
+    }
+  }
+
+  paginationHTML += `
+        <button class="join-item btn ${
+          currentPage === totalPages ? "btn-disabled" : "btn-outline"
+        }" 
+                onclick="changePage('${tabName}', ${currentPage + 1})" 
+                ${currentPage === totalPages ? "disabled" : ""}>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="text-sm text-gray-500 ml-4">
+        Showing ${(currentPage - 1) * state.itemsPerPage + 1} to 
+        ${Math.min(currentPage * state.itemsPerPage, state.totalItems)} of 
+        ${state.totalItems} entries
+      </div>
+    </div>
+  `;
+
+  return paginationHTML;
+}
+
+// Handle page change - Make it global for HTML onclick
+window.changePage = function (tabName, newPage) {
+  const state = paginationState[tabName];
+  if (!state) return;
+
+  const totalPages = Math.ceil(state.totalItems / state.itemsPerPage);
+
+  if (newPage >= 1 && newPage <= totalPages) {
+    state.currentPage = newPage;
+
+    // Reload the appropriate data
+    switch (tabName) {
+      case "members":
+        loadMembers();
+        break;
+      case "brands":
+        loadAdminBrands();
+        break;
+      case "perfumes":
+        loadAdminPerfumes();
+        break;
+    }
+  }
+};
+
+// Get paginated data
+function getPaginatedData(data, tabName) {
+  const state = paginationState[tabName];
+  if (!state || !data) return data;
+
+  const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+  const endIndex = startIndex + state.itemsPerPage;
+
+  return data.slice(startIndex, endIndex);
+}
+
 // Helper functions
 function safeGetFromStorage(key) {
   try {
@@ -1224,6 +1339,9 @@ async function showAdminTab(tab) {
       tabButton.classList.add("active");
     }
 
+    // CRITICAL: Reset pagination to page 1 when switching tabs
+    resetPagination(tab);
+
     // Load data for selected tab with await to ensure completion
     if (tab === "members") {
       console.log("Loading members data...");
@@ -1270,6 +1388,9 @@ async function loadMembers() {
       const activeMembers = users.filter((user) => !user.isBlocked);
       const blockedMembers = users.filter((user) => user.isBlocked);
 
+      // Get paginated data
+      const paginatedUsers = getPaginatedData(users, "members");
+
       const table = document.getElementById("membersTable");
       if (!table) {
         console.error("membersTable element not found");
@@ -1307,7 +1428,7 @@ async function loadMembers() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${users
+                            ${paginatedUsers
                               .map((user) => {
                                 const isBlocked = user.isBlocked;
                                 const statusBadge = isBlocked
@@ -1355,6 +1476,7 @@ async function loadMembers() {
                         </tbody>
                     </table>
                 </div>
+                ${createPaginationHTML("members", users)}
             `;
     }
   } catch (error) {
@@ -1907,6 +2029,10 @@ async function loadAdminPerfumes() {
           hasImage: !!(p.imageUrl || p.uri),
         }))
       );
+
+      // Get paginated data
+      const paginatedPerfumes = getPaginatedData(perfumes, "perfumes");
+
       const table = document.getElementById("perfumesTable");
       if (!table) {
         console.log("perfumesTable element not found - not on admin page");
@@ -1926,7 +2052,7 @@ async function loadAdminPerfumes() {
                             </tr>
                         </thead>
                         <tbody>
-                            ${perfumes
+                            ${paginatedPerfumes
                               .map(
                                 (perfume) => `
                                 <tr>
@@ -2025,6 +2151,7 @@ async function loadAdminPerfumes() {
                         </tbody>
                     </table>
                 </div>
+                ${createPaginationHTML("perfumes", perfumes)}
             `;
     }
   } catch (error) {
@@ -2057,6 +2184,9 @@ function filterBrands(filter) {
       break;
   }
 
+  // Reset pagination when filtering
+  resetPagination("brands");
+
   // Re-render table with filtered brands
   renderBrandsTable(filteredBrands);
 }
@@ -2068,6 +2198,9 @@ function renderBrandsTable(brands) {
   const deletedBrands = brands.filter(
     (brand) => brand.isDeleted || brand.deletedAt
   );
+
+  // Get paginated data
+  const paginatedBrands = getPaginatedData(brands, "brands");
 
   const table = document.getElementById("brandsTable");
   if (!table) {
@@ -2109,7 +2242,7 @@ function renderBrandsTable(brands) {
                     </tr>
                 </thead>
                 <tbody>
-                    ${brands
+                    ${paginatedBrands
                       .map((brand) => {
                         // Check if brand is deleted (either isDeleted flag or has deletedAt date)
                         const isDeleted = brand.isDeleted || brand.deletedAt;
@@ -2167,6 +2300,7 @@ function renderBrandsTable(brands) {
                 </tbody>
             </table>
         </div>
+        ${createPaginationHTML("brands", brands)}
     `;
 }
 
