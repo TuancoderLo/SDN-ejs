@@ -105,36 +105,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .social-platform::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.3) 0%,
-      transparent 70%
-    );
-    transition: all 0.4s ease;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .social-platform:hover::before {
-    width: 100px;
-    height: 100px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
 
   .social-platform:hover {
-    transform: translateY(-8px) rotate(5deg) scale(1.1);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .social-platform i {
+    font-size: 1.25rem !important;
+    color: white !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: inline-block !important;
+  }
+
+  /* Force FontAwesome icons to display */
+  .social-platform .fab,
+  .social-platform .fas {
+    font-family: "Font Awesome 6 Brands", "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    -webkit-font-smoothing: antialiased !important;
+    display: inline-block !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    line-height: 1 !important;
   }
 
   .contact-info {
@@ -236,41 +235,7 @@
   <div class="footer-content">
     <div class="container mx-auto px-6">
       <!-- Main Content -->
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">
-        <!-- Company Info -->
-        <div class="footer-section">
-          <h3 class="section-title text-2xl">Perfume SDN</h3>
-          <p class="text-white/80 text-sm leading-relaxed mb-6">
-            Founded in 2024, Perfume SDN offers over 100 premium fragrance
-            brands. We are Vietnam's leading perfume website, committed to
-            providing diversity, convenience, cost savings and absolute customer
-            satisfaction.
-          </p>
-          <div class="flex flex-wrap gap-3">
-            <a href="#" class="social-platform bg-blue-600">
-              <i class="fab fa-facebook-f text-white text-xl"></i>
-            </a>
-            <a
-              href="#"
-              class="social-platform bg-gradient-to-r from-purple-500 to-pink-500"
-            >
-              <i class="fab fa-instagram text-white text-xl"></i>
-            </a>
-            <a href="#" class="social-platform bg-red-600">
-              <i class="fab fa-youtube text-white text-xl"></i>
-            </a>
-            <a
-              href="#"
-              class="social-platform bg-gradient-to-r from-black to-gray-800"
-            >
-              <i class="fab fa-tiktok text-white text-xl"></i>
-            </a>
-            <a href="#" class="social-platform bg-blue-400">
-              <i class="fab fa-twitter text-white text-xl"></i>
-            </a>
-          </div>
-        </div>
-
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
         <!-- Quick Links -->
         <div class="footer-section">
           <h3 class="section-title text-xl">Quick Links</h3>
@@ -411,3 +376,25 @@
     </div>
   </div>
 </footer>
+
+<script>
+  // Debug FontAwesome loading
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log(
+      "FontAwesome check:",
+      window.FontAwesome || "FontAwesome not loaded"
+    );
+
+    // Force show social icons after page load
+    setTimeout(function () {
+      const socialIcons = document.querySelectorAll(".social-platform i");
+      socialIcons.forEach(function (icon) {
+        icon.style.display = "inline-block";
+        icon.style.visibility = "visible";
+        icon.style.opacity = "1";
+        icon.style.color = "white";
+        console.log("Social icon processed:", icon.className);
+      });
+    }, 100);
+  });
+</script>
