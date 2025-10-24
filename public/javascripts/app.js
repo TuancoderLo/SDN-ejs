@@ -80,6 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
           showSection("profile");
           loadProfileData(); // Load profile data when showing profile section
         }, 100);
+      } else {
+        // Set home as active by default
+        updateNavbarActiveState("perfumes");
       }
     } else if (isAdminPage) {
       // Auto-load admin members tab with a small delay to ensure DOM is ready
@@ -1546,6 +1549,9 @@ function showSection(sectionId) {
     targetSection.classList.add("active");
   }
 
+  // Update navbar active states
+  updateNavbarActiveState(sectionId);
+
   // Load data for specific sections
   if (sectionId === "profile") {
     loadProfileData();
@@ -1561,6 +1567,35 @@ function showSection(sectionId) {
   if (sectionId === "profile" && window.location.pathname === "/admin") {
     window.location.href = "/?section=profile";
     return;
+  }
+}
+
+// Function to update navbar active state
+function updateNavbarActiveState(activeSection) {
+  // Remove active class from all nav items
+  document.querySelectorAll(".nav-item, .mobile-nav-item").forEach((item) => {
+    item.classList.remove("active");
+  });
+
+  // Add active class to current section nav items
+  if (activeSection === "profile") {
+    const profileLink = document.getElementById("profileLink");
+    const profileLinkMobile = document.querySelector(
+      'a[href="/?section=profile"].mobile-nav-item'
+    );
+    if (profileLink) profileLink.classList.add("active");
+    if (profileLinkMobile) profileLinkMobile.classList.add("active");
+  } else if (activeSection === "perfumes" || !activeSection) {
+    // Home/Perfumes section is active by default
+    const homeLinks = document.querySelectorAll('a[href="/"]');
+    homeLinks.forEach((link) => {
+      if (
+        link.classList.contains("nav-item") ||
+        link.classList.contains("mobile-nav-item")
+      ) {
+        link.classList.add("active");
+      }
+    });
   }
 }
 

@@ -837,10 +837,12 @@
             >
               <div class="card-body p-8">
                 <div class="flex items-center gap-4 mb-8">
-                  <div class="badge badge-lg gold-gradient text-white border-0">
+                  <div
+                    class="badge badge-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white border-0"
+                  >
                     <i class="fas fa-user-edit mr-2"></i>
                   </div>
-                  <h2 class="card-title text-3xl text-gray-800">
+                  <h2 class="card-title text-2xl text-gray-800">
                     Personal Information
                   </h2>
                 </div>
@@ -857,7 +859,7 @@
                       type="text"
                       id="profileName"
                       placeholder="Enter your full name"
-                      class="input input-bordered h-14 text-lg bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      class="input input-bordered h-12 bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
                       required
                     />
                   </div>
@@ -875,7 +877,7 @@
                       min="1900"
                       max="2024"
                       placeholder="YYYY"
-                      class="input input-bordered h-14 text-lg bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      class="input input-bordered h-12 bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
                       required
                     />
                   </div>
@@ -889,7 +891,7 @@
                     </label>
                     <select
                       id="profileGender"
-                      class="select select-bordered h-14 text-lg bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      class="select select-bordered h-12 bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
                       required
                     >
                       <option value="true">Male</option>
@@ -900,7 +902,7 @@
                   <div class="card-actions justify-end mt-8">
                     <button
                       type="submit"
-                      class="btn btn-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg rounded-xl"
+                      class="btn btn-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg rounded-xl border-0 transition-all"
                     >
                       <i class="fas fa-save mr-2"></i>
                       Update Profile
@@ -911,20 +913,26 @@
             </div>
 
             <!-- Change Password Card -->
-            <div class="card bg-base-100 shadow-xl">
-              <div class="card-body">
-                <div class="flex items-center gap-3 mb-6">
-                  <div class="badge badge-secondary badge-lg">
+            <div
+              class="card bg-white/80 backdrop-blur-sm shadow-xl border border-gray-200 rounded-3xl"
+            >
+              <div class="card-body p-8">
+                <div class="flex items-center gap-4 mb-8">
+                  <div
+                    class="badge badge-lg bg-gradient-to-r from-red-500 to-pink-600 text-white border-0"
+                  >
                     <i class="fas fa-lock mr-2"></i>
                   </div>
-                  <h2 class="card-title text-2xl">Change Password</h2>
+                  <h2 class="card-title text-2xl text-gray-800">
+                    Change Password
+                  </h2>
                 </div>
 
-                <form id="passwordForm" class="space-y-4">
+                <form id="passwordForm" class="space-y-6">
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold">
-                        <i class="fas fa-key mr-2 text-secondary"></i>
+                      <span class="label-text font-semibold text-gray-800">
+                        <i class="fas fa-key mr-2 text-red-600"></i>
                         Current Password
                       </span>
                     </label>
@@ -932,15 +940,15 @@
                       type="password"
                       id="oldPassword"
                       placeholder="Enter current password"
-                      class="input input-bordered input-secondary"
+                      class="input input-bordered h-12 bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition-all"
                       required
                     />
                   </div>
 
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold">
-                        <i class="fas fa-shield-alt mr-2 text-secondary"></i>
+                      <span class="label-text font-semibold text-gray-800">
+                        <i class="fas fa-shield-alt mr-2 text-red-600"></i>
                         New Password
                       </span>
                     </label>
@@ -948,13 +956,16 @@
                       type="password"
                       id="newPassword"
                       placeholder="Enter new password"
-                      class="input input-bordered input-secondary"
+                      class="input input-bordered h-12 bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition-all"
                       required
                     />
                   </div>
 
-                  <div class="card-actions justify-end mt-6">
-                    <button type="submit" class="btn btn-secondary btn-lg">
+                  <div class="card-actions justify-end mt-8">
+                    <button
+                      type="submit"
+                      class="btn btn-lg bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white shadow-lg rounded-xl border-0 transition-all"
+                    >
                       <i class="fas fa-lock mr-2"></i>
                       Change Password
                     </button>
@@ -965,48 +976,71 @@
           </div>
 
           <!-- Account Statistics -->
-          <div class="mt-8">
-            <div class="card bg-base-100 shadow-xl">
-              <div class="card-body">
-                <div class="flex items-center gap-3 mb-6">
-                  <div class="badge badge-accent badge-lg">
+          <div class="mt-10">
+            <div
+              class="card bg-white/80 backdrop-blur-sm shadow-xl border border-gray-200 rounded-3xl"
+            >
+              <div class="card-body p-8">
+                <div class="flex items-center gap-4 mb-8">
+                  <div
+                    class="badge badge-lg bg-gradient-to-r from-green-500 to-teal-600 text-white border-0"
+                  >
                     <i class="fas fa-chart-bar mr-2"></i>
                   </div>
-                  <h2 class="card-title text-2xl">Account Statistics</h2>
+                  <h2 class="card-title text-2xl text-gray-800">
+                    Account Statistics
+                  </h2>
                 </div>
 
                 <div
-                  class="stats stats-vertical lg:stats-horizontal shadow w-full"
+                  class="stats stats-vertical lg:stats-horizontal shadow-lg w-full bg-white/50 rounded-2xl"
                 >
                   <div class="stat">
-                    <div class="stat-figure text-primary">
+                    <div class="stat-figure text-blue-600">
                       <i class="fas fa-user text-3xl"></i>
                     </div>
-                    <div class="stat-title">Member Since</div>
-                    <div class="stat-value text-primary" id="memberSince">
+                    <div class="stat-title font-semibold text-gray-600">
+                      Member Since
+                    </div>
+                    <div
+                      class="stat-value text-blue-600 font-bold"
+                      id="memberSince"
+                    >
                       -
                     </div>
-                    <div class="stat-desc">Account created</div>
+                    <div class="stat-desc text-gray-500">Account created</div>
                   </div>
 
                   <div class="stat">
-                    <div class="stat-figure text-secondary">
+                    <div class="stat-figure text-purple-600">
                       <i class="fas fa-comment text-3xl"></i>
                     </div>
-                    <div class="stat-title">Reviews</div>
-                    <div class="stat-value text-secondary" id="reviewCount">
+                    <div class="stat-title font-semibold text-gray-600">
+                      Reviews
+                    </div>
+                    <div
+                      class="stat-value text-purple-600 font-bold"
+                      id="reviewCount"
+                    >
                       0
                     </div>
-                    <div class="stat-desc">Perfume reviews</div>
+                    <div class="stat-desc text-gray-500">Perfume reviews</div>
                   </div>
 
                   <div class="stat">
-                    <div class="stat-figure text-accent">
+                    <div class="stat-figure text-yellow-600">
                       <i class="fas fa-star text-3xl"></i>
                     </div>
-                    <div class="stat-title">Average Rating</div>
-                    <div class="stat-value text-accent" id="avgRating">-</div>
-                    <div class="stat-desc">Your reviews</div>
+                    <div class="stat-title font-semibold text-gray-600">
+                      Average Rating
+                    </div>
+                    <div
+                      class="stat-value text-yellow-600 font-bold"
+                      id="avgRating"
+                    >
+                      -
+                    </div>
+                    <div class="stat-desc text-gray-500">Your reviews</div>
                   </div>
                 </div>
               </div>
