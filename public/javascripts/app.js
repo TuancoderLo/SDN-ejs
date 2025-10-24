@@ -683,27 +683,16 @@ function showLoadingSkeleton() {
         ${Array.from(
           { length: 8 },
           (_, i) => `
-            <div class="card luxury-glass premium-shadow animate-pulse border border-white/20 rounded-3xl overflow-hidden" style="animation-delay: ${
-              i * 0.1
-            }s;">
-                <figure class="relative overflow-hidden bg-gradient-to-br from-white/10 to-white/5">
-                    <div class="h-64 w-full relative">
-                        <div class="absolute inset-4 bg-gradient-to-br from-white/20 to-white/10 rounded-2xl animate-shimmer"></div>
-                        <!-- Premium badge skeleton -->
-                        <div class="absolute top-4 left-4 w-16 h-6 bg-white/30 rounded-full animate-pulse"></div>
-                    </div>
-                </figure>
-                <div class="card-body p-6 space-y-4">
-                    <div class="h-6 bg-gradient-to-r from-white/20 to-white/10 rounded w-3/4 mx-auto animate-pulse"></div>
-                    <div class="h-4 bg-gradient-to-r from-white/20 to-white/10 rounded w-1/2 mx-auto animate-pulse"></div>
-                    <div class="h-8 bg-gradient-to-r from-white/20 to-white/10 rounded-full w-20 mx-auto animate-pulse"></div>
-                    <div class="h-3 bg-gradient-to-r from-white/20 to-white/10 rounded w-16 mx-auto animate-pulse"></div>
-                    <div class="flex justify-center items-center space-x-2 mt-4">
-                        <div class="w-1 h-1 bg-white/30 rounded-full animate-pulse"></div>
-                        <div class="w-2 h-2 bg-white/30 rounded-full animate-pulse"></div>
-                        <div class="w-1 h-1 bg-white/30 rounded-full animate-pulse"></div>
-                    </div>
+            <div class="skeleton-card" style="animation-delay: ${i * 0.1}s;">
+                <div class="h-64 bg-gray-300 rounded-xl mb-4"></div>
+                <div class="h-6 bg-gray-300 rounded mb-3"></div>
+                <div class="h-4 bg-gray-300 rounded w-3/4 mb-4"></div>
+                <div class="flex gap-2 mb-4">
+                    <div class="h-6 bg-gray-300 rounded-full w-16"></div>
+                    <div class="h-6 bg-gray-300 rounded-full w-12"></div>
                 </div>
+                <div class="h-8 bg-gray-300 rounded w-20 mb-4"></div>
+                <div class="h-12 bg-gray-300 rounded"></div>
             </div>
         `
         ).join("")}
@@ -729,31 +718,17 @@ function displayPerfumes(perfumes) {
 
   if (perfumes.length === 0) {
     grid.innerHTML = `
-            <div class="col-span-full text-center py-20">
-                <div class="hero bg-white/90 backdrop-blur-sm shadow-xl rounded-3xl p-16 border border-gray-200 animate-fadeInUp">
-                    <div class="hero-content text-center">
-                        <div class="max-w-lg">
-                            <div class="mb-8 animate-bounce-in">
-                                <div class="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6 animate-float">
-                                    <i class="fas fa-search text-4xl text-white"></i>
-                                </div>
-                            </div>
-                            <h3 class="text-4xl font-bold mb-6 text-gray-800 animate-slide-in-left">No perfumes found</h3>
-                            <p class="text-xl text-gray-600 mb-8 leading-relaxed animate-slide-in-right">
-                                We couldn't find any perfumes matching your criteria. Try adjusting your search or filter settings to discover amazing fragrances.
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp">
-                                <button class="btn btn-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg transition-all duration-300" onclick="document.getElementById('searchInput').value=''; filterPerfumes();">
-                                    <i class="fas fa-refresh mr-2"></i>
-                                    Clear Search
-                                </button>
-                                <button class="btn btn-lg bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white shadow-lg transition-all duration-300" onclick="document.getElementById('brandFilter').value=''; filterPerfumes();">
-                                    <i class="fas fa-filter mr-2"></i>
-                                    Clear Filter
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="empty-state" style="grid-column: 1 / -1;">
+                <i class="fas fa-search"></i>
+                <h3>No perfumes found</h3>
+                <p>We couldn't find any perfumes matching your criteria. Try adjusting your search or filter settings.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button class="btn btn-primary" onclick="document.getElementById('searchInput').value=''; filterPerfumes();">
+                        <i class="fas fa-refresh mr-2"></i>Clear Search
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('brandFilter').value=''; filterPerfumes();">
+                        <i class="fas fa-filter mr-2"></i>Clear Filter
+                    </button>
                 </div>
             </div>
         `;
@@ -766,44 +741,33 @@ function displayPerfumes(perfumes) {
         <div class="perfume-card" style="animation-delay: ${
           index * 0.05
         }s;" onclick="goToPerfumeDetail('${perfume._id}')">
-            <!-- Premium Badge -->
-            <div class="perfume-premium-badge">
-                <i class="fas fa-crown mr-1"></i>Premium
-            </div>
-            
             <!-- Image Section -->
-            <div class="perfume-card-image">
-                <img src="${perfume.imageUrl || perfume.uri || ""}" 
+            <div style="padding: 1.5rem;">
+                <img class="perfume-image" 
+                     src="${perfume.imageUrl || perfume.uri || ""}" 
                      alt="${perfume.perfumeName || "Unknown Perfume"}" 
                      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="flex items-center justify-center w-full h-full bg-gray-100 text-gray-400" style="display: none;">
+                <div class="flex items-center justify-center w-full h-64 bg-gray-100 text-gray-400 rounded-xl" style="display: none;">
                     <div class="text-center">
                         <i class="fas fa-image text-4xl mb-2"></i>
                         <p class="text-sm">No Image</p>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Content Section -->
-            <div class="perfume-card-content">
-                <h3 class="perfume-card-title">${
+                
+                <!-- Content Section -->
+                <h3 class="perfume-title">${
                   perfume.perfumeName || "Unknown Perfume"
                 }</h3>
                 
-                <button class="perfume-card-brand ${
-                  perfume.brand?.isDeleted ? "opacity-60" : ""
-                }" 
-                        onclick="event.stopPropagation(); selectBrandFilter('${
-                          perfume.brand?._id || ""
-                        }')">
+                <div class="perfume-brand">
                     ${
                       perfume.brand ? perfume.brand.brandName : "Unknown Brand"
                     }${perfume.brand?.isDeleted ? " (Deleted)" : ""}
-                </button>
+                </div>
                 
-                <div class="perfume-card-details">
-                    <span class="perfume-detail-badge ${
-                      perfume.targetAudience || "unisex"
+                <div class="perfume-badges">
+                    <span class="gender-badge ${
+                      perfume.targetAudience || "male"
                     }">
                         <i class="fas ${
                           perfume.targetAudience === "male"
@@ -814,27 +778,25 @@ function displayPerfumes(perfumes) {
                         }"></i>
                         ${perfume.targetAudience || "unisex"}
                     </span>
-                    <span class="perfume-detail-badge">
+                    <span class="volume-badge">
                         <i class="fas fa-flask"></i>
                         ${perfume.volume || "100"}ml
                     </span>
-                    ${
-                      perfume.price
-                        ? `<span class="perfume-detail-badge">
-                        <i class="fas fa-dollar-sign"></i>
-                        $${perfume.price}
-                    </span>`
-                        : ""
-                    }
                 </div>
                 
-                <div class="perfume-card-actions">
-                    <a href="#" class="perfume-btn perfume-btn-view" onclick="event.preventDefault(); event.stopPropagation(); goToPerfumeDetail('${
+                ${
+                  perfume.price
+                    ? `<div class="perfume-price">$${perfume.price}</div>`
+                    : ""
+                }
+                
+                <div class="perfume-actions">
+                    <button class="btn-view" onclick="event.preventDefault(); event.stopPropagation(); goToPerfumeDetail('${
                       perfume._id
                     }')">
-                        <i class="fas fa-eye"></i>
+                        <i class="fas fa-eye mr-2"></i>
                         View
-                    </a>
+                    </button>
                     ${
                       (() => {
                         try {
@@ -846,12 +808,12 @@ function displayPerfumes(perfumes) {
                         }
                       })()
                         ? `
-                    <a href="#" class="perfume-btn perfume-btn-edit" onclick="event.preventDefault(); event.stopPropagation(); editPerfume('${perfume._id}')">
+                    <button class="btn-edit" onclick="event.preventDefault(); event.stopPropagation(); editPerfume('${perfume._id}')">
                         <i class="fas fa-edit"></i>
-                        Edit
                     </button>
-                </div>
-                    </a>
+                    <button class="btn-delete" onclick="event.preventDefault(); event.stopPropagation(); deletePerfume('${perfume._id}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
                     `
                         : ""
                     }
