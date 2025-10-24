@@ -530,6 +530,23 @@
         margin-bottom: 1rem;
         opacity: 0.5;
       }
+
+      /* Fix select styling to match inputs */
+      select.input {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 0.5em;
+        padding-right: 2.5rem;
+        cursor: pointer;
+      }
+
+      select.input option {
+        padding: 0.5rem;
+        background: white;
+        color: #374151;
+      }
     </style>
   </head>
   <body
@@ -897,7 +914,7 @@
                     </label>
                     <select
                       id="profileGender"
-                      class="select select-bordered h-12 bg-white text-gray-800 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
+                      class="input input-bordered h-12 bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
                       required
                     >
                       <option value="true">Male</option>
