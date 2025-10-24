@@ -1029,6 +1029,11 @@
           // Show modal with animation
           modal.showModal();
 
+          // Prevent immediate closure
+          setTimeout(() => {
+            modal.setAttribute('data-opened', 'true');
+          }, 100);
+
           // Trigger reflow and animate
           requestAnimationFrame(() => {
             modal.style.opacity = "1";
@@ -1037,6 +1042,14 @@
               modalBox.style.transform = "translateY(0)";
             }
           });
+
+          // Stop any event propagation for modal content
+          const modalBox = modal.querySelector(".modal-box");
+          if (modalBox) {
+            modalBox.addEventListener('click', function(e) {
+              e.stopPropagation();
+            });
+          }
         }
       }
 
@@ -1046,12 +1059,10 @@
 
       // Add event listeners for modal close buttons
       document.addEventListener("DOMContentLoaded", function () {
-        // Handle modal backdrop clicks
+        // Handle modal backdrop clicks ONLY
         document.addEventListener("click", function (e) {
-          if (
-            e.target.classList.contains("modal-backdrop") ||
-            e.target.closest(".modal-backdrop")
-          ) {
+          // Only close modal if clicking directly on modal backdrop, not on modal content
+          if (e.target.classList.contains("modal-backdrop")) {
             enhancedCloseModal();
           }
         });
@@ -1063,13 +1074,13 @@
           }
         });
 
-        // Prevent modal content clicks from closing modal
+        // Prevent ALL modal content clicks from closing modal
         document.addEventListener("click", function (e) {
-          if (
-            e.target.closest(".modal-content") ||
-            e.target.closest(".modal-box")
-          ) {
+          // If click is inside any modal content, prevent any closure
+          if (e.target.closest(".modal-box") || e.target.closest(".modal-content")) {
             e.stopPropagation();
+            e.preventDefault();
+            return false;
           }
         });
       });
@@ -1151,18 +1162,16 @@
         // Optimize transitions
         document.body.style.transition = "padding-right 0.3s ease";
 
-        // Handle modal backdrop clicks with debouncing
+        // Additional safety: Handle modal backdrop clicks with debouncing
         let backdropClickTimeout;
         document.addEventListener("click", function (e) {
-          clearTimeout(backdropClickTimeout);
-          backdropClickTimeout = setTimeout(() => {
-            if (
-              e.target.classList.contains("modal-backdrop") ||
-              (e.target.closest(".modal") && !e.target.closest(".modal-box"))
-            ) {
+          // Only handle if it's a direct modal backdrop click
+          if (e.target.classList.contains("modal-backdrop")) {
+            clearTimeout(backdropClickTimeout);
+            backdropClickTimeout = setTimeout(() => {
               enhancedCloseModal();
-            }
-          }, 10);
+            }, 50);
+          }
         });
 
         // Handle escape key with debouncing
@@ -1173,13 +1182,6 @@
             escapeKeyTimeout = setTimeout(() => {
               enhancedCloseModal();
             }, 10);
-          }
-        });
-
-        // Prevent modal content clicks from closing modal
-        document.addEventListener("click", function (e) {
-          if (e.target.closest(".modal-box")) {
-            e.stopPropagation();
           }
         });
 
