@@ -850,9 +850,11 @@
                 <form id="profileForm" class="space-y-6">
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold text-gray-800">
+                      <span
+                        class="label-text font-semibold text-gray-800 min-w-0 flex-1"
+                      >
                         <i class="fas fa-user mr-2 text-blue-600"></i>
-                        Full Name
+                        <span class="inline-block w-32">Full Name</span>
                       </span>
                     </label>
                     <input
@@ -866,9 +868,11 @@
 
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold text-gray-800">
+                      <span
+                        class="label-text font-semibold text-gray-800 min-w-0 flex-1"
+                      >
                         <i class="fas fa-calendar mr-2 text-blue-600"></i>
-                        Year of Birth
+                        <span class="inline-block w-32">Year of Birth</span>
                       </span>
                     </label>
                     <input
@@ -884,9 +888,11 @@
 
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold text-gray-800">
+                      <span
+                        class="label-text font-semibold text-gray-800 min-w-0 flex-1"
+                      >
                         <i class="fas fa-venus-mars mr-2 text-blue-600"></i>
-                        Gender
+                        <span class="inline-block w-32">Gender</span>
                       </span>
                     </label>
                     <select
@@ -931,9 +937,11 @@
                 <form id="passwordForm" class="space-y-6">
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold text-gray-800">
+                      <span
+                        class="label-text font-semibold text-gray-800 min-w-0 flex-1"
+                      >
                         <i class="fas fa-key mr-2 text-red-600"></i>
-                        Current Password
+                        <span class="inline-block w-32">Current Password</span>
                       </span>
                     </label>
                     <input
@@ -947,9 +955,11 @@
 
                   <div class="form-control">
                     <label class="label">
-                      <span class="label-text font-semibold text-gray-800">
+                      <span
+                        class="label-text font-semibold text-gray-800 min-w-0 flex-1"
+                      >
                         <i class="fas fa-shield-alt mr-2 text-red-600"></i>
-                        New Password
+                        <span class="inline-block w-32">New Password</span>
                       </span>
                     </label>
                     <input
@@ -959,6 +969,21 @@
                       class="input input-bordered h-12 bg-white text-gray-800 placeholder-gray-500 border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 transition-all"
                       required
                     />
+                  </div>
+
+                  <!-- Empty div to match the height of Personal Information form -->
+                  <div class="form-control" style="visibility: hidden">
+                    <label class="label">
+                      <span
+                        class="label-text font-semibold text-gray-800 min-w-0 flex-1"
+                      >
+                        <i class="fas fa-circle mr-2 text-transparent"></i>
+                        <span class="inline-block w-32">&nbsp;</span>
+                      </span>
+                    </label>
+                    <div
+                      class="h-12 input input-bordered bg-transparent border-transparent"
+                    ></div>
                   </div>
 
                   <div class="card-actions justify-end mt-8">
