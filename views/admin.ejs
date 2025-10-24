@@ -243,10 +243,133 @@
         color: white;
       }
 
+      /* Profile Cards Enhancement */
+      .profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: stretch;
+      }
+
+      .profile-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 500px;
+      }
+
+      .profile-card .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .profile-card form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .profile-card .space-y-5 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 1.25rem;
+      }
+
+      .profile-card .form-control {
+        height: 76px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .profile-card .input,
+      .profile-card .select {
+        height: 48px !important;
+        min-height: 48px !important;
+        padding: 0.75rem 1rem !important;
+        font-size: 0.875rem;
+        border-width: 1px;
+        border-radius: 0.5rem;
+      }
+
+      /* Force dropdown to open downward */
+      .profile-card .select {
+        position: relative;
+      }
+
+      .profile-card .select option {
+        background: white;
+        color: #374151;
+        padding: 0.5rem;
+      }
+
+      /* Override DaisyUI dropdown behavior */
+      .profile-card .dropdown,
+      .profile-card .dropdown-content {
+        position: static !important;
+      }
+
+      /* Ensure select dropdown opens downward */
+      select.select-bordered,
+      select.input-bordered {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1em;
+        padding-right: 2.5rem;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+
+      .profile-card .label {
+        margin-bottom: 0.25rem;
+        height: auto;
+      }
+
+      .profile-card .label-text {
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .profile-card .card-actions {
+        margin-top: auto;
+        padding-top: 2rem;
+      }
+
+      /* Ensure enough space for dropdown */
+      .profile-card {
+        min-height: 550px;
+        overflow: visible;
+      }
+
+      .profile-card .card-body {
+        overflow: visible;
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-card form {
+        overflow: visible;
+      }
+
+      /* Fix select dropdown positioning */
+      .profile-card .form-control:last-child {
+        margin-bottom: 2rem;
+      }
+
       /* Dashboard responsive */
       @media (max-width: 1024px) {
         .w-80 {
           width: 16rem;
+        }
+        
+        .profile-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
         }
       }
 
@@ -263,6 +386,15 @@
         
         .w-80.mobile-open {
           left: 0;
+        }
+
+        .profile-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+
+        .profile-card {
+          min-height: 400px;
         }
       }
     </style>
@@ -389,12 +521,7 @@
                   </div>
                 </div>
                 <div class="flex items-center space-x-4">
-                  <div class="stats shadow-sm">
-                    <div class="stat px-4 py-2">
-                      <div class="stat-title text-xs">Active Users</div>
-                      <div class="stat-value text-lg">3</div>
-                    </div>
-                  </div>
+                  <!-- Active Users section removed -->
                 </div>
               </div>
             </div>
@@ -587,10 +714,10 @@
                 </div>
 
             <!-- Main Profile Grid -->
-            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div class="profile-grid">
               <!-- Personal Information Card -->
               <div
-                class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                class="profile-card card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
               >
                 <div class="card-body flex flex-col h-full">
                   <div class="flex items-center gap-3 mb-6">
@@ -677,7 +804,7 @@
 
               <!-- Change Password Card -->
               <div
-                class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
+                class="profile-card card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
               >
                 <div class="card-body flex flex-col h-full">
                   <div class="flex items-center gap-3 mb-6">
@@ -726,6 +853,9 @@
                           required
                         />
                       </div>
+
+                      <!-- Empty placeholder for equal height -->
+                      <div class="form-control"></div>
                     </div>
 
                     <div class="card-actions justify-center mt-auto pt-8">
@@ -741,83 +871,6 @@
                 </div>
               </div>
 
-              <!-- Account Statistics Card -->
-              <div
-                class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300"
-              >
-                <div class="card-body">
-                  <div class="flex items-center gap-3 mb-6">
-                    <div
-                      class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent to-accent/80 flex items-center justify-center"
-                    >
-                      <i class="fas fa-chart-bar text-white text-lg"></i>
-                    </div>
-                    <h2 class="card-title text-xl">Account Statistics</h2>
-                  </div>
-
-                  <div class="space-y-6">
-                    <div class="stat bg-base-200/50 rounded-xl p-4">
-                      <div class="flex items-center justify-between">
-                        <div>
-                          <div class="stat-title text-sm opacity-70">
-                            Member Since
-                          </div>
-                          <div
-                            class="stat-value text-2xl text-primary"
-                            id="memberSince"
-                          >
-                            2025
-                          </div>
-                          <div class="stat-desc text-xs">Account created</div>
-                        </div>
-                        <div class="stat-figure text-primary">
-                          <i class="fas fa-user text-2xl"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="stat bg-base-200/50 rounded-xl p-4">
-                      <div class="flex items-center justify-between">
-                        <div>
-                          <div class="stat-title text-sm opacity-70">
-                            Reviews
-                          </div>
-                          <div
-                            class="stat-value text-2xl text-secondary"
-                            id="reviewCount"
-                          >
-                            0
-                          </div>
-                          <div class="stat-desc text-xs">Perfume reviews</div>
-                        </div>
-                        <div class="stat-figure text-secondary">
-                          <i class="fas fa-comment text-2xl"></i>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="stat bg-base-200/50 rounded-xl p-4">
-                      <div class="flex items-center justify-between">
-                        <div>
-                          <div class="stat-title text-sm opacity-70">
-                            Average Rating
-                          </div>
-                          <div
-                            class="stat-value text-2xl text-accent"
-                            id="avgRating"
-                          >
-                            -
-                          </div>
-                          <div class="stat-desc text-xs">Your reviews</div>
-                        </div>
-                        <div class="stat-figure text-accent">
-                          <i class="fas fa-star text-2xl"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <!-- Quick Actions Section -->
