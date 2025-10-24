@@ -1,440 +1,613 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <style>
-        .luxury-gradient {
-            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #3b82f6 50%, #06b6d4 75%, #0891b2 100%);
+      .luxury-gradient {
+        background: linear-gradient(
+          135deg,
+          #1e3a8a 0%,
+          #1e40af 25%,
+          #3b82f6 50%,
+          #06b6d4 75%,
+          #0891b2 100%
+        );
+      }
+      .premium-blue {
+        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      }
+      .ocean-gradient {
+        background: linear-gradient(
+          135deg,
+          #0ea5e9 0%,
+          #06b6d4 50%,
+          #0891b2 100%
+        );
+      }
+      .glass-morphism {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-        .premium-blue {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        .ocean-gradient {
-            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #0891b2 100%);
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
         }
-        .glass-morphism {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        50% {
+          transform: translateY(-20px);
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      }
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
+        50% {
+          box-shadow: 0 0 40px rgba(59, 130, 0.6);
         }
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(59, 130, 0.6);
-            }
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
         }
-        @keyframes shimmer {
-            0% {
-                background-position: -200% 0;
-            }
-            100% {
-                background-position: 200% 0;
-            }
+        100% {
+          background-position: 200% 0;
         }
-        @keyframes bounce-in {
-            0% {
-                opacity: 0;
-                transform: scale(0.3) translateY(-50px);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05) translateY(0);
-            }
-            70% {
-                transform: scale(0.95);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+      }
+      @keyframes bounce-in {
+        0% {
+          opacity: 0;
+          transform: scale(0.3) translateY(-50px);
         }
-        @keyframes slide-in-left {
-            from {
-                opacity: 0;
-                transform: translateX(-100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        50% {
+          opacity: 1;
+          transform: scale(1.05) translateY(0);
         }
-        @keyframes slide-in-right {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        70% {
+          transform: scale(0.95);
         }
-        @keyframes rotate-in {
-            from {
-                opacity: 0;
-                transform: rotate(-180deg) scale(0.5);
-            }
-            to {
-                opacity: 1;
-                transform: rotate(0deg) scale(1);
-            }
+        100% {
+          opacity: 1;
+          transform: scale(1);
         }
-        .animate-fadeInUp {
-            animation: fadeInUp 0.6s ease-out;
+      }
+      @keyframes slide-in-left {
+        from {
+          opacity: 0;
+          transform: translateX(-100px);
         }
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
+        to {
+          opacity: 1;
+          transform: translateX(0);
         }
-        .animate-pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
+      }
+      @keyframes slide-in-right {
+        from {
+          opacity: 0;
+          transform: translateX(100px);
         }
-        .animate-shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
+        to {
+          opacity: 1;
+          transform: translateX(0);
         }
-        .animate-bounce-in {
-            animation: bounce-in 0.8s ease-out;
+      }
+      @keyframes rotate-in {
+        from {
+          opacity: 0;
+          transform: rotate(-180deg) scale(0.5);
         }
-        .animate-slide-in-left {
-            animation: slide-in-left 0.8s ease-out;
+        to {
+          opacity: 1;
+          transform: rotate(0deg) scale(1);
         }
-        .animate-slide-in-right {
-            animation: slide-in-right 0.8s ease-out;
-        }
-        .animate-rotate-in {
-            animation: rotate-in 1s ease-out;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .btn-hover {
-            transition: all 0.3s ease;
-        }
-        .btn-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
-        }
-        .perfume-image {
-            transition: all 0.3s ease;
-        }
-        .perfume-image:hover {
-            transform: scale(1.05);
-        }
-        /* Custom Scrollbar */
-        .scrollbar-thin {
-            scrollbar-width: thin;
-        }
-        .scrollbar-thin::-webkit-scrollbar {
-            width: 6px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-            background: rgba(59, 130, 246, 0.5);
-            border-radius: 3px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-            background: rgba(59, 130, 246, 0.7);
-        }
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 0.6s ease-out;
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .animate-pulse-glow {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      .animate-shimmer {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        background-size: 200% 100%;
+        animation: shimmer 2s infinite;
+      }
+      .animate-bounce-in {
+        animation: bounce-in 0.8s ease-out;
+      }
+      .animate-slide-in-left {
+        animation: slide-in-left 0.8s ease-out;
+      }
+      .animate-slide-in-right {
+        animation: slide-in-right 0.8s ease-out;
+      }
+      .animate-rotate-in {
+        animation: rotate-in 1s ease-out;
+      }
+      .gradient-text {
+        background: linear-gradient(
+          135deg,
+          #1e40af 0%,
+          #3b82f6 50%,
+          #06b6d4 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .btn-hover {
+        transition: all 0.3s ease;
+      }
+      .btn-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+      }
+      .perfume-image {
+        transition: all 0.3s ease;
+      }
+      .perfume-image:hover {
+        transform: scale(1.05);
+      }
+      /* Custom Scrollbar */
+      .scrollbar-thin {
+        scrollbar-width: thin;
+      }
+      .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: rgba(59, 130, 246, 0.5);
+        border-radius: 3px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: rgba(59, 130, 246, 0.7);
+      }
     </style>
-</head>
-<body class="bg-gradient-to-br from-blue-50 via-white to-cyan-50 min-h-screen relative">
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-50 via-white to-cyan-50 min-h-screen relative"
+  >
     <!-- Background Decorative Elements -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute top-20 left-20 w-32 h-32 bg-blue-200/20 rounded-full animate-float"></div>
-        <div class="absolute top-40 right-20 w-24 h-24 bg-cyan-200/20 rounded-full animate-float" style="animation-delay: 1s;"></div>
-        <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-sky-200/20 rounded-full animate-float" style="animation-delay: 2s;"></div>
-        <div class="absolute bottom-40 right-1/3 w-28 h-28 bg-blue-300/20 rounded-full animate-float" style="animation-delay: 0.5s;"></div>
-        <div class="absolute top-1/2 left-10 w-16 h-16 bg-indigo-200/20 rounded-full animate-float" style="animation-delay: 3s;"></div>
-        <div class="absolute top-1/3 right-1/4 w-12 h-12 bg-teal-200/20 rounded-full animate-float" style="animation-delay: 1.5s;"></div>
+      <div
+        class="absolute top-20 left-20 w-32 h-32 bg-blue-200/20 rounded-full animate-float"
+      ></div>
+      <div
+        class="absolute top-40 right-20 w-24 h-24 bg-cyan-200/20 rounded-full animate-float"
+        style="animation-delay: 1s"
+      ></div>
+      <div
+        class="absolute bottom-20 left-1/4 w-20 h-20 bg-sky-200/20 rounded-full animate-float"
+        style="animation-delay: 2s"
+      ></div>
+      <div
+        class="absolute bottom-40 right-1/3 w-28 h-28 bg-blue-300/20 rounded-full animate-float"
+        style="animation-delay: 0.5s"
+      ></div>
+      <div
+        class="absolute top-1/2 left-10 w-16 h-16 bg-indigo-200/20 rounded-full animate-float"
+        style="animation-delay: 3s"
+      ></div>
+      <div
+        class="absolute top-1/3 right-1/4 w-12 h-12 bg-teal-200/20 rounded-full animate-float"
+        style="animation-delay: 1.5s"
+      ></div>
     </div>
 
     <%- include('partials/navbar') %>
 
     <!-- Main Content -->
     <main class="min-h-screen py-4 md:py-8 relative">
-        <div class="container mx-auto px-2 md:px-4">
-            <!-- Loading State -->
-            <div id="loadingState" class="flex items-center justify-center min-h-[400px]">
-                <div class="text-center">
-                    <div class="loading loading-spinner loading-lg text-primary mb-4"></div>
-                    <p class="text-gray-600">Loading perfume details...</p>
-                </div>
-            </div>
-
-            <!-- Error State -->
-            <div id="errorState" class="hidden">
-                <div class="alert alert-error max-w-md mx-auto">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <span id="errorMessage">Failed to load perfume details</span>
-                </div>
-            </div>
-
-            <!-- Perfume Detail Content -->
-            <div id="perfumeDetail" class="hidden max-w-6xl mx-auto">
-                <!-- Breadcrumb -->
-                <div class="breadcrumbs text-sm mb-6 animate-fadeInUp">
-                    <ul>
-                        <li><a href="/" class="text-primary hover:text-primary-focus">Home</a></li>
-                        <li><a href="/" class="text-primary hover:text-primary-focus">Perfumes</a></li>
-                        <li id="breadcrumbPerfume" class="text-gray-500">Perfume Detail</li>
-                    </ul>
-                </div>
-
-                <!-- Main Detail Card -->
-                <div class="card glass-morphism shadow-2xl border border-white/20 rounded-3xl animate-fadeInUp relative overflow-hidden">
-                    <!-- Shimmer Effect -->
-                    <div class="absolute inset-0 animate-shimmer opacity-30"></div>
-                    
-                    <div class="card-body p-4 md:p-8 relative z-10">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-                            <!-- Left Column - Image -->
-                            <div class="animate-slide-in-left">
-                                <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-xl">
-                                    <img id="perfumeImage" src="" alt="Perfume" class="w-full h-full object-cover perfume-image">
-                                </div>
-                            </div>
-
-                            <!-- Right Column - Details -->
-                            <div class="animate-slide-in-right">
-                                <!-- Brand -->
-                                <div class="mb-4">
-                                    <span id="perfumeBrand" class="badge badge-primary badge-lg text-sm font-semibold"></span>
-                                </div>
-
-                                <!-- Name -->
-                                <h1 id="perfumeName" class="text-4xl font-bold gradient-text mb-4"></h1>
-
-                                <!-- Price -->
-                                <div class="mb-6">
-                                    <span id="perfumePrice" class="text-3xl font-bold text-primary"></span>
-                                </div>
-
-                                <!-- Description -->
-                                <div class="mb-6">
-                                    <h3 class="text-lg font-semibold text-gray-800 mb-3">Description</h3>
-                                    <p id="perfumeDescription" class="text-gray-600 leading-relaxed"></p>
-                                </div>
-
-                                <!-- Details Grid -->
-                                <div class="grid grid-cols-2 gap-4 mb-6">
-                                    <div class="bg-white/50 rounded-xl p-4">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <i class="fas fa-tag text-primary"></i>
-                                            <span class="font-semibold text-gray-700">Category</span>
-                                        </div>
-                                        <span id="perfumeCategory" class="text-gray-600"></span>
-                                    </div>
-                                    <div class="bg-white/50 rounded-xl p-4">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <i class="fas fa-calendar text-primary"></i>
-                                            <span class="font-semibold text-gray-700">Release Year</span>
-                                        </div>
-                                        <span id="perfumeYear" class="text-gray-600"></span>
-                                    </div>
-                                </div>
-
-                                <!-- Action Buttons -->
-                                <div class="flex gap-4">
-                                    <button onclick="addToFavorites()" class="btn btn-outline btn-primary flex-1 btn-hover">
-                                        <i class="fas fa-heart mr-2"></i>
-                                        Add to Favorites
-                                    </button>
-                                    <button onclick="sharePerfume()" class="btn btn-outline btn-secondary flex-1 btn-hover">
-                                        <i class="fas fa-share mr-2"></i>
-                                        Share
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Comments Section -->
-                <div class="mt-12">
-                    <h2 class="text-2xl font-bold gradient-text mb-6 text-center">Customer Reviews</h2>
-                    <div class="card glass-morphism shadow-2xl border border-white/20 rounded-3xl">
-                        <div class="card-body p-4 md:p-8">
-                            <!-- Comments Container -->
-                            <div id="commentsContainer" class="max-h-96 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
-                                <!-- Comments will be loaded here -->
-                            </div>
-                            
-                            <!-- No Comments Message -->
-                            <div id="noCommentsMessage" class="text-center py-8 text-gray-500 hidden">
-                                <i class="fas fa-comments text-4xl mb-4 opacity-50"></i>
-                                <p>No reviews yet. Be the first to review this perfume!</p>
-                            </div>
-                            
-                            <!-- Add Comment Form (if user is logged in) -->
-                            <div id="addCommentForm" class="mt-6 pt-6 border-t border-white/20 hidden">
-                                <h3 class="text-lg font-semibold mb-4">Write a Review</h3>
-                                <form id="commentForm" class="space-y-4">
-                                    <div>
-                                        <label class="label">
-                                            <span class="label-text font-semibold">Rating</span>
-                                        </label>
-                                        <div class="rating rating-lg">
-                                            <input type="radio" name="rating" value="1" class="mask mask-star-2 bg-orange-400" />
-                                            <input type="radio" name="rating" value="2" class="mask mask-star-2 bg-orange-400" />
-                                            <input type="radio" name="rating" value="3" class="mask mask-star-2 bg-orange-400" />
-                                            <input type="radio" name="rating" value="4" class="mask mask-star-2 bg-orange-400" />
-                                            <input type="radio" name="rating" value="5" class="mask mask-star-2 bg-orange-400" checked />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="label">
-                                            <span class="label-text font-semibold">Your Review</span>
-                                        </label>
-                                        <textarea name="content" class="textarea textarea-bordered w-full h-24" placeholder="Share your thoughts about this perfume..."></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-hover">
-                                        <i class="fas fa-paper-plane mr-2"></i>
-                                        Submit Review
-                                    </button>
-                                </form>
-                            </div>
-                            
-                            <!-- Login Prompt (if user is not logged in) -->
-                            <div id="loginPrompt" class="mt-6 pt-6 border-t border-white/20 text-center">
-                                <p class="text-gray-600 mb-4">Want to share your thoughts?</p>
-                                <a href="/login" class="btn btn-outline btn-primary btn-hover" onclick="storeRedirectUrl(window.location.href)">
-                                    <i class="fas fa-sign-in-alt mr-2"></i>
-                                    Login to Review
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Related Perfumes -->
-                <div class="mt-12">
-                    <h2 class="text-2xl font-bold gradient-text mb-6 text-center">Related Perfumes</h2>
-                    <div id="relatedPerfumes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Related perfumes will be loaded here -->
-                    </div>
-                </div>
-            </div>
+      <div class="container mx-auto px-2 md:px-4">
+        <!-- Loading State -->
+        <div
+          id="loadingState"
+          class="flex items-center justify-center min-h-[400px]"
+        >
+          <div class="text-center">
+            <div
+              class="loading loading-spinner loading-lg text-primary mb-4"
+            ></div>
+            <p class="text-gray-600">Loading perfume details...</p>
+          </div>
         </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden">
+          <div class="alert alert-error max-w-md mx-auto">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="errorMessage">Failed to load perfume details</span>
+          </div>
+        </div>
+
+        <!-- Perfume Detail Content -->
+        <div id="perfumeDetail" class="hidden max-w-6xl mx-auto">
+          <!-- Breadcrumb -->
+          <div class="breadcrumbs text-sm mb-6 animate-fadeInUp">
+            <ul>
+              <li>
+                <a href="/" class="text-primary hover:text-primary-focus"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="/" class="text-primary hover:text-primary-focus"
+                  >Perfumes</a
+                >
+              </li>
+              <li id="breadcrumbPerfume" class="text-gray-500">
+                Perfume Detail
+              </li>
+            </ul>
+          </div>
+
+          <!-- Main Detail Card -->
+          <div
+            class="card glass-morphism shadow-2xl border border-white/20 rounded-3xl animate-fadeInUp relative overflow-hidden"
+          >
+            <!-- Shimmer Effect -->
+            <div class="absolute inset-0 animate-shimmer opacity-30"></div>
+
+            <div class="card-body p-4 md:p-8 relative z-10">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+                <!-- Left Column - Image -->
+                <div class="animate-slide-in-left">
+                  <div
+                    class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl overflow-hidden shadow-xl"
+                  >
+                    <img
+                      id="perfumeImage"
+                      src=""
+                      alt="Perfume"
+                      class="w-full h-full object-cover perfume-image"
+                    />
+                  </div>
+                </div>
+
+                <!-- Right Column - Details -->
+                <div class="animate-slide-in-right">
+                  <!-- Brand -->
+                  <div class="mb-4">
+                    <span
+                      id="perfumeBrand"
+                      class="badge badge-primary badge-lg text-sm font-semibold"
+                    ></span>
+                  </div>
+
+                  <!-- Name -->
+                  <h1
+                    id="perfumeName"
+                    class="text-4xl font-bold gradient-text mb-4"
+                  ></h1>
+
+                  <!-- Price -->
+                  <div class="mb-6">
+                    <span
+                      id="perfumePrice"
+                      class="text-3xl font-bold text-primary"
+                    ></span>
+                  </div>
+
+                  <!-- Description -->
+                  <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                      Description
+                    </h3>
+                    <p
+                      id="perfumeDescription"
+                      class="text-gray-600 leading-relaxed"
+                    ></p>
+                  </div>
+
+                  <!-- Details Grid -->
+                  <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-white/50 rounded-xl p-4">
+                      <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-tag text-primary"></i>
+                        <span class="font-semibold text-gray-700"
+                          >Category</span
+                        >
+                      </div>
+                      <span id="perfumeCategory" class="text-gray-600"></span>
+                    </div>
+                    <div class="bg-white/50 rounded-xl p-4">
+                      <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-calendar text-primary"></i>
+                        <span class="font-semibold text-gray-700"
+                          >Release Year</span
+                        >
+                      </div>
+                      <span id="perfumeYear" class="text-gray-600"></span>
+                    </div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div class="flex gap-4">
+                    <button
+                      onclick="addToFavorites()"
+                      class="btn btn-outline btn-primary flex-1 btn-hover"
+                    >
+                      <i class="fas fa-heart mr-2"></i>
+                      Add to Favorites
+                    </button>
+                    <button
+                      onclick="sharePerfume()"
+                      class="btn btn-outline btn-secondary flex-1 btn-hover"
+                    >
+                      <i class="fas fa-share mr-2"></i>
+                      Share
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold gradient-text mb-6 text-center">
+              Customer Reviews
+            </h2>
+            <div
+              class="card glass-morphism shadow-2xl border border-white/20 rounded-3xl"
+            >
+              <div class="card-body p-4 md:p-8">
+                <!-- Comments Container -->
+                <div
+                  id="commentsContainer"
+                  class="max-h-96 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+                >
+                  <!-- Comments will be loaded here -->
+                </div>
+
+                <!-- No Comments Message -->
+                <div
+                  id="noCommentsMessage"
+                  class="text-center py-8 text-gray-500 hidden"
+                >
+                  <i class="fas fa-comments text-4xl mb-4 opacity-50"></i>
+                  <p>No reviews yet. Be the first to review this perfume!</p>
+                </div>
+
+                <!-- Add Comment Form (if user is logged in) -->
+                <div
+                  id="addCommentForm"
+                  class="mt-6 pt-6 border-t border-white/20 hidden"
+                >
+                  <h3 class="text-lg font-semibold mb-4">Write a Review</h3>
+                  <form id="commentForm" class="space-y-4">
+                    <div>
+                      <label class="label">
+                        <span class="label-text font-semibold">Rating</span>
+                      </label>
+                      <div class="rating rating-lg">
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="1"
+                          class="mask mask-star-2 bg-orange-400"
+                        />
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="2"
+                          class="mask mask-star-2 bg-orange-400"
+                        />
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="3"
+                          class="mask mask-star-2 bg-orange-400"
+                        />
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="4"
+                          class="mask mask-star-2 bg-orange-400"
+                        />
+                        <input
+                          type="radio"
+                          name="rating"
+                          value="5"
+                          class="mask mask-star-2 bg-orange-400"
+                          checked
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label class="label">
+                        <span class="label-text font-semibold"
+                          >Your Review</span
+                        >
+                      </label>
+                      <textarea
+                        name="content"
+                        class="textarea textarea-bordered w-full h-24"
+                        placeholder="Share your thoughts about this perfume..."
+                      ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-hover">
+                      <i class="fas fa-paper-plane mr-2"></i>
+                      Submit Review
+                    </button>
+                  </form>
+                </div>
+
+                <!-- Login Prompt (if user is not logged in) -->
+                <div
+                  id="loginPrompt"
+                  class="mt-6 pt-6 border-t border-white/20 text-center"
+                >
+                  <p class="text-gray-600 mb-4">Want to share your thoughts?</p>
+                  <a
+                    href="/login"
+                    class="btn btn-outline btn-primary btn-hover"
+                    onclick="storeRedirectUrl(window.location.href)"
+                  >
+                    <i class="fas fa-sign-in-alt mr-2"></i>
+                    Login to Review
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Related Perfumes -->
+          <div class="mt-12">
+            <h2 class="text-2xl font-bold gradient-text mb-6 text-center">
+              Related Perfumes
+            </h2>
+            <div
+              id="relatedPerfumes"
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              <!-- Related perfumes will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <!-- Toast Container -->
     <div id="toast-container" class="toast toast-top toast-end z-50">
-        <div id="toast" class="alert hidden shadow-2xl glass-morphism animate-fadeInUp">
-            <div class="flex items-center gap-3">
-                <div id="toast-icon" class="text-xl"></div>
-                <span id="toast-message" class="font-semibold"></span>
-            </div>
-            <button id="toast-close" class="btn btn-sm btn-circle btn-ghost hover:bg-white/20 transition-all duration-300">✕</button>
+      <div
+        id="toast"
+        class="alert hidden shadow-2xl glass-morphism animate-fadeInUp"
+      >
+        <div class="flex items-center gap-3">
+          <div id="toast-icon" class="text-xl"></div>
+          <span id="toast-message" class="font-semibold"></span>
         </div>
+        <button
+          id="toast-close"
+          class="btn btn-sm btn-circle btn-ghost hover:bg-white/20 transition-all duration-300"
+        >
+          ✕
+        </button>
+      </div>
     </div>
 
     <script src="/javascripts/app.js"></script>
     <script>
-        // Get perfume ID from URL
-        const perfumeId = '<%= perfumeId %>';
-        
-        // Load perfume details when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadPerfumeDetail(perfumeId);
+      // Get perfume ID from URL
+      const perfumeId = "<%= perfumeId %>";
+
+      // Load perfume details when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        loadPerfumeDetail(perfumeId);
+      });
+
+      async function loadPerfumeDetail(id) {
+        try {
+          console.log("Loading perfume detail for ID:", id);
+          const response = await fetch(`/api/public/perfumes/${id}`);
+          if (!response.ok) {
+            throw new Error("Perfume not found");
+          }
+
+          const perfume = await response.json();
+          console.log("Perfume data from backend:", perfume);
+          displayPerfumeDetail(perfume);
+          loadRelatedPerfumes(perfume.brand);
+        } catch (error) {
+          console.error("Error loading perfume:", error);
+          showError("Failed to load perfume details");
+        }
+      }
+
+      function displayComments(comments) {
+        const container = document.getElementById("commentsContainer");
+        const noCommentsMessage = document.getElementById("noCommentsMessage");
+
+        if (!comments || comments.length === 0) {
+          container.innerHTML = "";
+          noCommentsMessage.classList.remove("hidden");
+          return;
+        }
+
+        noCommentsMessage.classList.add("hidden");
+        container.innerHTML = "";
+
+        comments.forEach((comment) => {
+          const commentElement = createCommentElement(comment);
+          container.appendChild(commentElement);
+        });
+      }
+
+      function createCommentElement(comment) {
+        const div = document.createElement("div");
+
+        // Check if current user owns this comment
+        const currentUserId = getCurrentUserId();
+        const commentAuthorId = comment.author?._id || comment.author;
+        const isOwner =
+          currentUserId &&
+          commentAuthorId &&
+          currentUserId.toString() === commentAuthorId.toString();
+
+        // Apply different styling for owner's comments
+        const baseClasses = "rounded-xl p-4 border";
+        const ownerClasses = isOwner
+          ? "bg-blue-50/80 border-blue-300 shadow-blue-100 shadow-md"
+          : "bg-white/50 border-white/20";
+
+        div.className = `${baseClasses} ${ownerClasses}`;
+        div.setAttribute("data-comment-id", comment._id);
+
+        const stars =
+          "★".repeat(comment.rating) + "☆".repeat(5 - comment.rating);
+        const authorName = comment.author?.name || "Anonymous";
+        const date = new Date(comment.createdAt).toLocaleDateString();
+
+        console.log("Comment ownership check:", {
+          commentId: comment._id,
+          currentUserId: currentUserId,
+          commentAuthorId: commentAuthorId,
+          isOwner: isOwner,
+          comment: comment,
         });
 
-        async function loadPerfumeDetail(id) {
-            try {
-                console.log('Loading perfume detail for ID:', id);
-                const response = await fetch(`/api/public/perfumes/${id}`);
-                if (!response.ok) {
-                    throw new Error('Perfume not found');
-                }
-                
-                const perfume = await response.json();
-                console.log('Perfume data from backend:', perfume);
-                displayPerfumeDetail(perfume);
-                loadRelatedPerfumes(perfume.brand);
-                
-            } catch (error) {
-                console.error('Error loading perfume:', error);
-                showError('Failed to load perfume details');
-            }
-        }
+        // Show edit/delete buttons only for comment owner
+        const showButtons = isOwner;
 
-        function displayComments(comments) {
-            const container = document.getElementById('commentsContainer');
-            const noCommentsMessage = document.getElementById('noCommentsMessage');
-            
-            if (!comments || comments.length === 0) {
-                container.innerHTML = '';
-                noCommentsMessage.classList.remove('hidden');
-                return;
-            }
-            
-            noCommentsMessage.classList.add('hidden');
-            container.innerHTML = '';
-            
-            comments.forEach(comment => {
-                const commentElement = createCommentElement(comment);
-                container.appendChild(commentElement);
-            });
-        }
-
-        function createCommentElement(comment) {
-            const div = document.createElement('div');
-            div.className = 'bg-white/50 rounded-xl p-4 border border-white/20';
-            div.setAttribute('data-comment-id', comment._id);
-            
-            const stars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
-            const authorName = comment.author?.name || 'Anonymous';
-            const date = new Date(comment.createdAt).toLocaleDateString();
-            
-            // Check if current user owns this comment
-            const currentUserId = getCurrentUserId();
-            const commentAuthorId = comment.author?._id || comment.author;
-            const isOwner = currentUserId && commentAuthorId && currentUserId.toString() === commentAuthorId.toString();
-            
-            console.log('Comment ownership check:', {
-                commentId: comment._id,
-                currentUserId: currentUserId,
-                commentAuthorId: commentAuthorId,
-                isOwner: isOwner,
-                comment: comment
-            });
-            
-            // For testing: show buttons for all comments if user is logged in
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            const showButtons = isOwner || (token && currentUserId); // Show buttons if owner OR if user is logged in (for testing)
-            
-            const actionButtons = showButtons ? `
+        const actionButtons = showButtons
+          ? `
                 <div class="flex gap-2">
                     <button onclick="editComment('${comment._id}')" 
                             class="btn btn-ghost btn-xs text-blue-600 hover:bg-blue-50">
@@ -451,18 +624,40 @@
                         Xóa
                     </button>
                 </div>
-            ` : '';
-            
-            div.innerHTML = `
+            `
+          : "";
+
+        // Owner badge for user's own comments
+        const ownerBadge = isOwner
+          ? `
+                <div class="badge badge-primary badge-sm mr-2">
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2L13.09 8.26L20 9L15 13.74L16.18 20.5L10 17L3.82 20.5L5 13.74L0 9L6.91 8.26L10 2Z" clip-rule="evenodd"/>
+                    </svg>
+                    Bình luận của bạn
+                </div>
+            `
+          : "";
+
+        div.innerHTML = `
                 <div class="flex items-start justify-between mb-2">
                     <div class="flex items-center gap-2">
                         <div class="avatar placeholder">
-                            <div class="bg-primary text-primary-content rounded-full w-8">
-                                <span class="text-xs">${authorName.charAt(0).toUpperCase()}</span>
+                            <div class="bg-primary text-primary-content rounded-full w-8 ${
+                              isOwner ? "ring-2 ring-blue-400" : ""
+                            }">
+                                <span class="text-xs">${authorName
+                                  .charAt(0)
+                                  .toUpperCase()}</span>
                             </div>
                         </div>
                         <div>
-                            <p class="font-semibold text-sm">${authorName}</p>
+                            <div class="flex items-center gap-2 mb-1">
+                                <p class="font-semibold text-sm ${
+                                  isOwner ? "text-blue-700" : ""
+                                }">${authorName}</p>
+                                ${ownerBadge}
+                            </div>
                             <div class="text-yellow-400 text-sm">${stars}</div>
                         </div>
                     </div>
@@ -472,292 +667,402 @@
                     </div>
                 </div>
                 <div class="comment-content">
-                    <p class="text-gray-700 text-sm leading-relaxed">${comment.content}</p>
+                    <p class="text-gray-700 text-sm leading-relaxed">${
+                      comment.content
+                    }</p>
                 </div>
                 <div class="comment-edit-form hidden mt-3">
                     <form onsubmit="saveCommentEdit(event, '${comment._id}')">
                         <div class="mb-3">
                             <label class="block text-sm font-medium text-gray-700 mb-2">Đánh giá:</label>
-                            <div class="rating rating-lg" id="editRating-${comment._id}">
-                                <input type="radio" name="rating" value="1" class="mask mask-star-2 bg-orange-400" ${comment.rating === 1 ? 'checked' : ''} />
-                                <input type="radio" name="rating" value="2" class="mask mask-star-2 bg-orange-400" ${comment.rating === 2 ? 'checked' : ''} />
-                                <input type="radio" name="rating" value="3" class="mask mask-star-2 bg-orange-400" ${comment.rating === 3 ? 'checked' : ''} />
-                                <input type="radio" name="rating" value="4" class="mask mask-star-2 bg-orange-400" ${comment.rating === 4 ? 'checked' : ''} />
-                                <input type="radio" name="rating" value="5" class="mask mask-star-2 bg-orange-400" ${comment.rating === 5 ? 'checked' : ''} />
+                            <div class="rating rating-lg" id="editRating-${
+                              comment._id
+                            }">
+                                <input type="radio" name="rating" value="1" class="mask mask-star-2 bg-orange-400" ${
+                                  comment.rating === 1 ? "checked" : ""
+                                } />
+                                <input type="radio" name="rating" value="2" class="mask mask-star-2 bg-orange-400" ${
+                                  comment.rating === 2 ? "checked" : ""
+                                } />
+                                <input type="radio" name="rating" value="3" class="mask mask-star-2 bg-orange-400" ${
+                                  comment.rating === 3 ? "checked" : ""
+                                } />
+                                <input type="radio" name="rating" value="4" class="mask mask-star-2 bg-orange-400" ${
+                                  comment.rating === 4 ? "checked" : ""
+                                } />
+                                <input type="radio" name="rating" value="5" class="mask mask-star-2 bg-orange-400" ${
+                                  comment.rating === 5 ? "checked" : ""
+                                } />
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nội dung:</label>
-                            <textarea name="content" class="textarea textarea-bordered w-full" rows="3" required>${comment.content}</textarea>
+                            <textarea name="content" class="textarea textarea-bordered w-full" rows="3" required>${
+                              comment.content
+                            }</textarea>
                         </div>
                         <div class="flex gap-2">
                             <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-                            <button type="button" onclick="cancelEdit('${comment._id}')" class="btn btn-ghost btn-sm">Hủy</button>
+                            <button type="button" onclick="cancelEdit('${
+                              comment._id
+                            }')" class="btn btn-ghost btn-sm">Hủy</button>
                         </div>
                     </form>
                 </div>
             `;
-            
-            return div;
+
+        return div;
+      }
+
+      function getCurrentUserId() {
+        // Get current user ID from token or user data
+        const token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
+        console.log("Token found:", !!token);
+
+        if (!token) {
+          console.log("No token found");
+          return null;
         }
 
-        function getCurrentUserId() {
-            // Get current user ID from token or user data
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            console.log('Token found:', !!token);
-            
-            if (!token) {
-                console.log('No token found');
-                return null;
-            }
-            
-            try {
-                // Decode JWT token to get user ID
-                const payload = JSON.parse(atob(token.split('.')[1]));
-                const userId = payload.userId || payload._id || payload.id;
-                console.log('Decoded token payload:', payload);
-                console.log('Extracted user ID:', userId);
-                return userId;
-            } catch (e) {
-                console.error('Error decoding token:', e);
-                return null;
-            }
+        try {
+          // Decode JWT token to get user ID
+          const payload = JSON.parse(atob(token.split(".")[1]));
+          const userId = payload.userId || payload._id || payload.id;
+          console.log("Decoded token payload:", payload);
+          console.log("Extracted user ID:", userId);
+          return userId;
+        } catch (e) {
+          console.error("Error decoding token:", e);
+          return null;
+        }
+      }
+
+      function editComment(commentId) {
+        const commentElement = document.querySelector(
+          `[data-comment-id="${commentId}"]`
+        );
+        if (!commentElement) return;
+
+        const contentDiv = commentElement.querySelector(".comment-content");
+        const editForm = commentElement.querySelector(".comment-edit-form");
+
+        contentDiv.classList.add("hidden");
+        editForm.classList.remove("hidden");
+      }
+
+      function cancelEdit(commentId) {
+        const commentElement = document.querySelector(
+          `[data-comment-id="${commentId}"]`
+        );
+        if (!commentElement) return;
+
+        const contentDiv = commentElement.querySelector(".comment-content");
+        const editForm = commentElement.querySelector(".comment-edit-form");
+
+        contentDiv.classList.remove("hidden");
+        editForm.classList.add("hidden");
+      }
+
+      async function saveCommentEdit(event, commentId) {
+        event.preventDefault();
+
+        // Check if user is logged in
+        const token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
+        if (!token) {
+          // Store current page URL for redirect after login
+          storeRedirectUrl(window.location.href);
+          alert("Vui lòng đăng nhập để chỉnh sửa comment");
+          window.location.href = "/login";
+          return;
         }
 
-        function editComment(commentId) {
-            const commentElement = document.querySelector(`[data-comment-id="${commentId}"]`);
-            if (!commentElement) return;
-            
-            const contentDiv = commentElement.querySelector('.comment-content');
-            const editForm = commentElement.querySelector('.comment-edit-form');
-            
-            contentDiv.classList.add('hidden');
-            editForm.classList.remove('hidden');
+        const formData = new FormData(event.target);
+        const rating = parseInt(formData.get("rating"));
+        const content = formData.get("content");
+
+        try {
+          const perfumeId = window.location.pathname.split("/").pop();
+
+          const response = await fetch(
+            `/api/perfumes/${perfumeId}/comments/${commentId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ rating, content }),
+            }
+          );
+
+          if (response.ok) {
+            // Reload the page to show updated comment
+            window.location.reload();
+          } else {
+            const error = await response.json();
+            alert("Lỗi khi cập nhật comment: " + error.message);
+          }
+        } catch (error) {
+          console.error("Error updating comment:", error);
+          alert("Có lỗi xảy ra khi cập nhật comment");
+        }
+      }
+
+      async function deleteComment(commentId) {
+        if (!confirm("Bạn có chắc chắn muốn xóa comment này?")) {
+          return;
         }
 
-        function cancelEdit(commentId) {
-            const commentElement = document.querySelector(`[data-comment-id="${commentId}"]`);
-            if (!commentElement) return;
-            
-            const contentDiv = commentElement.querySelector('.comment-content');
-            const editForm = commentElement.querySelector('.comment-edit-form');
-            
-            contentDiv.classList.remove('hidden');
-            editForm.classList.add('hidden');
+        // Check if user is logged in
+        const token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
+        if (!token) {
+          // Store current page URL for redirect after login
+          storeRedirectUrl(window.location.href);
+          alert("Vui lòng đăng nhập để xóa comment");
+          window.location.href = "/login";
+          return;
         }
 
-        async function saveCommentEdit(event, commentId) {
-            event.preventDefault();
-            
-            // Check if user is logged in
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            if (!token) {
-                // Store current page URL for redirect after login
-                storeRedirectUrl(window.location.href);
-                alert('Vui lòng đăng nhập để chỉnh sửa comment');
-                window.location.href = '/login';
-                return;
+        try {
+          const perfumeId = window.location.pathname.split("/").pop();
+
+          const response = await fetch(
+            `/api/perfumes/${perfumeId}/comments/${commentId}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-            
-            const formData = new FormData(event.target);
-            const rating = parseInt(formData.get('rating'));
-            const content = formData.get('content');
-            
-            try {
-                const perfumeId = window.location.pathname.split('/').pop();
-                
-                const response = await fetch(`/api/perfumes/${perfumeId}/comments/${commentId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ rating, content })
-                });
-                
-                if (response.ok) {
-                    // Reload the page to show updated comment
-                    window.location.reload();
-                } else {
-                    const error = await response.json();
-                    alert('Lỗi khi cập nhật comment: ' + error.message);
-                }
-            } catch (error) {
-                console.error('Error updating comment:', error);
-                alert('Có lỗi xảy ra khi cập nhật comment');
+          );
+
+          if (response.ok) {
+            // Reload the page to show updated comments
+            window.location.reload();
+          } else {
+            const error = await response.json();
+            alert("Lỗi khi xóa comment: " + error.message);
+          }
+        } catch (error) {
+          console.error("Error deleting comment:", error);
+          alert("Có lỗi xảy ra khi xóa comment");
+        }
+      }
+
+      function checkUserLoginStatus() {
+        // Check if user is logged in (you can implement this based on your auth system)
+        const token =
+          localStorage.getItem("token") || sessionStorage.getItem("token");
+        const addCommentForm = document.getElementById("addCommentForm");
+        const loginPrompt = document.getElementById("loginPrompt");
+
+        if (token) {
+          // Check if user already has a comment
+          const currentUserId = getCurrentUserId();
+          let userHasComment = false;
+
+          if (currentUserId) {
+            const commentsList = document.querySelectorAll("[data-comment-id]");
+            for (const commentEl of commentsList) {
+              const ownerBadge = commentEl.querySelector(".badge-primary");
+              if (ownerBadge) {
+                userHasComment = true;
+                break;
+              }
             }
+          }
+
+          if (userHasComment) {
+            // User already has a comment, show message instead of form
+            addCommentForm.classList.add("hidden");
+            loginPrompt.classList.add("hidden");
+
+            // Create or update existing comment message
+            let existingMsg = document.getElementById("userCommentMessage");
+            if (!existingMsg) {
+              existingMsg = document.createElement("div");
+              existingMsg.id = "userCommentMessage";
+              existingMsg.className =
+                "mt-6 pt-6 border-t border-white/20 text-center";
+              existingMsg.innerHTML = `
+                            <div class="alert alert-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Bạn đã đánh giá sản phẩm này. Mỗi người chỉ được đánh giá một lần!</span>
+                            </div>
+                        `;
+              // Insert after comments container
+              const commentsContainer =
+                document.getElementById("commentsContainer");
+              commentsContainer.parentNode.insertBefore(
+                existingMsg,
+                commentsContainer.nextSibling
+              );
+            }
+          } else {
+            // User doesn't have a comment, show form
+            addCommentForm.classList.remove("hidden");
+            loginPrompt.classList.add("hidden");
+
+            // Remove existing message if it exists
+            const existingMsg = document.getElementById("userCommentMessage");
+            if (existingMsg) {
+              existingMsg.remove();
+            }
+
+            // Remove existing event listener first to prevent double binding
+            const form = document.getElementById("commentForm");
+            if (form) {
+              // Clone the form to remove all event listeners
+              const newForm = form.cloneNode(true);
+              form.parentNode.replaceChild(newForm, form);
+
+              // Add single event listener
+              newForm.addEventListener("submit", handleCommentSubmit);
+            }
+          }
+        } else {
+          addCommentForm.classList.add("hidden");
+          loginPrompt.classList.remove("hidden");
+
+          // Remove existing message if it exists
+          const existingMsg = document.getElementById("userCommentMessage");
+          if (existingMsg) {
+            existingMsg.remove();
+          }
+        }
+      }
+
+      function displayPerfumeDetail(perfume) {
+        console.log("Displaying perfume detail:", perfume);
+
+        // Hide loading, show content
+        document.getElementById("loadingState").classList.add("hidden");
+        document.getElementById("perfumeDetail").classList.remove("hidden");
+
+        // Update content - handle both formatted and raw data
+        const perfumeName =
+          perfume.name || perfume.perfumeName || "Unknown Perfume";
+        const brandName =
+          typeof perfume.brand === "string"
+            ? perfume.brand
+            : perfume.brand?.brandName || "Unknown Brand";
+
+        // Update page title
+        document.title = `${perfumeName} - Perfume SDN`;
+
+        // Update breadcrumb
+        document.getElementById("breadcrumbPerfume").textContent = perfumeName;
+
+        document.getElementById("perfumeName").textContent = perfumeName;
+        document.getElementById("perfumeBrand").textContent = brandName;
+        document.getElementById("perfumePrice").textContent = `$${
+          perfume.price || 0
+        }`;
+        document.getElementById("perfumeDescription").textContent =
+          perfume.description || "No description available.";
+        document.getElementById("perfumeCategory").textContent =
+          perfume.category || perfume.targetAudience || "N/A";
+        document.getElementById("perfumeYear").textContent =
+          perfume.releaseYear || "N/A";
+
+        // Update image with better fallback
+        const image = document.getElementById("perfumeImage");
+
+        // Use imageUrl first, then uri - prioritize actual product images
+        let imageSrc = "";
+        if (perfume.imageUrl && perfume.imageUrl.includes("unsplash.com")) {
+          // If imageUrl is from unsplash, prefer uri if it's a product image
+          imageSrc = perfume.uri || perfume.imageUrl;
+        } else {
+          // Otherwise use imageUrl first
+          imageSrc = perfume.imageUrl || perfume.uri;
         }
 
-        async function deleteComment(commentId) {
-            if (!confirm('Bạn có chắc chắn muốn xóa comment này?')) {
-                return;
-            }
-            
-            // Check if user is logged in
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            if (!token) {
-                // Store current page URL for redirect after login
-                storeRedirectUrl(window.location.href);
-                alert('Vui lòng đăng nhập để xóa comment');
-                window.location.href = '/login';
-                return;
-            }
-            
-            try {
-                const perfumeId = window.location.pathname.split('/').pop();
-                
-                const response = await fetch(`/api/perfumes/${perfumeId}/comments/${commentId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
-                if (response.ok) {
-                    // Reload the page to show updated comments
-                    window.location.reload();
-                } else {
-                    const error = await response.json();
-                    alert('Lỗi khi xóa comment: ' + error.message);
-                }
-            } catch (error) {
-                console.error('Error deleting comment:', error);
-                alert('Có lỗi xảy ra khi xóa comment');
-            }
+        console.log("Image sources:", {
+          imageUrl: perfume.imageUrl,
+          uri: perfume.uri,
+          finalSrc: imageSrc,
+          perfumeName: perfumeName,
+        });
+
+        if (imageSrc && imageSrc.trim() !== "") {
+          console.log("Setting image src to:", imageSrc);
+          image.src = imageSrc;
+          image.alt = perfumeName;
+          image.onerror = function () {
+            console.log("Image failed to load:", imageSrc);
+            // If image fails to load, show "No image" message
+            this.style.display = "none";
+            const container = this.parentElement;
+            const noImageDiv = document.createElement("div");
+            noImageDiv.className =
+              "absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-lg";
+            noImageDiv.innerHTML = "<span>Không có ảnh</span>";
+            container.appendChild(noImageDiv);
+          };
+        } else {
+          console.log("No image source available");
+          // Show "No image" message directly
+          image.style.display = "none";
+          const container = image.parentElement;
+          const noImageDiv = document.createElement("div");
+          noImageDiv.className =
+            "absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-lg";
+          noImageDiv.innerHTML = "<span>Không có ảnh</span>";
+          container.appendChild(noImageDiv);
         }
 
-        function checkUserLoginStatus() {
-            // Check if user is logged in (you can implement this based on your auth system)
-            const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-            const addCommentForm = document.getElementById('addCommentForm');
-            const loginPrompt = document.getElementById('loginPrompt');
-            
-            if (token) {
-                addCommentForm.classList.remove('hidden');
-                loginPrompt.classList.add('hidden');
-                
-                // Add form submission handler
-                document.getElementById('commentForm').addEventListener('submit', handleCommentSubmit);
-            } else {
-                addCommentForm.classList.add('hidden');
-                loginPrompt.classList.remove('hidden');
-            }
+        // Load and display comments
+        displayComments(perfume.comments || []);
+
+        // Check if user is logged in and show appropriate form
+        checkUserLoginStatus();
+      }
+
+      async function loadRelatedPerfumes(brand) {
+        try {
+          const response = await fetch("/api/public/perfumes");
+          const perfumes = await response.json();
+
+          // Filter related perfumes (same brand, different perfume)
+          const related = perfumes
+            .filter((p) => p.brand === brand && p._id !== perfumeId)
+            .slice(0, 3);
+
+          const container = document.getElementById("relatedPerfumes");
+          container.innerHTML = "";
+
+          if (related.length === 0) {
+            container.innerHTML =
+              '<p class="text-gray-500 text-center col-span-full">No related perfumes found.</p>';
+            return;
+          }
+
+          related.forEach((perfume) => {
+            const card = createPerfumeCard(perfume);
+            container.appendChild(card);
+          });
+        } catch (error) {
+          console.error("Error loading related perfumes:", error);
         }
+      }
 
-        function displayPerfumeDetail(perfume) {
-            console.log('Displaying perfume detail:', perfume);
-            
-            // Hide loading, show content
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('perfumeDetail').classList.remove('hidden');
+      function createPerfumeCard(perfume) {
+        const card = document.createElement("div");
+        card.className =
+          "card bg-white/80 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl overflow-hidden cursor-pointer";
+        card.onclick = () => (window.location.href = `/perfume/${perfume._id}`);
 
-            // Update content - handle both formatted and raw data
-            const perfumeName = perfume.name || perfume.perfumeName || 'Unknown Perfume';
-            const brandName = typeof perfume.brand === 'string' ? perfume.brand : (perfume.brand?.brandName || 'Unknown Brand');
-
-            // Update page title
-            document.title = `${perfumeName} - Perfume SDN`;
-
-            // Update breadcrumb
-            document.getElementById('breadcrumbPerfume').textContent = perfumeName;
-            
-            document.getElementById('perfumeName').textContent = perfumeName;
-            document.getElementById('perfumeBrand').textContent = brandName;
-            document.getElementById('perfumePrice').textContent = `$${perfume.price || 0}`;
-            document.getElementById('perfumeDescription').textContent = perfume.description || 'No description available.';
-            document.getElementById('perfumeCategory').textContent = perfume.category || perfume.targetAudience || 'N/A';
-            document.getElementById('perfumeYear').textContent = perfume.releaseYear || 'N/A';
-            
-            // Update image with better fallback
-            const image = document.getElementById('perfumeImage');
-            
-            // Use imageUrl first, then uri - prioritize actual product images
-            let imageSrc = '';
-            if (perfume.imageUrl && perfume.imageUrl.includes('unsplash.com')) {
-                // If imageUrl is from unsplash, prefer uri if it's a product image
-                imageSrc = perfume.uri || perfume.imageUrl;
-            } else {
-                // Otherwise use imageUrl first
-                imageSrc = perfume.imageUrl || perfume.uri;
-            }
-            
-            console.log('Image sources:', { 
-                imageUrl: perfume.imageUrl, 
-                uri: perfume.uri, 
-                finalSrc: imageSrc,
-                perfumeName: perfumeName 
-            });
-            
-            if (imageSrc && imageSrc.trim() !== '') {
-                console.log('Setting image src to:', imageSrc);
-                image.src = imageSrc;
-                image.alt = perfumeName;
-                image.onerror = function() {
-                    console.log('Image failed to load:', imageSrc);
-                    // If image fails to load, show "No image" message
-                    this.style.display = 'none';
-                    const container = this.parentElement;
-                    const noImageDiv = document.createElement('div');
-                    noImageDiv.className = 'absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-lg';
-                    noImageDiv.innerHTML = '<span>Không có ảnh</span>';
-                    container.appendChild(noImageDiv);
-                };
-            } else {
-                console.log('No image source available');
-                // Show "No image" message directly
-                image.style.display = 'none';
-                const container = image.parentElement;
-                const noImageDiv = document.createElement('div');
-                noImageDiv.className = 'absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-lg';
-                noImageDiv.innerHTML = '<span>Không có ảnh</span>';
-                container.appendChild(noImageDiv);
-            }
-            
-            // Load and display comments
-            displayComments(perfume.comments || []);
-            
-            // Check if user is logged in and show appropriate form
-            checkUserLoginStatus();
-        }
-
-        async function loadRelatedPerfumes(brand) {
-            try {
-                const response = await fetch('/api/public/perfumes');
-                const perfumes = await response.json();
-                
-                // Filter related perfumes (same brand, different perfume)
-                const related = perfumes
-                    .filter(p => p.brand === brand && p._id !== perfumeId)
-                    .slice(0, 3);
-
-                const container = document.getElementById('relatedPerfumes');
-                container.innerHTML = '';
-
-                if (related.length === 0) {
-                    container.innerHTML = '<p class="text-gray-500 text-center col-span-full">No related perfumes found.</p>';
-                    return;
-                }
-
-                related.forEach(perfume => {
-                    const card = createPerfumeCard(perfume);
-                    container.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error('Error loading related perfumes:', error);
-            }
-        }
-
-        function createPerfumeCard(perfume) {
-            const card = document.createElement('div');
-            card.className = 'card bg-white/80 shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl overflow-hidden cursor-pointer';
-            card.onclick = () => window.location.href = `/perfume/${perfume._id}`;
-
-            const perfumeName = perfume.name || 'Perfume';
-            const imageSrc = perfume.imageUrl || perfume.uri;
-            card.innerHTML = `
+        const perfumeName = perfume.name || "Perfume";
+        const imageSrc = perfume.imageUrl || perfume.uri;
+        card.innerHTML = `
                 <div class="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative">
-                    <img src="${imageSrc || ''}" 
+                    <img src="${imageSrc || ""}" 
                          alt="${perfumeName}" class="w-full h-full object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-sm" style="display: none;">
@@ -766,90 +1071,134 @@
                 </div>
                 <div class="card-body p-4">
                     <h3 class="font-semibold text-gray-800 truncate">${perfumeName}</h3>
-                    <p class="text-sm text-gray-600">${perfume.brand || 'Unknown Brand'}</p>
-                    <p class="text-lg font-bold text-primary">$${perfume.price || '0'}</p>
+                    <p class="text-sm text-gray-600">${
+                      perfume.brand || "Unknown Brand"
+                    }</p>
+                    <p class="text-lg font-bold text-primary">$${
+                      perfume.price || "0"
+                    }</p>
                 </div>
             `;
 
-            return card;
+        return card;
+      }
+
+      function showError(message) {
+        document.getElementById("loadingState").classList.add("hidden");
+        document.getElementById("errorMessage").textContent = message;
+        document.getElementById("errorState").classList.remove("hidden");
+      }
+
+      function addToFavorites() {
+        if (typeof showNotification === "function") {
+          showNotification("Added to favorites!", "success");
+        }
+      }
+
+      function sharePerfume() {
+        if (navigator.share) {
+          navigator.share({
+            title: document.getElementById("perfumeName").textContent,
+            text: `Check out this perfume: ${
+              document.getElementById("perfumeName").textContent
+            }`,
+            url: window.location.href,
+          });
+        } else {
+          // Fallback: copy to clipboard
+          navigator.clipboard.writeText(window.location.href);
+          if (typeof showNotification === "function") {
+            showNotification("Link copied to clipboard!", "success");
+          }
+        }
+      }
+
+      async function handleCommentSubmit(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const rating = formData.get("rating");
+        const content = formData.get("content");
+
+        if (!content.trim()) {
+          if (typeof showNotification === "function") {
+            showNotification(
+              "Vui lòng viết nội dung đánh giá trước khi gửi!",
+              "error"
+            );
+          }
+          return;
         }
 
-        function showError(message) {
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('errorMessage').textContent = message;
-            document.getElementById('errorState').classList.remove('hidden');
-        }
-
-        function addToFavorites() {
-            if (typeof showNotification === 'function') {
-                showNotification('Added to favorites!', 'success');
-            }
-        }
-
-        function sharePerfume() {
-            if (navigator.share) {
-                navigator.share({
-                    title: document.getElementById('perfumeName').textContent,
-                    text: `Check out this perfume: ${document.getElementById('perfumeName').textContent}`,
-                    url: window.location.href
-                });
-            } else {
-                // Fallback: copy to clipboard
-                navigator.clipboard.writeText(window.location.href);
-                if (typeof showNotification === 'function') {
-                    showNotification('Link copied to clipboard!', 'success');
-                }
-            }
-        }
-
-        async function handleCommentSubmit(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const rating = formData.get('rating');
-            const content = formData.get('content');
-            
-            if (!content.trim()) {
-                if (typeof showNotification === 'function') {
-                    showNotification('Please write a review before submitting!', 'error');
+        // Check if user already has a comment (frontend validation)
+        const currentUserId = getCurrentUserId();
+        if (currentUserId) {
+          const existingComment = document.querySelector(
+            ".comment-item [data-comment-id]"
+          );
+          if (existingComment) {
+            // Check if any existing comment belongs to current user
+            const commentsList = document.querySelectorAll("[data-comment-id]");
+            for (const commentEl of commentsList) {
+              const commentId = commentEl.getAttribute("data-comment-id");
+              const ownerBadge = commentEl.querySelector(".badge-primary");
+              if (ownerBadge) {
+                if (typeof showNotification === "function") {
+                  showNotification(
+                    "Bạn đã có bình luận cho sản phẩm này. Mỗi người chỉ được đánh giá một lần!",
+                    "error"
+                  );
                 }
                 return;
+              }
             }
-            
-            try {
-                const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-                const response = await fetch(`/api/perfumes/${perfumeId}/comments`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ rating: parseInt(rating), content: content.trim() })
-                });
-                
-                if (response.ok) {
-                    if (typeof showNotification === 'function') {
-                        showNotification('Review submitted successfully!', 'success');
-                    }
-                    // Reload the page to show the new comment
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    const error = await response.json();
-                    if (typeof showNotification === 'function') {
-                        showNotification(error.message || 'Failed to submit review', 'error');
-                    }
-                }
-            } catch (error) {
-                console.error('Error submitting comment:', error);
-                if (typeof showNotification === 'function') {
-                    showNotification('Failed to submit review. Please try again.', 'error');
-                }
-            }
+          }
         }
+
+        try {
+          const token =
+            localStorage.getItem("token") || sessionStorage.getItem("token");
+          const response = await fetch(`/api/perfumes/${perfumeId}/comments`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              rating: parseInt(rating),
+              content: content.trim(),
+            }),
+          });
+
+          if (response.ok) {
+            if (typeof showNotification === "function") {
+              showNotification("Đánh giá đã được gửi thành công!", "success");
+            }
+            // Reload the page to show the new comment
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+          } else {
+            const error = await response.json();
+            if (typeof showNotification === "function") {
+              showNotification(
+                error.message || "Không thể gửi đánh giá",
+                "error"
+              );
+            }
+          }
+        } catch (error) {
+          console.error("Error submitting comment:", error);
+          if (typeof showNotification === "function") {
+            showNotification(
+              "Không thể gửi đánh giá. Vui lòng thử lại.",
+              "error"
+            );
+          }
+        }
+      }
     </script>
-    
+
     <%- include('partials/footer') %>
-</body>
+  </body>
 </html>

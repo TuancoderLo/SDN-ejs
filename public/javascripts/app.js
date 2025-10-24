@@ -138,14 +138,6 @@ function setupEventListeners() {
     .getElementById("editBrandForm")
     ?.addEventListener("submit", updateBrandFromModal);
 
-  // Comment form (dynamically added)
-  document.addEventListener("submit", function (e) {
-    if (e.target.id === "commentForm") {
-      e.preventDefault();
-      handleCommentSubmit(e);
-    }
-  });
-
   // Store current page URL when clicking login/register links
   document.getElementById("loginLink")?.addEventListener("click", function (e) {
     console.log("🔗 Login link clicked, storing URL:", window.location.href);
@@ -1656,61 +1648,6 @@ function showNotification(message, type = "info") {
       toast.classList.remove("animate-fadeOutDown");
     }, 300); // Wait for animation to complete
   };
-}
-
-// Comment functions
-async function handleCommentSubmit(e) {
-  // Refresh auth state
-  currentUser = getStoredUser();
-  if (!currentUser) {
-    // Store current page URL for redirect after login
-    storeRedirectUrl(window.location.href);
-    showNotification("Please login to add a review", "error");
-    // Add delay to show notification before redirect
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 1500);
-    return;
-  }
-
-  const rating = document.querySelector('input[name="rating"]:checked')?.value;
-  const content = document.getElementById("commentContent").value;
-
-  if (!rating || !content.trim()) {
-    showNotification("Please provide both rating and review content", "error");
-    return;
-  }
-
-  try {
-    const response = await fetch(
-      `${API_URL}/perfumes/${currentPerfumeId}/comments`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${safeGetFromStorage("token")}`,
-        },
-        body: JSON.stringify({
-          rating: parseInt(rating),
-          content: content.trim(),
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    if (response.ok) {
-      showNotification("Review submitted successfully!", "success");
-      document.getElementById("commentForm").reset();
-      // Reload perfume details to show new comment
-      showPerfumeDetail(currentPerfumeId);
-    } else {
-      showNotification(data.message || "Failed to submit review", "error");
-    }
-  } catch (error) {
-    showNotification("Error submitting review", "error");
-    console.error("Comment submit error:", error);
-  }
 }
 
 // Admin functions
